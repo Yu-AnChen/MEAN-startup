@@ -8,6 +8,7 @@ import 'angular-local-storage';
 import 'angular-smart-table';
 import ngMdIcons from 'angular-material-icons';
 import ngAnimate from 'angular-animate';
+import ngSanitize from 'angular-sanitize';
 
 // configs
 import themeConfig from './themeConfig';
@@ -23,6 +24,7 @@ angular
         ngAria,
         ngMaterial,
         ngMdIcons,
+        ngSanitize,
         'LocalStorageModule',
         'smart-table',
         app

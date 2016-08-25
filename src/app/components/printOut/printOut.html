@@ -1,0 +1,94 @@
+<h4>{{$ctrl.absData.title}}</h4>
+<div class="wrapper-author">
+    
+    <span ng-if="$ctrl.absData.authors.length === 1">{{author.name}}</span>
+      
+    <span ng-if="$ctrl.absData.authors.length === 2">
+        <span ng-repeat="author in $ctrl.absData.authors">
+            <span ng-if="$first"><u>{{author.name}}</u><sup 
+                ng-if="$ctrl.absData.useAffiliationSup" 
+                ng-repeat="num in author.affiliationSup"
+            >{{num}}<span ng-if="!$last">,</span></sup></span>
+            <span ng-if="$last">and {{author.name}}*<sup 
+                ng-if="$ctrl.absData.useAffiliationSup" 
+                ng-repeat="num in author.affiliationSup"
+            >,{{num}}</sup></span>
+        </span>
+    </span>
+    
+    <span ng-if="$ctrl.absData.authors.length > 2">
+        <span ng-repeat="author in $ctrl.absData.authors | filter:'presenting'">
+            <u>{{author.name}}</u>,<sup 
+                ng-if="$ctrl.absData.useAffiliationSup" 
+                ng-repeat="num in author.affiliationSup"
+            >{{num}}<span ng-if="!$last">,</span></sup></span>
+        </span>
+        <span ng-repeat="author in $ctrl.absData.authors | filter:'general'">
+            {{author.name}},<sup 
+                ng-if="$ctrl.absData.useAffiliationSup" 
+                ng-repeat="num in author.affiliationSup"
+            >{{num}}<span ng-if="!$last">,</span></sup></span>
+        </span>
+        <span ng-repeat="author in $ctrl.absData.authors | filter:'corresponding'">
+            and {{author.name}}*<sup 
+                ng-if="$ctrl.absData.useAffiliationSup" 
+                ng-repeat="num in author.affiliationSup"
+            >,{{num}}</sup></span>
+        </span>
+    </span>
+
+</div>
+
+<div class="wrapper-affil">
+    <span ng-repeat="affil in $ctrl.absData.affiliations">
+        <sup>{{affil.id}}</sup>{{affil.name}}<br />
+    </span>
+</div>
+
+<div class="wrapper-keywords">
+    keywords: 
+    <span ng-repeat="keyword in $ctrl.absData.keywords">
+        {{keyword}}<span ng-if="!$last">,</span>
+    </span>
+</div>
+
+<div class="wrapper-abs-content" 
+    ng-bind-html="$ctrl.absData.absContent">
+</div>
+
+
+
+
+
+
+<!--just showing how html structure affect white space-->
+<hr>
+<div class="wrapper-author">
+  <span 
+      ng-repeat="author in $ctrl.absData.authors"
+      >
+      {{author.name}}<sup ng-repeat="num in author.affiliationSup">{{num}},</sup>, 
+          <!--sup 
+              ng-repeat="number in author.affiliationSup"
+              >{{number}},
+          </sup-->
+  </span>
+  <br />
+  <span 
+      ng-repeat="author in $ctrl.absData.authors"
+      >
+      {{author.name}}<!--sup ng-repeat="num in author.affiliationSup">{{num}},</sup--> 
+          <sup 
+              ng-repeat="number in author.affiliationSup"
+              >{{number}},
+          </sup>
+      , 
+  </span>
+</div>
+
+
+          <!--div class="wrapper-author">{{{authAffilForm}}}</div>
+          <div class="wrapper-affil">{{{affilForm}}}</div>
+          <h6>Keyowrds: {{keywords}}</h6>
+          <!-- <h6>email: {{email}}</h6> -->
+          <!--{{{absContentMD}}} -->
