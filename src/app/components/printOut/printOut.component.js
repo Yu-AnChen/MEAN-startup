@@ -1,11 +1,11 @@
-// import './printOut.styl';
+import './printOut.styl';
 import template from './printOut.html';
 
 const printOutComponent = {
     
     template,
     bindings: {
-        absData: '<'  // <print-out abs-data="$ctrl.absData"></print-out>
+        absData: '<',  // <print-out abs-data="$ctrl.absData"></print-out>
     },
     controller:
     /* @ngInject */
@@ -22,13 +22,24 @@ const printOutComponent = {
             // this.absData = this.getAbsData(); // this.data == $ctrl.asbData
         }
         $onChanges(changes){
-            console.log(changes.absData.curretValue);
+            console.log(changes);
+            // console.log(this.absData);
         }
         $onDestroy(){}
         $postLink(){}
-
         
-
+        // filterValidAuthor(val) {
+        //     if (
+        //         this.filterString(val.name) || 
+        //         val.affiliationOfAuthor.filter(this.filterString).length 
+        //     ) {
+        //         return true;
+        //     } else {
+        //         return false;
+        //     }
+        // }
+        
+    
         // getAbsData() {
         //     var absData = {
         //         user_id: 1,

@@ -1,0 +1,100 @@
+<div class="row">
+    <div class="col-md-6">
+        <print-out
+            abs-data="$ctrl.form"></print-out>
+    </div>
+    <div class="col-md-6">
+        <form>
+            <label class="form_bullet">Abstract Title:</label>
+            <input type="text" ng-model="$ctrl.form.title"/>
+            
+            <div ng-repeat="author in $ctrl.form.authors">
+                <label><span
+                    ng-if="author.role!=='General'">{{author.role}}
+                </span> Author<span
+                    ng-if="author.role=='General'"> {{$index+1}}</span>:
+                </label>
+                
+                <input type="text" name="author-name"
+                    ng-model="$ctrl.form.authors[$index].name" 
+                    ng-change="[$ctrl.validateAuthor(), $ctrl.matchAuthor($ctrl.form.authors[$index].name), $ctrl.decideUseAffiliationSup()]"/>
+                <!--<input type="text" ng-model="$ctrl.form.authors[$index].role"/>-->
+                
+                <br />
+                <div ng-repeat="sup in author.affiliationSup track by $index">
+                    <label>Affiliation:</label>
+                    
+                    <textarea type="textarea" name="affiliation"
+                        ng-model="$ctrl.form.authors[$parent.$index].affiliationOfAuthor[$index]"
+                        ng-change="[$ctrl.validateAuthor(), $ctrl.checkAffilUnique(), $ctrl.matchAffilSup(), $ctrl.decideUseAffiliationSup()]">
+                    </textarea>
+                </div>
+                <button ng-click="$ctrl.addAffiliation($index)">Add Affiliation</button>
+            
+            </div>
+            <button ng-click="$ctrl.addAuthor()">Add Author</button>
+            <br/>
+            <label>Keywords:</label>
+            <input type="text" name="keywords" ng-model="$ctrl.form.keywords[0]" ng-change="$ctrl.splitKeywords()"/>
+            <hr>
+            {{$ctrl.form.authors}}
+            <hr>
+            {{$ctrl.form.affiliations}}
+            <hr>
+            <span ng-repeat="show in $ctrl.filteredAuthors track by $index">
+                {{show}}
+            </span>
+            
+            {{$ctrl.addOn}}
+            <button ng-click="$ctrl.toggleAutoBackup()">status:{{$ctrl.autoBackupConfig.msg}}</button>
+            <button ng-click="$ctrl.submit()">Submit</button>
+
+        </form>
+    </div>
+</div>
+
+<!--<form class="col-md-5 abs_form">-->
+<!--    <p>-->
+<!--        <span class="form_bullet">Abstract Title:</span>-->
+<!--        <input -->
+<!--            ng-model="title"-->
+<!--            type="text" class="js-abs_title js-hide-next" name="abs_title" placeholder='The Title of the Abstract'/>-->
+<!--    </p>-->
+
+<!--    <p>-->
+<!--        <span class="form_bullet">Presenting Author:</span>-->
+<!--        <input -->
+<!--            ng-model="authors"-->
+<!--            type="text" class="js-auth js-hide-next" name="author_1"/> -->
+            
+<!--        <span class="form_indent">Affiliation:</span>-->
+<!--        <textarea -->
+<!--            ng-model="affiliations"-->
+<!--            class="text-affil js-affil js-hide-next" name="author_affil_1_1"></textarea>-->
+<!--        <button -->
+<!--            ng-model="btn-add_affiliation"-->
+<!--            type="button" class="js-add_affil btn btn-add_affil">Add Affiliation</button>-->
+<!--    </p>-->
+    
+<!--    <p>-->
+<!--      <span class="form_bullet">Corresponding Author:</span> <input class="js-auth js-hide-next" type="text" name="author_99"/>-->
+<!--      <span class="form_indent">Affiliation:</span>-->
+<!--      <textarea class="text-affil js-affil js-hide-next" name="author_affil_99_1"></textarea>-->
+<!--      <button type="button" class="js-add_affil btn btn-add_affil">Add Affiliation</button>-->
+<!--    </p>-->
+    
+<!--    <p class="text-center">-->
+<!--    <button type="button" class="js-add_author btn btn-add_author">Add Another Author</button>-->
+<!--    </p>-->
+    
+<!--    <p>-->
+<!--      <span class="form_bullet">Keywords:</span> <input class="js-keywords js-hide-next" type="text" name="abs_keywords" placeholder='Keywords, seperated by ", "'/>-->
+<!--    </p>-->
+
+<!--    <p>-->
+<!--      <span class="form_bullet">Abstract:</span>-->
+<!--      <textarea name="abs_content" class="js-abs_content js-hide-next"></textarea>-->
+<!--    </p>-->
+<!--    <br />-->
+    
+<!--</form>-->

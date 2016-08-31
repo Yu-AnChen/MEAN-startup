@@ -24,6 +24,10 @@ module.exports = {
                 test: /\.css$/,
                 loader: 'style!css'
             },
+            { 
+                test: /\.scss$/, 
+                loader: "style-loader!raw-loader!sass-loader?includePaths[]=" + path.resolve(__dirname, "./node_modules/compass-mixins/lib")
+            },
             {
                 test: /\.eot(\?v=\d+\.\d+\.\d+)?$/,
                 loader: 'file'

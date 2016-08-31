@@ -47,6 +47,7 @@ const dbUrl = process.env.MONGODB_URI || process.env.MONGOLAB_URI;
 
 app.use((req, res, next) => {
     dbClient.connect(dbUrl, (err, db) => {
+        // app.set('db', db);  => req.app.get('db')
         req.db = db;
         next();
     });

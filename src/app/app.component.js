@@ -3,8 +3,9 @@ import './app.styl';
 
 const appComponent = {
     template: `
-    <print-out
-        abs-data="$ctrl.absData"></print-out>
+    <div class="container-fluid">
+        <abs-form-input></abs-form-input>
+    </div>
     `,
     controller: /* @ngInject */ 
     class AppController {
