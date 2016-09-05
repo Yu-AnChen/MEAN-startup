@@ -16,6 +16,8 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import colorsSupported from 'supports-color';
 import historyApiFallback from 'connect-history-api-fallback';
+import nodemon from 'gulp-nodemon';
+import mocha from 'gulp-mocha';
 
 let root = 'src';
 
@@ -165,3 +167,14 @@ gulp.task('copy-assets', () => {
 });
 
 gulp.task('default', ['watch']);
+
+gulp.task('start', ()=> {
+    nodemon({
+        script: 'app.js'
+    }).on('start', ['check-routes']);
+})
+gulp.task('check-routes', () => {
+    return gulp.src('app.spec.js', {
+        read: false
+    }).pipe(mocha());
+});

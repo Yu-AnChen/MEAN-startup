@@ -3,7 +3,8 @@ import './app.styl';
 
 const appComponent = {
     template: `
-    <div class="container-fluid">
+    <header-and-nav></header-and-nav>
+    <div>
         <abs-form-input></abs-form-input>
     </div>
     `,

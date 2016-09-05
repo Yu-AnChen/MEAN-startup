@@ -23,51 +23,23 @@ class formApiService {
         return ['$resource','$http'];
     }
     constructor($resource, $http) {
-        // '/abs/'  => req.params.userId
-        // '/ab/:userId'  => req.params.userId
-        this.apiUrlForAB = '/ab/'
-        this.apiUrlForABs = '/abs/'
-        
-        this.AB = $resource(this.apiUrlForAB+':userId', 
-                            {userId:'@id'}, 
+        this.abstract = $resource('/abstract/:email', 
+                            {email: '@email'}, 
                             {   
                                 'update': { method:'PUT' },
                                 'post': {method: 'POST'}
                             }
                             );
-        this.ABs = $resource(this.apiUrlForABs);
+        this.abstracts = $resource('/abstracts/');
         this.$http = $http;
     }
-    get(userId){
-        // $resource
-        return this.AB.get({userId: userId});
+    get(email, title){
+        const _title = title || '';
+        return this.$http.get('/abstract/'+email+'?title='+_title);
     }
-    getAB2(userId){
-        return this.$http.get(this.apiUrlForABs + userId);
-    }
-    update(userId, data){
-        // $resource
-        return this.AB.update({userId: userId}, data);
-    }
-    updateAB2(userId, data){
-        return this.$http.put(this.apiUrlForABs + userId, data);
-    }
-    
-    updateCounter(number) {
-        console.log(number);
+    save(data){
+        return this.$http.put('/abstract/', data);
     }
 }
 
 export default formApiService;
-
-// class formApiService2 {
-//         static get $inject() {
-//             return [];
-//         }
-//         constructor() {
-//         }
-// }
-// export {formApiService, formApiService2};
-// function formApiService($log, $timeout, $scope) {
-// }
-// formApiService.$inject = ['$log', '$timeout', '$scope']

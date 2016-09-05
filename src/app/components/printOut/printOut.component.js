@@ -20,6 +20,7 @@ const printOutComponent = {
         }
         $onInit(){
             // this.absData = this.getAbsData(); // this.data == $ctrl.asbData
+            // this.abstract = this.parseMarkdown("*hello*");
         }
         $onChanges(changes){
             console.log(changes);
@@ -27,6 +28,18 @@ const printOutComponent = {
         }
         $onDestroy(){}
         $postLink(){}
+        
+        
+        // KEYWORDS
+        splitKeywords(string) {
+            let splitedWords = string.split(",");
+            return splitedWords.map((element) => element.trim());
+        }
+        // ABSTRACT
+        parseMarkdown(string) {
+            const marked = require("marked");
+            return marked(string);
+        }
         
         // filterValidAuthor(val) {
         //     if (

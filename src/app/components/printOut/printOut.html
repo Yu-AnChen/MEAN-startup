@@ -1,85 +1,50 @@
-<h4>{{$ctrl.absData.title}}</h4>
-<!--<h3>Existing authors: {{$ctrl.existingAuthorCounts}}</h3>-->
-<div class="wrapper-author">
-   <div>
-        <span 
-            ng-repeat="author in $ctrl.absData.authors | filter:{validAuthor: true} as results">
-            <span ng-if="results.length === 1">
-                {{author.name}}
+<div id="abs_print">
+    <h4 class="abs_title">{{$ctrl.absData.title}}</h4>
+    <!--<h3>Existing authors: {{$ctrl.existingAuthorCounts}}</h3>-->
+    <div class="wrapper-author">
+       <div>
+            <span 
+                ng-repeat="author in $ctrl.absData.authors | filter:{validAuthor: true} as results">
+                <span ng-if="results.length === 1">
+                    {{author.name}}
+                </span>
+                <span ng-if="results.length > 1">
+                    <span ng-if="$first"><u>{{author.name}}</u><sup
+                        ng-if="$ctrl.absData.useAffiliationSup"
+                        ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
+                        >{{n}}<span ng-if="!$last">,</span></sup><span ng-if="results.length > 2">,</span>
+                    </span>
+                    <span ng-if="!$first && !$last">{{author.name}}<sup 
+                        ng-if="$ctrl.absData.useAffiliationSup"
+                        ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
+                        >{{n}}<span ng-if="!$last">,</span></sup>,
+                    </span>
+                    <span ng-if="$last">and {{author.name}}*<sup ng-if="$ctrl.absData.useAffiliationSup">,</sup><sup 
+                        ng-if="$ctrl.absData.useAffiliationSup"
+                        ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
+                        >{{n}}<span ng-if="!$last">,</span></sup>
+                    </span>
+                </span>
             </span>
-            <span ng-if="results.length > 1">
-                <span ng-if="$first"><u>{{author.name}}</u><sup
-                    ng-if="$ctrl.absData.useAffiliationSup"
-                    ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
-                    >{{n}}<span ng-if="!$last">,</span></sup><span ng-if="results.length > 2">,</span>
-                </span>
-                <span ng-if="!$first && !$last">{{author.name}}<sup 
-                    ng-if="$ctrl.absData.useAffiliationSup"
-                    ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
-                    >{{n}}<span ng-if="!$last">,</span></sup>,
-                </span>
-                <span ng-if="$last">and {{author.name}}*<sup ng-if="$ctrl.absData.useAffiliationSup">,</sup><sup 
-                    ng-if="$ctrl.absData.useAffiliationSup"
-                    ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
-                    >{{n}}<span ng-if="!$last">,</span></sup>
-                </span>
-            </span>
-        </span>
-        <span ng-if="results.length === 0">no valid author</span>
+            <span ng-if="results.length === 0">no valid author</span>
+        </div>
     </div>
+    
+    <div class="wrapper-affil">
+        <span ng-repeat="affil in $ctrl.absData.affiliations">
+            <sup ng-if="$ctrl.absData.useAffiliationSup">{{$index+1}}</sup>{{affil}}<br />
+        </span>
+    </div>
+    
+    <div class="wrapper-keywords">
+        keywords: 
+        <span ng-repeat="keyword in $ctrl.splitKeywords($ctrl.absData.keywords) track by $index"
+            ng-if="$index>0">
+            {{keyword}}<span ng-if="!$last">,</span>
+        </span>
+    </div>
+    
+    <div class="wrapper-abs-content" 
+        ng-bind-html="$ctrl.parseMarkdown($ctrl.absData.absContent)"></div>
+    
 </div>
-
-<div class="wrapper-affil">
-    <span ng-repeat="affil in $ctrl.absData.affiliations">
-        <sup ng-if="$ctrl.absData.useAffiliationSup">{{$index+1}}</sup>{{affil}}<br />
-    </span>
-</div>
-
-<div class="wrapper-keywords">
-    keywords: 
-    <span ng-repeat="keyword in $ctrl.absData.keywords track by $index"
-        ng-if="$index>0">
-        {{keyword}}<span ng-if="!$last">,</span>
-    </span>
-</div>
-
-<div class="wrapper-abs-content" 
-    ng-bind-html="$ctrl.absData.absContent">
-</div>
-
-
-
-
-
-
-<!--just showing how html structure affect white space-->
-<hr>
-<div class="wrapper-author">
-  <span 
-      ng-repeat="author in $ctrl.absData.authors"
-      >
-      {{author.name}}<sup ng-repeat="num in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index">{{num}},</sup>, 
-          <!--sup 
-              ng-repeat="number in author.affiliationSup track by $index"
-              >{{number}},
-          </sup-->
-  </span>
-  <br />
-  <span 
-      ng-repeat="author in $ctrl.absData.authors"
-      >
-      {{author.name}}<!--sup ng-repeat="num in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index">{{num}},</sup--> 
-          <sup 
-              ng-repeat="number in author.affiliationSup track by $index"
-              >{{number}},
-          </sup>
-      , 
-  </span>
-</div>
-
-
-          <!--div class="wrapper-author">{{{authAffilForm}}}</div>
-          <div class="wrapper-affil">{{{affilForm}}}</div>
-          <h6>Keyowrds: {{keywords}}</h6>
-          <!-- <h6>email: {{email}}</h6> -->
-          <!--{{{absContentMD}}} -->

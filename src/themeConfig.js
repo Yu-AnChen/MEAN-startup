@@ -14,17 +14,30 @@ function themeConfig($mdThemingProvider) {
     $mdThemingProvider.definePalette('customBlue', customBlueMap);
     $mdThemingProvider.definePalette('white', customWhiteMap);
     $mdThemingProvider.theme('default')
-        .backgroundPalette('white')
-        .primaryPalette('customBlue', {
-            'default': '500',
-            'hue-1': '50'
+        .primaryPalette('grey', {
+            'default': '900',
+            'hue-1': '50',
+            'hue-2': '200',
+            'hue-3': '500'
         })
-        .accentPalette('green', {
-            'default': '500',
-            'hue-3': '700'
-        });
-    $mdThemingProvider.theme('input', 'default')
-        .primaryPalette('grey');
+        .accentPalette('light-green', {
+            'default': '800'
+        })
+    
+    $mdThemingProvider.theme('navTheme')
+        .accentPalette('white')
+        // .backgroundPalette('light-green')
+    //     .backgroundPalette('white')
+    //     .primaryPalette('customBlue', {
+    //         'default': '500',
+    //         'hue-1': '50'
+    //     })
+    //     .accentPalette('green', {
+    //         'default': '500',
+    //         'hue-3': '700'
+    //     });
+    // $mdThemingProvider.theme('input', 'default')
+    //     .primaryPalette('grey');
 
 }
 export default themeConfig;

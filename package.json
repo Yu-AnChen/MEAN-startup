@@ -17,9 +17,9 @@
     "reinstall": "npm cache clean && rm -rf node_modules && npm run global && npm install",
     "global": "npm install -g gulp karma karma-cli webpack eslint morgan",
     "clean": "rm -rf ./dist",
-    "dev:front:only": "echo Running Frontend with Dev Server && gulp serve",
-    "dev:front": "echo Frontend Dev with Server && node app.js",
-    "dev:back": "gulp go",
+    "dev:front:only": "echo Running Frontend with Dev Server && NODE_ENV=development gulp serve",
+    "dev:front": "echo Frontend Dev with Server && NODE_ENV=development node app.js",
+    "dev:back": "gulp start",
     "dist:front": "gulp build",
     "test": "karma start",
     "eslint": "eslint --init",
@@ -51,7 +51,9 @@
     "express-flash": "0.0.2",
     "express-session": "^1.14.0",
     "express-validator": "^2.20.8",
-    "mongodb": "^2.2.5"
+    "marked": "^0.3.6",
+    "mongodb": "^2.2.9",
+    "request": "^2.74.0"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
@@ -87,6 +89,8 @@
     "fs-walk": "0.0.1",
     "graceful-fs": "^4.1.5",
     "gulp": "^3.9.0",
+    "gulp-mocha": "^3.0.1",
+    "gulp-nodemon": "^2.1.0",
     "gulp-rename": "^1.2.2",
     "gulp-template": "^3.0.0",
     "gulp-util": "^3.0.7",

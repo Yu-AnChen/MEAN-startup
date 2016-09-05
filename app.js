@@ -31,18 +31,8 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(expressValidator());
 
-// MongoDB
-// app.use(session({
-//     resave: true,
-//     saveUninitialized: true,
-//     secret: process.env.SESSION_SECRET,
-//     store: new MongoStore({
-//         url: process.env.MONGODB_URI || process.env.MONGOLAB_URI,
-//         autoReconnect: true
-//     })
-// }));
 const dbClient = mongodb.MongoClient;
-const ObjectId = mongodb.ObjectId;
+// const ObjectId = mongodb.ObjectId;
 const dbUrl = process.env.MONGODB_URI || process.env.MONGOLAB_URI;
 
 app.use((req, res, next) => {
@@ -55,10 +45,6 @@ app.use((req, res, next) => {
 
 // Frontend development
 if (process.env.NODE_ENV == 'development') {
-    // const Dashboard = require('webpack-dashboard');
-    // const DashboardPlugin = require('webpack-dashboard/plugin');
-    // const dashboard = new Dashboard();
-
     const webpack = require('webpack');
     const webpackDevMiddleware = require('webpack-dev-middleware');
     const webpackHotMiddleware = require('webpack-hot-middleware');
@@ -69,9 +55,7 @@ if (process.env.NODE_ENV == 'development') {
         path.join(__dirname, 'src/index.js'),
     ];
     const compiler = webpack(config);
-    // compiler.apply(new DashboardPlugin(dashboard.setData));
     const webpackMiddleware = webpackDevMiddleware(compiler, {
-        // path: 'http://localhost:'+port,
         publicPath: config.output.publicPath,
         contentBase: __dirname + '/src',
         quiet: true,
@@ -98,6 +82,16 @@ if (process.env.NODE_ENV == 'development') {
 
 // Routes
 const auth = require('./routes/auth');
+const abstract = require('./routes/abstract');
+const abstracts = require('./routes/abstracts');
+const user = require('./routes/user');
+const users = require('./routes/users');
+app.use(auth);
+app.use('/users', users);
+app.use('/abstract', abstract);
+app.use('/abstracts', abstracts);
+app.use('/user', user);
+app.use('/users', users);
 
 // Errors
 app.use(errorHandler());

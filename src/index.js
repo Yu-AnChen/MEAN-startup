@@ -11,12 +11,15 @@ import ngAnimate from 'angular-animate';
 import ngSanitize from 'angular-sanitize';
 import ngResource from 'angular-resource';
 
-// configs
+// filter-testing
 import appFilters from './appFilters';
-
+// configs
 import themeConfig from './themeConfig';
 import METADATA from './METADATA';
 import 'compass-mixins';
+
+// styles
+import 'angular-material/angular-material.css';
 
 // entry modules
 import app from './app';
