@@ -10,9 +10,15 @@ import ngMdIcons from 'angular-material-icons';
 import ngAnimate from 'angular-animate';
 import ngSanitize from 'angular-sanitize';
 import ngResource from 'angular-resource';
+import ngMessages from 'angular-messages';
+
 
 // filter-testing
 import appFilters from './appFilters';
+// directive-testing
+import appDirectives from './appDirectives';
+// factory
+import appFactories from './appFactories';
 // configs
 import themeConfig from './themeConfig';
 import METADATA from './METADATA';
@@ -33,9 +39,12 @@ angular
         ngMdIcons,
         ngSanitize,
         ngResource,
+        ngMessages,
         'LocalStorageModule',
         'smart-table',
         appFilters,
+        appDirectives,
+        appFactories,
         app
     ])
     .config(($stateProvider, $urlRouterProvider) => {

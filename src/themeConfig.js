@@ -15,13 +15,17 @@ function themeConfig($mdThemingProvider) {
     $mdThemingProvider.definePalette('white', customWhiteMap);
     $mdThemingProvider.theme('default')
         .primaryPalette('grey', {
-            'default': '900',
+            'default': '800',
             'hue-1': '50',
             'hue-2': '200',
             'hue-3': '500'
         })
-        .accentPalette('light-green', {
-            'default': '800'
+        .accentPalette('brown', {
+            'default': '600',
+            'hue-1': '300',
+        })
+        .warnPalette('orange', {
+            'default': '50'
         })
     
     $mdThemingProvider.theme('navTheme')

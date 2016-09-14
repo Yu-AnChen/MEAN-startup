@@ -1,8 +1,15 @@
 const Abstract = require('express').Router();
 const mongodb = require('mongodb');
 const ObjectId = mongodb.ObjectId;
+const Auth = require('./auth');
+// const Auth = require('./auth');
 
 Abstract.get('/:email', (req, res, next)=> {
+    // get '/abstract/currentUser'
+    if (req.params.email == 'currentUser') {
+        console.log(req.currentUser);
+        req.params.email = req.currentUser.email;
+    }
     const queryData = {
             email: req.params.email
         }
@@ -52,9 +59,11 @@ Abstract.put('/', (req, res)=> {
     } else {
         // create
         req.db.collection('abstracts')
-            .insert((req.body), (err)=> {
+            .insert((req.body), (err, docsInserted)=> {
                 if (!err) {
-                    res.sendStatus(200);
+                    // res.sendStatus(200);
+                    res.json(docsInserted);
+                    // 
                     req.db.close();
                 } else {
                     res.sendStatus(403);
@@ -64,7 +73,22 @@ Abstract.put('/', (req, res)=> {
     }
 
 });
-
+Abstract.put('/:absId', Auth, (req, res) => {
+    req.db.collection('abstracts')
+    .update({
+        _id: ObjectId(req.params.absId)
+    }, {
+        $set: req.body
+    }, (err) => {
+        if (!err) {
+            res.sendStatus(200);
+            req.db.close();
+        } else {
+            res.sendStatus(403);
+            req.db.close();
+        }
+    })
+});
 Abstract.delete('/:id', (req, res) => {
     req.db.collection('abstracts')
     .remove({

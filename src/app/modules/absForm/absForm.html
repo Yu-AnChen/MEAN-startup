@@ -1,0 +1,168 @@
+<md-button ng-click="$ctrl.saveAndSignUp()">Create Abstract</md-button>
+
+
+<div id="form" layout="row"  layout-sm="column" layout-xs="column"  layout-padding="">
+    <!--layout-sm="column"-->
+    <div flex="grow">
+        
+        <md-toolbar class="md-accent md-hue-1">
+            <div class="md-toolbar-tools">
+                  {{$ctrl.form.email}}
+                  <md-button class="md-icon-button" aria-label="Favorite">
+          <ng-md-icon icon="send"></ng-md-icon>
+        </md-button>
+            </div>
+        </md-toolbar>
+        <!--<div layout="column"  layout-padding="" layout-align="center center">-->
+        <!--    {{$ctrl.form.email}}-->
+        <!--</div>-->
+        <md-content class="formScroll">
+        <div layout="row" layout-align="start center" layout-padding="">
+            <span class="bullet">Autobackup</span> 
+            <md-switch 
+                ng-click="!$ctrl.currentUser || $ctrl.toggleAutoBackup()" 
+                ng-disabled="!$ctrl.currentUser"
+                aria-label="Toggle Auto Backup">
+                {{$ctrl.autoBackupConfig.msg}}
+            </md-switch>
+        </div>
+        
+        <div layout="column" layout-padding="">
+            <md-input-container>
+                <label class="bullet">Abstract Title</label>
+                <textarea type="textarea" name="title" 
+                    ng-model="$ctrl.form.title"></textarea>
+            </md-input-container>
+            <md-input-container class="indent-left">
+                <label>Field</label>
+                <md-select 
+                    ng-model="$ctrl.form.field">
+                    <md-option 
+                        ng-repeat="field in $ctrl.fields | orderBy"
+                        ng-value="field">{{field}}
+                    </md-option>
+                    <md-option value="other">Other</md-option>
+                </md-select>
+            </md-input-container>
+        </div>
+        
+
+        <div layout="column" layout-padding="" ng-repeat="author in $ctrl.form.authors">
+            <md-input-container>
+                <label class="bullet"><span
+                    ng-if="author.role!=='General'">{{author.role}}
+                </span> Author<span
+                    ng-if="author.role=='General'"> {{$index+1}}</span>
+                </label>
+                
+                <input type="text" name="author-name"
+                    ng-model="$ctrl.form.authors[$index].name" 
+                    ng-change="[$ctrl.validateAuthor(), $ctrl.matchAuthor($ctrl.form.authors[$index].name), $ctrl.decideUseAffiliationSup()]"/>
+            <!--<input type="text" ng-model="$ctrl.form.authors[$index].role"/>-->
+            </md-input-container>                
+            <md-input-container ng-repeat="sup in author.affiliationSup track by $index" class="indent-left">
+                    <label>Affiliation</label>
+                    
+                    <textarea type="textarea" name="affiliation"
+                        ng-model="$ctrl.form.authors[$parent.$index].affiliationOfAuthor[$index]"
+                        ng-change="[$ctrl.validateAuthor(), $ctrl.checkAffilUnique(), $ctrl.matchAffilSup(), $ctrl.decideUseAffiliationSup()]">
+                    </textarea>
+            </md-input-container>
+            <div layout="column"  layout-align="center end" layout-align-xs="center end">
+                <md-button 
+                    ng-click="$ctrl.addAffiliation($index)" 
+                    class="md-raised md-primary md-hue-2">Add Affiliation
+                </md-button>
+            </div>
+        </div>
+        <div layout="column" layout-padding="">
+            <div layout="column"  layout-align="center center" layout-align-xs="center end">
+                <md-button 
+                    ng-click="$ctrl.addAuthor()" 
+                    class="md-raised md-primary ">Add Another Author
+                </md-button>
+            </div>
+            
+            <md-input-container>
+                <label class="bullet">Keywords</label>
+                <input type="text" name="keywords" ng-model="$ctrl.form.keywords" ng-change="$ctrl.splitKeywords()"/>
+            </md-input-container>
+            
+            <md-input-container>
+                <label class="bullet">Abstract</label>
+                <textarea name="abs_content" class="js-abs_content js-hide-next"
+                    ng-model="$ctrl.form.absContent"></textarea>
+            </md-input-container>
+            
+        </div>   
+        <md-button 
+            ng-click="$ctrl.submit()"
+            ng-disabled="!$ctrl.currentUser"
+            class="md-raised md-primary ">Submit
+        </<md-button>
+        <md-content>
+    </div>
+    <!--<div flex-md="60" flex-gt-md="50" flex="100">-->
+    <div flex="auto">    
+        <div class="wrapper-abs_print" layout="column" layout-align="start center">
+            <abs-print
+                abs-data="$ctrl.form"></abs-print>
+        </div>
+    </div>
+</div>
+
+
+<!--<hr>-->
+            <!--{{$ctrl.form.authors}}-->
+            <!--<hr>-->
+            <!--{{$ctrl.form.affiliations}}-->
+            <!--<hr>-->
+            <!--<span ng-repeat="show in $ctrl.filteredAuthors track by $index">-->
+            <!--    {{show}}-->
+            <!--</span>-->
+
+<!--<form class="col-md-5 abs_form">-->
+<!--    <p>-->
+<!--        <span class="form_bullet">Abstract Title:</span>-->
+<!--        <input -->
+<!--            ng-model="title"-->
+<!--            type="text" class="js-abs_title js-hide-next" name="abs_title" placeholder='The Title of the Abstract'/>-->
+<!--    </p>-->
+
+<!--    <p>-->
+<!--        <span class="form_bullet">Presenting Author:</span>-->
+<!--        <input -->
+<!--            ng-model="authors"-->
+<!--            type="text" class="js-auth js-hide-next" name="author_1"/> -->
+            
+<!--        <span class="form_indent">Affiliation:</span>-->
+<!--        <textarea -->
+<!--            ng-model="affiliations"-->
+<!--            class="text-affil js-affil js-hide-next" name="author_affil_1_1"></textarea>-->
+<!--        <button -->
+<!--            ng-model="btn-add_affiliation"-->
+<!--            type="button" class="js-add_affil btn btn-add_affil">Add Affiliation</button>-->
+<!--    </p>-->
+    
+<!--    <p>-->
+<!--      <span class="form_bullet">Corresponding Author:</span> <input class="js-auth js-hide-next" type="text" name="author_99"/>-->
+<!--      <span class="form_indent">Affiliation:</span>-->
+<!--      <textarea class="text-affil js-affil js-hide-next" name="author_affil_99_1"></textarea>-->
+<!--      <button type="button" class="js-add_affil btn btn-add_affil">Add Affiliation</button>-->
+<!--    </p>-->
+    
+<!--    <p class="text-center">-->
+<!--    <button type="button" class="js-add_author btn btn-add_author">Add Another Author</button>-->
+<!--    </p>-->
+    
+<!--    <p>-->
+<!--      <span class="form_bullet">Keywords:</span> <input class="js-keywords js-hide-next" type="text" name="abs_keywords" placeholder='Keywords, seperated by ", "'/>-->
+<!--    </p>-->
+
+<!--    <p>-->
+<!--      <span class="form_bullet">Abstract:</span>-->
+<!--      <textarea name="abs_content" class="js-abs_content js-hide-next"></textarea>-->
+<!--    </p>-->
+<!--    <br />-->
+    
+<!--</form>-->

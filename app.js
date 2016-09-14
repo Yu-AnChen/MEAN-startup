@@ -81,17 +81,19 @@ if (process.env.NODE_ENV == 'development') {
 }
 
 // Routes
-const auth = require('./routes/auth');
+// const auth = require('./routes/auth');
 const abstract = require('./routes/abstract');
 const abstracts = require('./routes/abstracts');
 const user = require('./routes/user');
 const users = require('./routes/users');
-app.use(auth);
+const currentUser = require('./routes/currentUser');
+// login, logout, signup
+// app.use(auth);
+app.use('/currentUser', currentUser);
+app.use('/user', user);
 app.use('/users', users);
 app.use('/abstract', abstract);
 app.use('/abstracts', abstracts);
-app.use('/user', user);
-app.use('/users', users);
 
 // Errors
 app.use(errorHandler());

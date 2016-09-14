@@ -1,0 +1,92 @@
+import template from './signUp.html';
+import './signUp.styl';
+
+const userSignUpComponent = {
+    template,
+    bindings: {
+
+    },
+    controller: /* @ngInject */ 
+    class UserSignUpController {
+        static get $inject() {
+            return ['$log', '$timeout', '$scope', 'UserApi', 'FormApi', '$state', 'focus', '$stateParams'];
+        }
+        constructor($log, $timeout, $scope, UserApi, FormApi, $state, focus, $stateParams) {
+            this.$log = $log;
+            this.$timeout = $timeout;
+            this.$scope = $scope;
+            this.UserApi = UserApi;
+            this.FormApi = FormApi;
+            this.$state = $state;
+            this.$stateParams = $stateParams;
+            this.focus = focus;
+        }
+        $onInit() {
+            this.userData = this.getUserData();
+            this.alreadyExist = false;
+            this.autofocus = this.autofocus();
+            console.log(this.$stateParams);
+        }
+        autofocus() {
+            this.focus('userEmail');
+        }
+        getUserData() {
+            return {
+                email: this.$stateParams.email,
+                favoritePhrase: this.$stateParams.favoritePhrase,
+                favoritePhraseConfirm: "",
+                primaryAffiliation: ""
+            }
+        }
+        getCurrentUser() {
+            this.UserApi.getCurrentUser().then((res)=>{
+                // console.log(res.data);
+                if (res.data.email) {
+                    this.$state.go('app.absForm', {email: res.data.email});
+                }
+            })
+        }
+        signUp() {
+            let userDbData = {
+                email: this.userData.email.toLocaleLowerCase(),
+                favoritePhrase: this.userData.favoritePhrase,
+                primaryAffiliation: this.userData.primaryAffiliation,
+                signInDate: [new Date()],
+                signInCount: 1
+            }
+            
+            console.log('saving to db now');
+            this.UserApi.signup(userDbData).then((res)=>{
+                if (res.status == 200) {
+                    // console.log(res.data);
+                    // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
+                    if (this.$stateParams.absId) {
+                        this.FormApi.updateEmail(this.$stateParams.absId, {email: res.data.email}).then(()=>{
+                            this.$state.go('app.absForm', {email: res.data.email});
+                        // errorCalback NEEDED
+                        });
+                    }
+                    // this.$state.go('app.user.signOut', {email: res.data.email});
+                }
+            }, (res)=>{
+                if (res.status == 403 && res.data == 'email already exist') {
+                    this.alreadyExist = true;
+                    console.log(res);
+                } else {
+                    console.log('other error');
+                }
+            });
+        }
+        goSignIn() {
+            this.$state.go('app.user.signIn', { 
+                email : this.userData.email, 
+                favoritePhrase : this.userData.favoritePhrase 
+            });
+        }
+        goRoot() {
+            this.$state.go('app');
+        }
+    }
+    
+};
+export default userSignUpComponent;

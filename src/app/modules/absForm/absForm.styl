@@ -1,0 +1,29 @@
+@import "../../../index.variable"
+
+$abs_print-font-size = 11px
+
+md-content
+    background  rgba(255, 255, 255, 0.3)
+
+md-content.formScroll
+    height: $abs_print-font-size * (736/11) - 64
+    
+.indent-left
+    margin $padding-base 0 $padding-base 4*$padding-base
+    
+.wrapper-abs_print
+    overflow-x auto
+    
+#form label.bullet
+#form .bullet
+    border-left 3px solid #212121
+    padding-left $padding-base*1
+    box-sizing border-box
+    
+#form span.bullet
+    padding 0 8px
+    
+.clearfix:after
+    display: block
+    clear: both
+    content: ""

@@ -14,13 +14,13 @@
     <base href="<%= htmlWebpackPlugin.options.baseUrl %>">
 </head>
 
-<body ng-app="app" ng-strict-di ng-cloak>
-    <div ui-view>
+<body ng-app="app" ng-strict-di ng-cloak layout="column">
+    <md-content flex layout="column" ui-view>
         <div style="width:100%;height:100vh;text-align:center;padding-top:200px">
             <img
                 width="500px"
                 src="./assets/img/loading.gif" alt="Loading..." />
         </div>
-    </div>
+    </md-content>
 </body>
 </html>

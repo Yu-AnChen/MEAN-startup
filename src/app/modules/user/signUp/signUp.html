@@ -1,0 +1,91 @@
+<div layout="row" layout-padding="" layout-align="center center">
+<md-content layout="column" layout-padding="" flex-gt-xs="60" flex="100">
+    <div layout-gt-sm="row" layout="column" >
+        <h3 md-colors="{color: 'grey-800'}" flex class="form_bullet">
+            Create A New Abstract
+            <div><small>Let's start with some basics</small></div>
+        </h3>
+        <div layout="row" layout-align="center center" flex>
+            <md-button href="" 
+                ng-click="$ctrl.goSignIn()" 
+                class="md-accent md-hue-2 md-raised">Edit existing abstract</md-button>
+        </div>
+    </div>
+    
+    <form name="signUpForm" layout="column"  >
+        <md-input-container >
+            <label class="bullet">Email</label>
+            <input id="userEmail" type="email" name="email"
+                required md-no-asterisk="true"
+                ng-model="$ctrl.userData.email"
+                ng-change="$ctrl.alreadyExist = false;"/>
+            <div ng-messages="signUpForm.email.$error">
+                <div ng-message="email">Please enter a valid email.</div>
+                <div ng-message="required">This is required</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container >
+            <label class="bullet">Favorite phrase (e.g. DNA, in vivo, cascade, etc...)</label>
+            <input type="text" name="favoritePhrase"
+                required md-no-asterisk="true"
+                ng-minlength="3"
+                ng-model="$ctrl.userData.favoritePhrase"
+                ng-change="$ctrl.alreadyExist = false;"/>
+            <div><small>You need this to come back and edit your abstract</small></div>
+            <div ng-messages="signUpForm.favoritePhrase.$error">
+                <div ng-message="required">This is required</div>
+                <div ng-message="minlength">minimum length: 3 characters</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container >
+            <label class="bullet">Favorite phrase (re-enter)</label>
+            <input type="text" name="favoritePhraseConfirm" 
+                required md-no-asterisk="true"
+                ng-model="$ctrl.userData.favoritePhraseConfirm"
+                pw-check="$ctrl.userData.favoritePhrase"
+                ng-change="$ctrl.alreadyExist = false;"/>
+            <div ng-messages="signUpForm.favoritePhraseConfirm.$error">
+                <div ng-message="required">This is required</div>
+                <div ng-message="pwmatch">It has to match the previous phrase</div>
+            </div>
+        </md-input-container>
+        
+        <md-input-container >
+            <label class="bullet">Primary Affiliation</label>
+            <input type="text" name="primaryAffiliation"
+                required md-no-asterisk="true"
+                ng-model="$ctrl.userData.primaryAffiliation"
+                ng-change="$ctrl.alreadyExist = false;"/>
+            <div ng-messages="signUpForm.primaryAffiliation.$error">
+                <div ng-message="required">This is required</div>
+            </div>
+        </md-input-container>
+    </form>
+    <div layout="row" layout-align="center center"
+        ng-if="$ctrl.alreadyExist"
+        class="animate-if">
+        Looks like you have an existing abstract.
+        <md-button href="" 
+            ng-click="$ctrl.goSignIn()" 
+            class="md-accent md-hue-2 md-raised">Edit it!</md-button>
+    </div>
+    
+    <div layout="row" layout-align="center center">
+        <md-button 
+            ng-click="$ctrl.goRoot()"
+            class="md-raised md-primary"
+            >Back
+        </md-button>
+        <md-button 
+            ng-click="$ctrl.signUp()"
+            class="md-raised md-primary"
+            ng-disabled="signUpForm.$invalid"
+            >Next
+        </md-button>
+    </div>
+
+</md-content>
+   
+</div>

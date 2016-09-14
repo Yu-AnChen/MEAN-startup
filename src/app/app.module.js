@@ -1,10 +1,15 @@
-import appComponent from './app.component';
+import uiRouter from 'angular-ui-router';
 import components from './components';
-import services from './services'
+import modules from './modules';
+import services from './services';
+
+import appComponent from './app.component';
 
 const appModule = angular
     .module('app.core', [
+        uiRouter,
         components,
+        modules,
         services,
     ])
     .component('app', appComponent)
@@ -14,7 +19,14 @@ const appModule = angular
             .state('app', {
                 url: '/',
                 component: 'app'
-            });
+            })
+            ;
+    })
+    .config(($urlRouterProvider) => {
+        'ngInject';
+        $urlRouterProvider
+            .when('/user/signin', '/user/edit')
+            .otherwise('/')
     })
     .name;
 

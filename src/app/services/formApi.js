@@ -33,12 +33,23 @@ class formApiService {
         this.abstracts = $resource('/abstracts/');
         this.$http = $http;
     }
-    get(email, title){
+    
+    getAbstracts() {
+        return this.$http.get('/abstracts');
+    }
+    
+    get(email, title) {
         const _title = title || '';
         return this.$http.get('/abstract/'+email+'?title='+_title);
     }
-    save(data){
+    save(data) {
         return this.$http.put('/abstract/', data);
+    }
+    updateEmail(absId, data) {
+        return this.$http.put('/abstract/' + absId, data);
+    }
+    delete(_id) {
+        return this.$http.delete('/abstract/' + _id);
     }
 }
 

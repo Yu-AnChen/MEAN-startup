@@ -8,14 +8,22 @@
 //     width 100%
 //     overflow-x: hidden
 //     font-family: $font-family
+html
+    height initial
+body
+    min-height: 100vh
 
-div.ng-scope
     background: $bg-top-color; /* For browsers that do not support gradients */
     background: -webkit-linear-gradient($bg-top-color, $bg-bottom-color); /* For Safari 5.1 to 6.0 */
     background: -o-linear-gradient($bg-top-color, $bg-bottom-color); /* For Opera 11.1 to 12.0 */
     background: -moz-linear-gradient($bg-top-color, $bg-bottom-color); /* For Firefox 3.6 to 15 */
     background: linear-gradient($bg-top-color, $bg-bottom-color); /* Standard syntax */
 
-button, select, html, textarea, input
+button, select, html, textarea, input, .body_font_spacing
     font-family $body-font-set
     letter-spacing $body-letter-spacing
+    
+.form_bullet
+    border-left 3px solid #212121
+    padding-left $padding-base*2
+    box-sizing border-box

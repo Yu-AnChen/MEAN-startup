@@ -11,7 +11,8 @@ const url = 'http://abstract-submission-yuan12.c9users.io:' + process.env.PORT;
 let route = (nameWithSlash) => {
     return url + nameWithSlash;
 };
-describe('Test on Points Rewards System @ ' + url, () => {
+describe('Test on Abstract Submission System @ ' + url, () => {
+    
     describe('Root', () => {
         it('GET: /', (done) => {
             request(route('/'), (err, res, body) => {
@@ -22,21 +23,14 @@ describe('Test on Points Rewards System @ ' + url, () => {
     });
 
     describe('Abstracts Routes', () => {
-            it('GET: /abstracts', (done) => {
+        it('GET: /abstracts', (done) => {
             request(route('/abstracts'), (err, res, body) => {
                     assert.equal(res.statusCode, 200);
                     done();
             });
         });
-
-        it('GET: /users', (done) => {
-            request(route('/users'), (err, res, body) => {
-                    assert.equal(res.statusCode, 200);
-                    done();
-            });
-        });
-    })
-
+    });
+    
     describe('Abstract CRUD API',  ()=> {
         let abstractId;
         before('PUT: /abstract', (done) =>{
@@ -53,14 +47,16 @@ describe('Test on Points Rewards System @ ' + url, () => {
             });
         });
         
-        before('GET: /abstract/:email?title=testingTitle', (done) => {
+        before('GET: /abstract/:email', (done) => {
             request(route('/abstract/testing@test.com?title=testingTitle'), (err, res, body) => {
                     const results = JSON.parse(res.body)
+                    // console.log(res);
                     abstractId = results[0]._id;
                     assert.equal(res.statusCode, 200);
                     done();
             });
         })
+        
         it('PUT: /abstract', (done) =>{
             request({
                 method: 'put',
@@ -77,13 +73,12 @@ describe('Test on Points Rewards System @ ' + url, () => {
             });
         });
         
-        it('GET: /abstract/:email?title=', (done) => {
+        it('GET: /abstract/:emai', (done) => {
             request(route('/abstract/testing@test.com?title='), (err, res, body) => {
-                    assert.equal(res.statusCode, 200);
-                    done();
+                assert.equal(res.statusCode, 200);
+                done();
             });
         });
-        
         
         it('DELETE: /abstract/:id',  (done)=> {
             request({
@@ -94,8 +89,19 @@ describe('Test on Points Rewards System @ ' + url, () => {
                 done();
             });
         });
-    });    
+    });  
+    
+     describe('Users Routes', () => {
+        it('GET: /users', (done) => {
+            request(route('/users'), (err, res, body) => {
+                    assert.equal(res.statusCode, 200);
+                    done();
+            });
+        });
+    });
+    
     describe('User CRUD API',  ()=> {
+        // create
         it('POST: /user', (done) =>{
             request({
                 method: 'post',
@@ -109,28 +115,28 @@ describe('Test on Points Rewards System @ ' + url, () => {
                     done();
             });
         });
-        
+        // read
+        it('GET: /user/:email', (done) =>{
+            request(route('/user/newuser@gmail.com'), (err, res, body) => {
+                assert.equal(res.statusCode, 200);
+                done();
+            });
+        });
+        // update
         it('PUT: /user', (done) =>{
             request({
                 method: 'put',
                 url: route('/user'),
                 json: {
                     email: 'newuser@gmail.com',
-                    affiliation: 'updatedschoole',
+                    affiliation: 'updatedschool',
                 }
             }, (err, res, body) => {
-                    assert.equal(res.statusCode, 200);
-                    done();
+                assert.equal(res.statusCode, 200);
+                done();
             });
         });
-        
-        it('GET: /user/:email', (done) =>{
-            request(route('/user/newuser@gmail.com'), (err, res, body) => {
-                    assert.equal(res.statusCode, 200);
-                    done();
-            });
-        });
-        
+        // delete
         it('DELETE: /user/:email', (done) =>{
             request({
                 method: 'delete',
@@ -140,6 +146,7 @@ describe('Test on Points Rewards System @ ' + url, () => {
                 done();
             });
         });
+        
     });
 
 });

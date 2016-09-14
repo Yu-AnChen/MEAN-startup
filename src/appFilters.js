@@ -15,3 +15,6 @@ const appFilters = angular
     .name;
 
 export default appFilters;
+
+
+

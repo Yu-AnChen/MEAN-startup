@@ -1,12 +1,8 @@
-import printOutComponent from './printOut';
-import absFormInputComponent from './absFormInput';
-import headerAndNavComponent from './headerAndNav';
+import headerAndNav from './headerAndNav';
 
 const componentModule = angular
     .module('app.core.components', [])
-    .component('printOut', printOutComponent)
-    .component('absFormInput', absFormInputComponent)
-    .component('headerAndNav', headerAndNavComponent)
+    .component('headerAndNav', headerAndNav)
     .name;
 
 export default componentModule;
