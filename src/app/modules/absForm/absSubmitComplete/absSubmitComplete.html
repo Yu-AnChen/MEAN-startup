@@ -1,0 +1,54 @@
+<div layout="column" layout-sm="column" layout-align="center center"
+    ng-if="!$ctrl.dataLoaded">
+    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+</div>
+
+<div layout="column" layout-align="center center" layout-padding="" class="abs_complete"
+    ng-if="$ctrl.dataLoaded">
+    
+    <md-button
+        class="md-accent md-hue-2 md-raised"
+        ng-click="$ctrl.goSignIn()"
+        ng-if="!$ctrl.currentUser">
+        Check Submission Status
+    </md-button>
+    
+    
+    <h3 md-colors="{color: 'orange-800'}" class="md-headline"
+        style="margin-bottom: 0px; text-align:center"
+        ng-if="$ctrl.currentUser && !$ctrl.getSubmittedAbs">
+        Looks like you haven't submitted yet.
+    </h3>
+    <md-button
+        class="md-accent md-hue-2 md-raised"
+        ng-click="$ctrl.goAbsForm()"
+        ng-if="$ctrl.currentUser && !$ctrl.getSubmittedAbs">
+        Create Abstract
+    </md-button>
+    
+    <span layout="column" layout-align="center center" layout-padding=""
+        ng-if="$ctrl.currentUser && $ctrl.getSubmittedAbs">
+        <h3 md-colors="{color: 'green-800'}" class="md-headline"
+            style="margin-bottom: 0px; text-align:center">
+            Submission completed! The following is your submission.
+        </h3>
+        <div layout-align="center center" layout="column" layout-gt-xs="row">
+            Now you can
+            <md-button
+                class="md-accent md-hue-2 md-raised"
+                ng-click="$ctrl.signOut()">
+                leave for the symposium site
+            </md-button>
+            or
+            <md-button
+                class="md-accent md-hue-2 md-raised"
+                ng-click="$ctrl.goSignIn()">
+                Edit your abstract
+            </md-button>
+        </div>
+        <div class="wrapper-abs_print">
+            <abs-print
+               abs-data="$ctrl.form"></abs-print>
+        </div>
+    </span>
+</div>

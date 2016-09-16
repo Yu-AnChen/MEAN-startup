@@ -4,10 +4,10 @@ const ObjectId = mongodb.ObjectId;
 const Auth = require('./auth');
 // const Auth = require('./auth');
 
-Abstract.get('/:email', (req, res, next)=> {
+Abstract.get('/:email', Auth, (req, res, next)=> {
     // get '/abstract/currentUser'
     if (req.params.email == 'currentUser') {
-        console.log(req.currentUser);
+        // console.log(req.currentUser);
         req.params.email = req.currentUser.email;
     }
     const queryData = {
@@ -22,6 +22,7 @@ Abstract.get('/:email', (req, res, next)=> {
         .toArray((err, results)=>{
             if (!err) {
                 // res.send({abstract: results})
+                // console.log(results);
                 if (results.length >= 1) {
                     res.json(results);
                     req.db.close();
@@ -36,17 +37,24 @@ Abstract.get('/:email', (req, res, next)=> {
         });
 });
 
-Abstract.put('/', (req, res)=> {
+Abstract.put('/', Auth, (req, res)=> {
     if (req.body._id) {
         // update
         const _id = req.body._id;
+        var submittedAt
         delete req.body['_id'];
+        delete req.body['createdAt'];
+        if(req.body.submittedAt.length) {
+            submittedAt = req.body.submittedAt[0];
+        }
+        delete req.body['submittedAt'];
         
         req.db.collection('abstracts')
             .update({
                 _id: ObjectId(_id)
             }, {
-                $set: req.body
+                $set: req.body,
+                $addToSet: { submittedAt: submittedAt }
             }, (err)=> {
                 if (!err) {
                     res.sendStatus(200);
@@ -58,6 +66,8 @@ Abstract.put('/', (req, res)=> {
             });
     } else {
         // create
+        delete req.body['updatedAt'];
+        
         req.db.collection('abstracts')
             .insert((req.body), (err, docsInserted)=> {
                 if (!err) {
@@ -89,7 +99,7 @@ Abstract.put('/:absId', Auth, (req, res) => {
         }
     })
 });
-Abstract.delete('/:id', (req, res) => {
+Abstract.delete('/:id', Auth, (req, res) => {
     req.db.collection('abstracts')
     .remove({
         _id: ObjectId(req.params.id)
@@ -104,7 +114,7 @@ Abstract.delete('/:id', (req, res) => {
     });
 });
 
-Abstract.post('/', (req, res)=> {
+Abstract.post('/', Auth, (req, res)=> {
     const data = req.body;
     res.sendStatus(200);
 });

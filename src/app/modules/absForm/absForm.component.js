@@ -24,6 +24,7 @@ const absFormComponent = {
         }
         $onInit() {
             this.buildForm();
+            this.getCurrentUser();
             // if (this.mycurrentUser) {
             //     this.form = this.getFormNewUser();
             // } else {
@@ -35,21 +36,36 @@ const absFormComponent = {
             
             this.autoBackupConfig = {
                 status: false,
-                time: 1000, // ms
+                time: 2000, // ms
                 msg: 'DISABLED'
             }
             // this.currentUser = false;
             this.addOn = 0;
             this.AuthorAffilTemplate = this.genAuthorAffilTemplate();
             // this.addAuthor(); this.addAuthor();
+            this.absWithinPage = true;
+        }
+        $onDestroy() {
+            this.$interval.cancel(this.autoBackup);
+        }
+        
+        detectAbsOverflowY(callback) {
+            console.log("detectAbsOverflowY");
+            var el = document.querySelector("#abs_print");
+            if (el.scrollHeight > el.clientHeight) {
+               this.absWithinPage = false; 
+            } else { this.absWithinPage = true; }
+            if (typeof callback === "function") {
+                callback();
+            }
         }
         buildForm() {
             this.UserApi.getCurrentUser().then((res)=>{
                 this.getAbstract(res.data.email);
-                this.currentUser = true;
+                // this.currentUser = true;
             },(res)=>{
                 this.form = this.getFormNewUser();
-                this.currentUser = false;
+                // this.currentUser = false;
             });
         }
         getCurrentUser() {
@@ -58,12 +74,13 @@ const absFormComponent = {
                 if (res.data.email) {
                     // this.$state.go('app.absForm', {email: res.data.email});
                     console.log(res.data.email);
-                    return res.data;
+                    this.currentUser = res.data;
+                    // this.form.email = res.data.email;
                 } else { 
-                    return false; 
+                    this.currentUser =false; 
                 }
             }, (res)=>{
-                return false;
+                this.currentUser = false;
                 // if (res.status == 401) {
                 //     this.alreadyExist = true;
                 //     console.log(res);
@@ -74,11 +91,17 @@ const absFormComponent = {
         }
         
         submit(){
-            console.log("inside submit");
+            console.log("submitting");
             console.log(this.form);
+            this.form.submittedAt[0] = new Date();
             this.fillInAuthorAndAffil(()=>{
                 this.decideUseAffiliationSup(()=>{
-                    this.saveToDatabase();
+                    this.detectAbsOverflowY(()=>{
+                        console.log(this.absWithinPage);
+                       if (this.absWithinPage) { 
+                           this.saveToDatabase(true); 
+                       } 
+                    })
                 });
             });
             // this.fillInAuthorAndAffil(()=>{
@@ -88,17 +111,17 @@ const absFormComponent = {
                 // });
             // });
         }
-        saveAndSignUp() {
-            this.FormApi.save(this.form).then((res)=> {
-                console.log(res.data.ops[0]);
-                this.$state.go('app.user.signUp', {absId: res.data.ops[0]._id})
-            });
-        }
-        saveToDatabase(){
-            console.log('here we are!');
+        saveToDatabase(submit){
+            this.form.email = this.currentUser.email;
+            this.form.updatedAt = new Date();
             this.FormApi.save(this.form).then((res)=>{
                 console.log(res);
-                this.getAbstract(res.data.ops[0].email, res.data.ops[0].title);
+                if (res.data.ops) {
+                    this.getAbstract(res.data.ops[0].email, res.data.ops[0].title);
+                }
+                if (submit) {
+                    this.$state.go('app.absSubmitComplete')
+                }
             });
         }
         getAbstract(email, title) {
@@ -107,9 +130,18 @@ const absFormComponent = {
                 // console.log(this.form._id);
                 this.form = res.data[0];
                 // console.log(this.form._id);
+            }, ()=>{
+                this.form = this.getFormNewUser();
             });
         }
 
+        saveAndSignUp() {
+            // this.FormApi.save(this.form).then((res)=>{
+            //     console.log(res.data.ops[0]);
+                this.$state.go('app.user.signUp', {unsavedData: this.form})
+            // });
+        }
+        
         // DATA STRUCTURE
         getFormTemplate() {
             return {
@@ -123,7 +155,7 @@ const absFormComponent = {
                 absContent: "Stem cells switch between asymmetric and symmetric division to expand in number as tissues grow during development and in response to environmental changes. The stem cell intrinsic proteins controlling this switch are largely unknown, but one candidate is the Lin-28 pluripotency factor. A conserved RNA-binding protein that is downregulated in most animals as they develop from embryos to adults, Lin-28 persists in populations of adult stem cells. Its function in these cells has not been previously characterized. Here, we report that Lin-28 is highly enriched in adult intestinal stem cells in the Drosophila intestine. lin-28 null mutants are homozygous viable but display defects in this population of cells, which fail to undergo a characteristic food-triggered expansion in number and have reduced rates of symmetric division as well as reduced insulin signaling. Immunoprecipitation of Lin-28-bound mRNAs identified Insulin-like Receptor (InR), forced expression of which completely rescues lin-28-associated defects in intestinal stem cell number and division pattern. Furthermore, this stem cell activity of lin-28 is independent of one well-known lin-28 target, the microRNA let-7, which has limited expression in the intestinal epithelium. These results identify Lin-28 as a stem cell intrinsic factor that boosts insulin signaling in intestinal progenitor cells and promotes their symmetric division in response to nutrients, defining a mechanism through which Lin-28 controls the adult stem cell division patterns that underlie tissue homeostasis and regeneration.",
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                submittedAt: new Date()
+                submittedAt: []
             };
         }
         getFormNewUser() {
@@ -138,7 +170,7 @@ const absFormComponent = {
                 absContent: "Please read on before you delete the following and paste in your abstract.\n\nIf the bottom part of your abstract doesn't show up, that indicates the content is _too long_. Please trim it. While we are very open to the format, it must be single page print out.\n\nFor multiple paragraphs, place an empty line between every paragraph. So that they will be separated nicely.\n\nMarkdown runs in this box. _Italic text_ and **bold text** are made possible.",
                 createdAt: new Date(),
                 updatedAt: new Date(),
-                submittedAt: new Date()
+                submittedAt: []
             };
         }
         addAuthor() {
@@ -164,6 +196,10 @@ const absFormComponent = {
         }
         addAffiliation(authorIndex) {
             this.form.authors[authorIndex].affiliationSup.push(NaN);
+        }
+        toTitleCase() {
+            const toTitleCase = require('titlecase');
+            this.form.title = toTitleCase(this.form.title);
         }
 
         // TOOLS
@@ -227,21 +263,30 @@ const absFormComponent = {
             console.log('decideUseAffiliationSup');
             let validAuthors = this.form.authors.filter(this.filterValidAuthor);
             if (validAuthors.length > 1 && this.form.affiliations.length > 1) {
+                this.form.useAffiliationSup = false;
                 for (let i=0; i<validAuthors.length-1; i++) {
                     let supOne = validAuthors[i].affiliationSup.filter(this.filterString).sort();
                     let supTwo = validAuthors[i+1].affiliationSup.filter(this.filterString).sort();
-                    if (supOne.length != supTwo.length) { this.form.useAffiliationSup = true; }
+                    if (supOne.length != supTwo.length) { this.form.useAffiliationSup = true; break; }
                     else {
                         for ( let j=0; j<supOne.length; j++) {
-                            if (supOne[j] !== supTwo[j]) { this.form.useAffiliationSup = true; }
+                            if (supOne[j] !== supTwo[j]) { this.form.useAffiliationSup = true; break; }
                         }
+                        // 
                     }
                 }
-                this.form.useAffiliationSup = false;
+                // 
+                // this.form.useAffiliationSup = false;
+            
+                
+                
             } else {
                 this.form.useAffiliationSup = false;
             }
-            callback();
+            if (typeof callback == "function") {
+                callback();
+            }
+            
         }
         matchAuthor(name){
             this.filteredAuthors=[];
@@ -274,7 +319,9 @@ const absFormComponent = {
                 }
             }
             // this.decideUseAffiliationSup();
-            callback();
+            if (typeof callback == "function") {
+                callback();
+            }
         }
         // FIELDS
         getFields() {
@@ -303,20 +350,29 @@ const absFormComponent = {
         // DATABASE
         toggleAutoBackup() {
             if (this.autoBackupConfig.status) {
-                this.autoBackupConfig.msg = 'DISABLED';
-                this.$interval.cancel(this.autoBackup);
-            } else {
                 this.autoBackupConfig.msg = 'Changes saved';
                 this.autoBackup = this.$interval(()=>{
                     console.log('save');
                     this.addOn ++;
-                    // this.saveToDatabase();
+                    this.saveToDatabase(false);
                 }, this.autoBackupConfig.time);
+            } else {
+                this.autoBackupConfig.msg = 'DISABLED';
+                this.$interval.cancel(this.autoBackup);
             }
-            this.autoBackupConfig.status = !this.autoBackupConfig.status;
         }
-
-
+        goSignUp() {
+            this.$state.go('app.user.signIn');
+        }
+        // UI
+        focusNewAuthor() {
+            this.focus('author-name-'+(this.form.authors.length-2));
+        }
+        focusNewAffiliation(authorIndex) {
+            console.log(authorIndex);
+            this.focus('author-'+authorIndex+'-affiliation-'+(this.form.authors[authorIndex].affiliationSup.length-1))
+            // 'author-'+parentIndex+'-affiliation-'+(this.form.authors[parentIndex].affiliationSup.length-2)
+        }
 
     }
 };

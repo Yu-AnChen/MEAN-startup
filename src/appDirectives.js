@@ -49,5 +49,44 @@ const appDirectives = angular
             });
         };
     })
+    .directive('updateTitle', ['$rootScope', '$timeout',
+      function($rootScope, $timeout) {
+        return {
+          link: function(scope, element) {
+    
+            var listener = function(event, toState) {
+    
+              var title = 'Default Title';
+              if (toState.data && toState.data.pageTitle) title = toState.data.pageTitle;
+    
+              $timeout(function() {
+                element.text(title);
+              }, 0, false);
+            };
+    
+            $rootScope.$on('$stateChangeSuccess', listener);
+          }
+        };
+      }
+    ])
+    .directive('title', ['$rootScope', '$timeout',
+      function($rootScope, $timeout) {
+        return {
+          link: function() {
+    
+            var listener = function(event, toState) {
+    
+              $timeout(function() {
+                $rootScope.title = (toState.data && toState.data.pageTitle) 
+                ? toState.data.pageTitle 
+                : 'Default title';
+              });
+            };
+    
+            $rootScope.$on('$stateChangeSuccess', listener);
+          }
+        };
+      }
+    ])
     .name;
 export default appDirectives;

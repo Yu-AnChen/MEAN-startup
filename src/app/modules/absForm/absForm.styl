@@ -8,11 +8,24 @@ md-content
 md-content.formScroll
     height: $abs_print-font-size * (736/11) - 64
     
+@media (max-width: 959px)
+  md-content.formScroll
+    height: initial
+
+@media (max-width: 599px)
+    #toolbar_email
+        max-width 200px
+        overflow: hidden;
+        text-overflow: ellipsis;
+@media (min-height: 600px)
+    .progress_indic
+        margin-top: 150px
 .indent-left
     margin $padding-base 0 $padding-base 4*$padding-base
     
 .wrapper-abs_print
     overflow-x auto
+    overflow-y hidden
     
 #form label.bullet
 #form .bullet

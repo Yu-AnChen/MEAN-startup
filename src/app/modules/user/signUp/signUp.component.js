@@ -22,10 +22,12 @@ const userSignUpComponent = {
             this.focus = focus;
         }
         $onInit() {
+            this.showView = false;
+            this.getCurrentUser();
             this.userData = this.getUserData();
             this.alreadyExist = false;
             this.autofocus = this.autofocus();
-            console.log(this.$stateParams);
+            // console.log(this.$stateParams);
         }
         autofocus() {
             this.focus('userEmail');
@@ -43,7 +45,9 @@ const userSignUpComponent = {
                 // console.log(res.data);
                 if (res.data.email) {
                     this.$state.go('app.absForm', {email: res.data.email});
-                }
+                } 
+            }, ()=>{
+                this.showView = true;
             })
         }
         signUp() {
@@ -60,13 +64,20 @@ const userSignUpComponent = {
                 if (res.status == 200) {
                     // console.log(res.data);
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
-                    if (this.$stateParams.absId) {
-                        this.FormApi.updateEmail(this.$stateParams.absId, {email: res.data.email}).then(()=>{
-                            this.$state.go('app.absForm', {email: res.data.email});
-                        // errorCalback NEEDED
-                        });
+                    console.log(this.$stateParams);
+                    if (Object.keys(this.$stateParams.unsavedData).length) {
+                        this.$stateParams.unsavedData.email = res.data.email;
+                        
+                        this.FormApi.save(this.$stateParams.unsavedData).then(()=>{
+                            this.$state.go('app.absForm');
+                        }, ()=>{});
+                        // this.FormApi.updateEmail(this.$stateParams.absId, {email: res.data.email}).then(()=>{
+                        //     this.$state.go('app.absForm', {email: res.data.email});
+                        // // errorCalback NEEDED
+                        // });
+                    } else {
+                        this.$state.go('app.absForm', {email: res.data.email});
                     }
-                    // this.$state.go('app.user.signOut', {email: res.data.email});
                 }
             }, (res)=>{
                 if (res.status == 403 && res.data == 'email already exist') {

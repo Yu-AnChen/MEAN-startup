@@ -1,16 +1,34 @@
-<md-button ng-click="$ctrl.saveAndSignUp()">Create Abstract</md-button>
-
-
-<div id="form" layout="row"  layout-sm="column" layout-xs="column"  layout-padding="">
+<div ui-view class="abs_form">
+    
+<div layout="column" layout-sm="column" layout-align="center center"
+    ng-if="!$ctrl.form">
+    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+</div>
+<div id="form" layout="column" layout-gt-sm="row" layout-padding=""
+    ng-if="$ctrl.form"
+    ng-click="$ctrl.detectAbsOverflowY()"
+    ng-keyup="$ctrl.detectAbsOverflowY()"
     <!--layout-sm="column"-->
     <div flex="grow">
         
         <md-toolbar class="md-accent md-hue-1">
-            <div class="md-toolbar-tools">
-                  {{$ctrl.form.email}}
-                  <md-button class="md-icon-button" aria-label="Favorite">
-          <ng-md-icon icon="send"></ng-md-icon>
-        </md-button>
+            <div class="md-toolbar-tools" ng-if="!$ctrl.currentUser">
+                <span flex></span>
+                <div layout-xs="column">
+                    <span class="md-subhead">To save your changes, first,</span>
+                    <md-button class="md-warn md-raised md-hue-1" 
+                        ng-click="$ctrl.saveAndSignUp()"
+                        >
+                        Create Abstract!
+                    </md-button>
+                </div>
+                <span flex></span>
+            </div>
+                
+            <div class="md-toolbar-tools" ng-if="$ctrl.currentUser">
+                <span id="toolbar_email">{{$ctrl.currentUser.email}}</span>
+                <span flex></span>
+                <sign-out></sign-out>
             </div>
         </md-toolbar>
         <!--<div layout="column"  layout-padding="" layout-align="center center">-->
@@ -20,7 +38,8 @@
         <div layout="row" layout-align="start center" layout-padding="">
             <span class="bullet">Autobackup</span> 
             <md-switch 
-                ng-click="!$ctrl.currentUser || $ctrl.toggleAutoBackup()" 
+                ng-model="$ctrl.autoBackupConfig.status"
+                ng-change="!$ctrl.currentUser || $ctrl.toggleAutoBackup()" 
                 ng-disabled="!$ctrl.currentUser"
                 aria-label="Toggle Auto Backup">
                 {{$ctrl.autoBackupConfig.msg}}
@@ -31,7 +50,8 @@
             <md-input-container>
                 <label class="bullet">Abstract Title</label>
                 <textarea type="textarea" name="title" 
-                    ng-model="$ctrl.form.title"></textarea>
+                    ng-model="$ctrl.form.title"
+                    ng-change="$ctrl.toTitleCase()"></textarea>
             </md-input-container>
             <md-input-container class="indent-left">
                 <label>Field</label>
@@ -55,7 +75,7 @@
                     ng-if="author.role=='General'"> {{$index+1}}</span>
                 </label>
                 
-                <input type="text" name="author-name"
+                <input type="text" name="author-name" id="author-name-{{$index}}"
                     ng-model="$ctrl.form.authors[$index].name" 
                     ng-change="[$ctrl.validateAuthor(), $ctrl.matchAuthor($ctrl.form.authors[$index].name), $ctrl.decideUseAffiliationSup()]"/>
             <!--<input type="text" ng-model="$ctrl.form.authors[$index].role"/>-->
@@ -63,14 +83,14 @@
             <md-input-container ng-repeat="sup in author.affiliationSup track by $index" class="indent-left">
                     <label>Affiliation</label>
                     
-                    <textarea type="textarea" name="affiliation"
+                    <textarea type="textarea" name="affiliation" id="author-{{$parent.$index}}-affiliation-{{$index}}"
                         ng-model="$ctrl.form.authors[$parent.$index].affiliationOfAuthor[$index]"
                         ng-change="[$ctrl.validateAuthor(), $ctrl.checkAffilUnique(), $ctrl.matchAffilSup(), $ctrl.decideUseAffiliationSup()]">
                     </textarea>
             </md-input-container>
             <div layout="column"  layout-align="center end" layout-align-xs="center end">
                 <md-button 
-                    ng-click="$ctrl.addAffiliation($index)" 
+                    ng-click="[$ctrl.addAffiliation($index), $ctrl.focusNewAffiliation($index)]" 
                     class="md-raised md-primary md-hue-2">Add Affiliation
                 </md-button>
             </div>
@@ -78,7 +98,7 @@
         <div layout="column" layout-padding="">
             <div layout="column"  layout-align="center center" layout-align-xs="center end">
                 <md-button 
-                    ng-click="$ctrl.addAuthor()" 
+                    ng-click="[$ctrl.addAuthor(), $ctrl.focusNewAuthor()]" 
                     class="md-raised md-primary ">Add Another Author
                 </md-button>
             </div>
@@ -95,11 +115,11 @@
             </md-input-container>
             
         </div>   
-        <md-button 
-            ng-click="$ctrl.submit()"
-            ng-disabled="!$ctrl.currentUser"
-            class="md-raised md-primary ">Submit
-        </<md-button>
+        <!--<md-button -->
+        <!--    ng-click="$ctrl.submit()"-->
+        <!--    ng-disabled="!$ctrl.currentUser"-->
+        <!--    class="md-raised md-primary ">Submit-->
+        <!--</<md-button>-->
         <md-content>
     </div>
     <!--<div flex-md="60" flex-gt-md="50" flex="100">-->
@@ -110,8 +130,26 @@
         </div>
     </div>
 </div>
-
-
+<div layout-padding="" layout-align="center center" layout="row"
+    ng-if="$ctrl.form && !$ctrl.absWithinPage">
+    Your content is <span md-colors="{color: 'orange-800'}">more than one page</span>, please trim it.
+</div>
+<div layout="row" layout-align="center center" 
+    ng-if="$ctrl.form">
+    
+    <md-button 
+        ng-click="$ctrl.goSignUp()"
+        class="md-raised md-primary"
+        >Back
+    </md-button>
+    <md-button 
+        ng-click="$ctrl.submit()"
+        class="md-raised md-primary"
+        ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage"
+        >Submit
+    </md-button>
+</div>
+</div>
 <!--<hr>-->
             <!--{{$ctrl.form.authors}}-->
             <!--<hr>-->

@@ -9,12 +9,30 @@
     <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
     -->
 </md-nav-bar>
+    <div layout="row" layout-align="end center">
+    <md-menu>
+        <md-button aria-label="navigation links" class="md-fab md-warn" ng-click="$ctrl.openMenu($mdOpenMenu, $event)" md-theme="navTheme">
+            <ng-md-icon id="nav_icon" icon="menu" style="fill:white" size="32" md-menu-origin="" ><ng-md-icon>
+        </md-button>
+        <md-menu-content width="4" class="md-warn" md-theme="navTheme">
+            <md-menu-item
+                ng-repeat="(name, link) in $ctrl.navigationLinks()">
+                <md-button ng-href="{{link}}">
+                    {{name}}/
+                </md-button>
+            </md-menu-item>
+        </md-menu-content>
+    </md-menu>
+    </div>
+
+
+
 <h1 layout="column" layout-padding>
     <div href="#"  class="md-headline"  >
         <div id="color-bar" class="md-headline" md-colors="{background: 'yellow-500'}"></div>
         <a href="#" md-colors="{color: 'primary-50'}">TTBA SYMPOSIUM 2016</a>
     </div>
-    <div>
+    <div class="md-display-1">
         <a href="#"  class="md-display-1" md-colors="{color: 'primary-800'}">Abstract Submission for Poster Session</a>
     </div>
 </h1>

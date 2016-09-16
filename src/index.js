@@ -21,6 +21,7 @@ import appDirectives from './appDirectives';
 import appFactories from './appFactories';
 // configs
 import themeConfig from './themeConfig';
+import themeConfigNav from './themeConfigNav';
 import METADATA from './METADATA';
 import 'compass-mixins';
 
@@ -52,4 +53,5 @@ angular
         $urlRouterProvider.otherwise('/');
     })
     .config(themeConfig)
+    .config(themeConfigNav)
     .constant('METADATA', METADATA);

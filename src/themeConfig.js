@@ -25,7 +25,8 @@ function themeConfig($mdThemingProvider) {
             'hue-1': '300',
         })
         .warnPalette('orange', {
-            'default': '50'
+            'default': '50',
+            'hue-1': '800',
         })
     
     $mdThemingProvider.theme('navTheme')

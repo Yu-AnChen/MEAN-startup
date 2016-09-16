@@ -11,7 +11,7 @@ function sessionToken(length) {
 }
 
 User.post('/signup', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     req.db.collection('users')
       .find({
             email: req.body.email  
@@ -48,7 +48,7 @@ User.post('/signup', (req, res) => {
 });
 
 User.post('/signin', (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     req.db.collection('users')
       .find({
             email: req.body.email,
@@ -92,8 +92,8 @@ User.post('/signin', (req, res) => {
 });
 
 User.delete('/signout', Auth, (req, res) => {
-    console.log("req.body.email");
-    console.log(req.body);
+    // console.log("req.body.email");
+    // console.log(req.body);
     // if (req.currentUser.email == req.body.email) {
         
         req.db.collection('users')
@@ -101,7 +101,7 @@ User.delete('/signout', Auth, (req, res) => {
             email: req.currentUser.email
           }, { 
               $set: { 
-                  token: "123" 
+                  token: "" 
               } 
           }, (err, writeResult) => {
               if(!err) {

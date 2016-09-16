@@ -1,18 +1,12 @@
 function themeConfigNav($mdThemingProvider) {
     'ngInject';
-    var customBlueMap = $mdThemingProvider.extendPalette('blue', {
+    var customGreenMap = $mdThemingProvider.extendPalette('light-green', {
         'contrastDefaultColor': 'light',
         'contrastDarkColors': ['50'],
-        '50': 'ffffff'
+        '50': 'a4cc8d'
     });
-    var customWhiteMap = $mdThemingProvider.extendPalette('grey', {
-        'contrastDefaultColor': 'light',
-        'contrastDarkColors': ['50'],
-        '50': 'ffffff'
-    });
-
-    $mdThemingProvider.definePalette('customBlue', customBlueMap);
-    $mdThemingProvider.definePalette('white', customWhiteMap);
+    
+    $mdThemingProvider.definePalette('customGreenMap', customGreenMap);
     // $mdThemingProvider.theme('default')
     //     .primaryPalette('grey', {
     //         'default': '900',
@@ -25,8 +19,12 @@ function themeConfigNav($mdThemingProvider) {
     //     })
         
     $mdThemingProvider.theme('navTheme')
-        .primaryPalette('black')
-        .accentPalette('black')
+        .primaryPalette('white')
+        .accentPalette('white')
+        .warnPalette('customGreenMap', {
+            'default': '50',
+            'hue-1': '800',
+        })
         // .backgroundPalette('light-green')
     //     .backgroundPalette('white')
     //     .primaryPalette('customBlue', {

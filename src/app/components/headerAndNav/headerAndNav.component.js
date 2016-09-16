@@ -15,6 +15,23 @@ const headerAndNavComponent = {
             this.$timeout = $timeout;
             this.$scope = $scope;
         }
+        $onInit() {
+            this.originatorEv;
+        }
+
+        openMenu($mdOpenMenu, ev) {
+          this.originatorEv = ev;
+          $mdOpenMenu(ev);
+        }
+        navigationLinks() {
+            return {
+                Home:     "#page1",
+                Speakers: "#page2",
+                Schedule: "#page3",
+                Venue:    "#page4",
+                Register: "#page5",
+            }
+        }
     }
 };
 export default headerAndNavComponent;

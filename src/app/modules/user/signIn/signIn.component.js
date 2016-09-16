@@ -21,6 +21,8 @@ const userSignInComponent = {
             this.focus = focus;
         }
         $onInit() {
+            this.showView = false;
+            this.getCurrentUser();
             this.userData = this.getUserData();
             this.email = this.$stateParams.email;
             this.notExist = false;
@@ -35,6 +37,16 @@ const userSignInComponent = {
                 email: this.$stateParams.email,
                 favoritePhrase: this.$stateParams.favoritePhrase,
             }
+        }
+        getCurrentUser() {
+            this.UserApi.getCurrentUser().then((res)=>{
+                // console.log(res.data);
+                if (res.data.email) {
+                    this.$state.go('app.absForm', {email: res.data.email});
+                }
+            }, ()=>{
+                this.showView = true;
+            })
         }
         signIn() {
             let userDbData = {

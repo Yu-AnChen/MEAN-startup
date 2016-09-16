@@ -2,6 +2,7 @@ import uiRouter from 'angular-ui-router';
 import components from './components';
 import modules from './modules';
 import services from './services';
+import signOutComponent from './modules/user/signOut'
 
 import appComponent from './app.component';
 
@@ -13,12 +14,16 @@ const appModule = angular
         services,
     ])
     .component('app', appComponent)
+    .component('signOut',signOutComponent )
     .config(($stateProvider) => {
         'ngInject';
         $stateProvider
             .state('app', {
                 url: '/',
-                component: 'app'
+                component: 'app',
+                data: {
+                    pageTitle: 'TTBA SYMPOSIUM 2016'
+                }
             })
             ;
     })
