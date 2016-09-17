@@ -17,11 +17,12 @@ const absSubmitCompleteComponent = {
             this.$scope = $scope;
             this.FormApi = FormApi;
             this.UserApi = UserApi;
-            this.$state = $state
+            this.$state = $state;
         }
         $onInit() {
             this.buildForm();
             this.getSubmittedAbs = false;
+            this.resultTimeoutDelay = 2000;
         }
         // DATABASE
         buildForm() {
@@ -32,7 +33,8 @@ const absSubmitCompleteComponent = {
                 // this.submissionComplete = false;
                 // this.form = this.getFormNewUser();
                 this.currentUser = false;
-                this.dataLoaded = true;
+                // this.dataLoaded = true;
+                this.$timeout(()=>{this.dataLoaded = true;}, this.resultTimeoutDelay);
             });
         }
         getAbstract(email, title) {
@@ -40,10 +42,12 @@ const absSubmitCompleteComponent = {
                 console.log('get data from server');
                 this.form = res.data[0];
                 this.getSubmittedAbs = true;
-                this.dataLoaded = true;
+                // this.dataLoaded = true;
+                this.$timeout(()=>{this.dataLoaded = true;}, this.resultTimeoutDelay);
             }, ()=>{
                 this.getSubmittedAbs = false;
-                this.dataLoaded = true;
+                // this.dataLoaded = true;
+                this.$timeout(()=>{this.dataLoaded = true;}, this.resultTimeoutDelay);
             });
         }
         

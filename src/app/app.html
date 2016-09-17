@@ -1,36 +1,33 @@
 <header-and-nav></header-and-nav>
 <div ui-view>
     <div layout="row" layout-padding="" layout-align="center center" class="root">
-    <md-content layout="column" layout-padding="" flex-gt-xs="80" flex="100">
-        <div class="abs-root">
-    		<h2 md-colors="{color: 'grey-800'}">
-    		    <span class="form_bullet">Guidelines</span>
-    		</h2>
-    		<ol layout-margin="" class="md-subhead body_font_spacing">
-    			<li>Submission deadline: October 9, 2016.</li>
-    			<li>Decisions for elevator talk will be sent by October 14.</li>
-    			<li>You may submit updated versions of your abstract before the deadline.</li>
-    			<li>The maximum dimensions for each poster is 48 inches by 48 inches.</li>
-    		</ol>
-	    </div>
-	    
-	    <div layout="row" layout-align="center center">
-        <md-button 
-            ng-click="$ctrl.getCurrentUser()"
-            class="md-raised md-primary">
-            Back
-        </md-button>
-        <md-button 
-            ng-click="$ctrl.goSignUp()"
-            class="md-raised md-primary"
-            ng-disabled="signUpForm.$invalid">
-            Next
-        </md-button>
+        <md-content layout="column" layout-padding="" flex-gt-xs="80" flex="100">
+            <div class="abs-root">
+        		<h2 md-colors="{color: 'grey-800'}">
+        		    <span class="form_bullet">Guidelines</span>
+        		</h2>
+        		<ol layout-margin="" class="md-subhead body_font_spacing">
+        			<li>Submission deadline: October 9, 2016.</li>
+        			<li>Decisions for elevator talk will be sent by October 14.</li>
+        			<li>You may submit updated versions of your abstract before the deadline.</li>
+        			<li>The maximum dimensions for each poster is 48 inches by 48 inches.</li>
+        		</ol>
+    	    </div>
+    	    
+    	    <div layout="row" layout-align="center center">
+                <md-button 
+                    ng-click="$ctrl.getCurrentUser()"
+                    class="md-raised md-primary">
+                    Back
+                </md-button>
+                <md-button 
+                    ng-click="$ctrl.goSignUp()"
+                    class="md-raised md-primary"
+                    ng-disabled="signUpForm.$invalid">
+                    Next
+                </md-button>
+            </div>
+        </md-content>
     </div>
-    
-    </md-content>
-    </div>
-
-
-
 </div>
+<footer></footer>

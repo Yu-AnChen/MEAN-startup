@@ -4,7 +4,8 @@
     ng-if="!$ctrl.form">
     <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
 </div>
-<div id="form" layout="column" layout-gt-sm="row" layout-padding=""
+<form id="form" name="abstract_form"
+    layout="column" layout-gt-sm="row" layout-padding=""
     ng-if="$ctrl.form"
     ng-click="$ctrl.detectAbsOverflowY()"
     ng-keyup="$ctrl.detectAbsOverflowY()"
@@ -55,7 +56,7 @@
             </md-input-container>
             <md-input-container class="indent-left">
                 <label>Field</label>
-                <md-select 
+                <md-select required name="field"
                     ng-model="$ctrl.form.field">
                     <md-option 
                         ng-repeat="field in $ctrl.fields | orderBy"
@@ -63,6 +64,9 @@
                     </md-option>
                     <md-option value="other">Other</md-option>
                 </md-select>
+                <div ng-messages="abstract_form.field.$error">
+                    <div ng-message="required">This is required</div>
+                </div>
             </md-input-container>
         </div>
         
@@ -129,12 +133,14 @@
                 abs-data="$ctrl.form"></abs-print>
         </div>
     </div>
-</div>
+</form>
 <div layout-padding="" layout-align="center center" layout="row"
     ng-if="$ctrl.form && !$ctrl.absWithinPage">
     Your content is <span md-colors="{color: 'orange-800'}">more than one page</span>, please trim it.
 </div>
-<div layout="row" layout-align="center center" 
+
+<div layout="row" layout-align="center center"
+    style="margin: 20px 0px;"
     ng-if="$ctrl.form">
     
     <md-button 
@@ -145,62 +151,8 @@
     <md-button 
         ng-click="$ctrl.submit()"
         class="md-raised md-primary"
-        ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage"
+        ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field"
         >Submit
     </md-button>
 </div>
 </div>
-<!--<hr>-->
-            <!--{{$ctrl.form.authors}}-->
-            <!--<hr>-->
-            <!--{{$ctrl.form.affiliations}}-->
-            <!--<hr>-->
-            <!--<span ng-repeat="show in $ctrl.filteredAuthors track by $index">-->
-            <!--    {{show}}-->
-            <!--</span>-->
-
-<!--<form class="col-md-5 abs_form">-->
-<!--    <p>-->
-<!--        <span class="form_bullet">Abstract Title:</span>-->
-<!--        <input -->
-<!--            ng-model="title"-->
-<!--            type="text" class="js-abs_title js-hide-next" name="abs_title" placeholder='The Title of the Abstract'/>-->
-<!--    </p>-->
-
-<!--    <p>-->
-<!--        <span class="form_bullet">Presenting Author:</span>-->
-<!--        <input -->
-<!--            ng-model="authors"-->
-<!--            type="text" class="js-auth js-hide-next" name="author_1"/> -->
-            
-<!--        <span class="form_indent">Affiliation:</span>-->
-<!--        <textarea -->
-<!--            ng-model="affiliations"-->
-<!--            class="text-affil js-affil js-hide-next" name="author_affil_1_1"></textarea>-->
-<!--        <button -->
-<!--            ng-model="btn-add_affiliation"-->
-<!--            type="button" class="js-add_affil btn btn-add_affil">Add Affiliation</button>-->
-<!--    </p>-->
-    
-<!--    <p>-->
-<!--      <span class="form_bullet">Corresponding Author:</span> <input class="js-auth js-hide-next" type="text" name="author_99"/>-->
-<!--      <span class="form_indent">Affiliation:</span>-->
-<!--      <textarea class="text-affil js-affil js-hide-next" name="author_affil_99_1"></textarea>-->
-<!--      <button type="button" class="js-add_affil btn btn-add_affil">Add Affiliation</button>-->
-<!--    </p>-->
-    
-<!--    <p class="text-center">-->
-<!--    <button type="button" class="js-add_author btn btn-add_author">Add Another Author</button>-->
-<!--    </p>-->
-    
-<!--    <p>-->
-<!--      <span class="form_bullet">Keywords:</span> <input class="js-keywords js-hide-next" type="text" name="abs_keywords" placeholder='Keywords, seperated by ", "'/>-->
-<!--    </p>-->
-
-<!--    <p>-->
-<!--      <span class="form_bullet">Abstract:</span>-->
-<!--      <textarea name="abs_content" class="js-abs_content js-hide-next"></textarea>-->
-<!--    </p>-->
-<!--    <br />-->
-    
-<!--</form>-->

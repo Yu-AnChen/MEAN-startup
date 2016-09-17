@@ -1,5 +1,6 @@
 import template from './absForm.html';
 import './absForm.styl';
+var absFormConst = require('./absForm.constant.js')
 
 const absFormComponent = {
     template,
@@ -23,26 +24,19 @@ const absFormComponent = {
             this.$stateParams = $stateParams;
         }
         $onInit() {
+            this.absFormConst = absFormConst;
             this.buildForm();
             this.getCurrentUser();
-            // if (this.mycurrentUser) {
-            //     this.form = this.getFormNewUser();
-            // } else {
-            //     this.form = this.getFormTemplate();
-            // }
-            // this.form = this.getFormTemplate();
-            // this.form = this.getFormNewUser();
-            this.fields = this.getFields();
+            // this.form = this.getAbstractNewUser();
+            this.fields = this.absFormConst.researchFields;
             
             this.autoBackupConfig = {
                 status: false,
                 time: 2000, // ms
                 msg: 'DISABLED'
             }
-            // this.currentUser = false;
             this.addOn = 0;
             this.AuthorAffilTemplate = this.genAuthorAffilTemplate();
-            // this.addAuthor(); this.addAuthor();
             this.absWithinPage = true;
         }
         $onDestroy() {
@@ -64,7 +58,7 @@ const absFormComponent = {
                 this.getAbstract(res.data.email);
                 // this.currentUser = true;
             },(res)=>{
-                this.form = this.getFormNewUser();
+                this.form = this.absFormConst.abstractNewUser;
                 // this.currentUser = false;
             });
         }
@@ -81,12 +75,6 @@ const absFormComponent = {
                 }
             }, (res)=>{
                 this.currentUser = false;
-                // if (res.status == 401) {
-                //     this.alreadyExist = true;
-                //     console.log(res);
-                // } else {
-                //     console.log('other error');
-                // }
             });
         }
         
@@ -98,18 +86,12 @@ const absFormComponent = {
                 this.decideUseAffiliationSup(()=>{
                     this.detectAbsOverflowY(()=>{
                         console.log(this.absWithinPage);
-                       if (this.absWithinPage) { 
+                        if (this.absWithinPage) { 
                            this.saveToDatabase(true); 
-                       } 
-                    })
+                        } 
+                    });
                 });
             });
-            // this.fillInAuthorAndAffil(()=>{
-            //     this.saveToDatabase();
-                // this.decideUseAffiliationSup(()=>{
-                //     this.saveToDatabase();
-                // });
-            // });
         }
         saveToDatabase(submit){
             this.form.email = this.currentUser.email;
@@ -131,43 +113,28 @@ const absFormComponent = {
                 this.form = res.data[0];
                 // console.log(this.form._id);
             }, ()=>{
-                this.form = this.getFormNewUser();
+                this.form = this.absFormConst.abstractNewUser;
             });
         }
 
         saveAndSignUp() {
+            this.$state.go('app.user.signUp', {unsavedData: this.form});
             // this.FormApi.save(this.form).then((res)=>{
             //     console.log(res.data.ops[0]);
-                this.$state.go('app.user.signUp', {unsavedData: this.form})
             // });
         }
         
         // DATA STRUCTURE
-        getFormTemplate() {
+        getBlankForm() {
             return {
-                email: 'yuan@gmail.com',
-                title: "Lin-28 Promotes Symmetric Stem Cell Division And Drives Adaptive Growth in The Adult Drosophila Intestine",
+                email: "",
+                title: "",
                 field: "",
-                authors: [{"name":"Ching-Huan Chen","role":"Presenting","affiliationSup":[1],"affiliationOfAuthor":["Department of Biology, Indiana University, Bloomington, IN"],"validAuthor":true},{"name":"Arthur Luhur","role":"General","affiliationSup":[null],"affiliationOfAuthor":[""],"validAuthor":true},{"name":"Nicholas Sokol","role":"Corresponding","affiliationSup":[2],"affiliationOfAuthor":["Department of Molecular Biology, Indiana University, Bloomington, IN"],"validAuthor":true}],
-                affiliations: ["Department of Biology, Indiana University, Bloomington, IN","Department of Molecular Biology, Indiana University, Bloomington, IN"],
-                useAffiliationSup: true,
-                keywords: "Lin-28, Symmetric renewal, Intestinal stem cell, Drosophila",
-                absContent: "Stem cells switch between asymmetric and symmetric division to expand in number as tissues grow during development and in response to environmental changes. The stem cell intrinsic proteins controlling this switch are largely unknown, but one candidate is the Lin-28 pluripotency factor. A conserved RNA-binding protein that is downregulated in most animals as they develop from embryos to adults, Lin-28 persists in populations of adult stem cells. Its function in these cells has not been previously characterized. Here, we report that Lin-28 is highly enriched in adult intestinal stem cells in the Drosophila intestine. lin-28 null mutants are homozygous viable but display defects in this population of cells, which fail to undergo a characteristic food-triggered expansion in number and have reduced rates of symmetric division as well as reduced insulin signaling. Immunoprecipitation of Lin-28-bound mRNAs identified Insulin-like Receptor (InR), forced expression of which completely rescues lin-28-associated defects in intestinal stem cell number and division pattern. Furthermore, this stem cell activity of lin-28 is independent of one well-known lin-28 target, the microRNA let-7, which has limited expression in the intestinal epithelium. These results identify Lin-28 as a stem cell intrinsic factor that boosts insulin signaling in intestinal progenitor cells and promotes their symmetric division in response to nutrients, defining a mechanism through which Lin-28 controls the adult stem cell division patterns that underlie tissue homeostasis and regeneration.",
-                createdAt: new Date(),
-                updatedAt: new Date(),
-                submittedAt: []
-            };
-        }
-        getFormNewUser() {
-            return {
-                email: '',
-                title: "The Title, Ideally in Title Case.",
-                field: "",
-                authors: [{"name":"Siao-Ming Wang","role":"Presenting","affiliationSup":[1],"affiliationOfAuthor":["Department of Biophysics, University of Texas Southwestern Medical Center, Dallas, TX"],"validAuthor":true},{"name":"Jane Doe","role":"Corresponding","affiliationSup":[2],"affiliationOfAuthor":["Department of Radiology, University of Texas Southwestern Medical Center, Dallas, TX"],"validAuthor":true}],
-                affiliations: ["Department of Biophysics, University of Texas Southwestern Medical Center, Dallas, TX","Department of Radiology, University of Texas Southwestern Medical Center, Dallas, TX"],
-                useAffiliationSup: true,
-                keywords: "keyword, are, seperated, by, comma",
-                absContent: "Please read on before you delete the following and paste in your abstract.\n\nIf the bottom part of your abstract doesn't show up, that indicates the content is _too long_. Please trim it. While we are very open to the format, it must be single page print out.\n\nFor multiple paragraphs, place an empty line between every paragraph. So that they will be separated nicely.\n\nMarkdown runs in this box. _Italic text_ and **bold text** are made possible.",
+                authors: [{"name":"","role":"","affiliationSup":[NaN],"affiliationOfAuthor":[""],"validAuthor":false},{"name":"","role":"","affiliationSup":[NaN],"affiliationOfAuthor":[""],"validAuthor":false}],
+                affiliations: [],
+                useAffiliationSup: false,
+                keywords: "",
+                absContent: "",
                 createdAt: new Date(),
                 updatedAt: new Date(),
                 submittedAt: []
@@ -184,7 +151,7 @@ const absFormComponent = {
             if (this.form.authors.length < 2) {
                 this.form.authors.push(newAuthor);
             } else {
-                this.form.authors.splice(this.form.authors.length-1, 0, newAuthor);
+                // this.form.authors.splice(this.form.authors.length-1, 0, newAuthor);
             }
         }
         genAuthorAffilTemplate() {
@@ -197,10 +164,10 @@ const absFormComponent = {
         addAffiliation(authorIndex) {
             this.form.authors[authorIndex].affiliationSup.push(NaN);
         }
-        toTitleCase() {
-            const toTitleCase = require('titlecase');
-            this.form.title = toTitleCase(this.form.title);
-        }
+        // toTitleCase() {
+        //     const toTitleCase = require('titlecase');
+        //     this.form.title = toTitleCase(this.form.title);
+        // }
 
         // TOOLS
         genUniqueArray(theArray) {
@@ -272,21 +239,14 @@ const absFormComponent = {
                         for ( let j=0; j<supOne.length; j++) {
                             if (supOne[j] !== supTwo[j]) { this.form.useAffiliationSup = true; break; }
                         }
-                        // 
                     }
                 }
-                // 
-                // this.form.useAffiliationSup = false;
-            
-                
-                
             } else {
                 this.form.useAffiliationSup = false;
             }
             if (typeof callback == "function") {
                 callback();
             }
-            
         }
         matchAuthor(name){
             this.filteredAuthors=[];
@@ -341,12 +301,6 @@ const absFormComponent = {
                 "Pharmacology"
             ]
         }
-        // // KEYWORDS
-        // splitKeywords() {
-        //     let splitedWords = this.form.keywords[0].split(",");
-        //     this.form.keywords =
-        //         [this.form.keywords[0]].concat(splitedWords.map((element) => element.trim()))
-        // }
         // DATABASE
         toggleAutoBackup() {
             if (this.autoBackupConfig.status) {

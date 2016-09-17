@@ -17,15 +17,16 @@ const headerAndNavComponent = {
         }
         $onInit() {
             this.originatorEv;
+            this.navigationLinks = this.getNavigationLinks();
         }
 
         openMenu($mdOpenMenu, ev) {
           this.originatorEv = ev;
           $mdOpenMenu(ev);
         }
-        navigationLinks() {
+        getNavigationLinks() {
             return {
-                Home:     "#page1",
+                Home:     "https://www.google.com/",
                 Speakers: "#page2",
                 Schedule: "#page3",
                 Venue:    "#page4",

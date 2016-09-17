@@ -1,36 +1,31 @@
 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" md-theme="navTheme" >
-    <md-nav-item md-nav-href="#page5" name="page1" class="md-primary">Home/</md-nav-item>
-    <md-nav-item md-nav-href="#page5" name="page2">Speakers/</md-nav-item>
-    <md-nav-item md-nav-href="#page5" name="page3">Schedule/</md-nav-item>
-    <md-nav-item md-nav-href="#page5" name="page4">Venue/</md-nav-item>
-    <md-nav-item md-nav-href="#page5" name="page5">Register/</md-nav-item>
-    <!-- these require actual routing with ui-router or ng-route, so they won't work in the demo
-    <md-nav-item md-nav-sref="app.page4" name="page4">Page Four</md-nav-item>
-    <md-nav-item md-nav-href="#page5" name="page5">Page Five</md-nav-item>
-    -->
+    <span ng-repeat="(name, link) in $ctrl.navigationLinks">
+        <md-nav-item md-nav-href="{{link}}" name="{{name}}">{{name}}/</md-nav-item>
+    </span>
 </md-nav-bar>
-    <div layout="row" layout-align="end center">
+
+<div layout="row" layout-align="end center">
     <md-menu>
-        <md-button aria-label="navigation links" class="md-fab md-warn" ng-click="$ctrl.openMenu($mdOpenMenu, $event)" md-theme="navTheme">
+        <md-button aria-label="navigation links" class="md-fab md-primary" ng-click="$ctrl.openMenu($mdOpenMenu, $event)" md-theme="navTheme">
             <ng-md-icon id="nav_icon" icon="menu" style="fill:white" size="32" md-menu-origin="" ><ng-md-icon>
         </md-button>
-        <md-menu-content width="4" class="md-warn" md-theme="navTheme">
-            <md-menu-item
-                ng-repeat="(name, link) in $ctrl.navigationLinks()">
-                <md-button ng-href="{{link}}">
+        <md-menu-content width="4" class="md-primary" md-theme="navTheme" md-colors="{background: 'primary', color: 'white'}">
+            <md-menu-item class="md-primary"
+                ng-repeat="(name, link) in $ctrl.navigationLinks">
+                <md-button ng-href="{{link}}" md-colors="{color: 'white'}" style="letter-spacing: 0.07em; font-size: 18px;">
                     {{name}}/
                 </md-button>
             </md-menu-item>
         </md-menu-content>
     </md-menu>
-    </div>
+</div>
 
 
 
 <h1 layout="column" layout-padding>
-    <div href="#"  class="md-headline"  >
+    <div class="md-headline">
         <div id="color-bar" class="md-headline" md-colors="{background: 'yellow-500'}"></div>
-        <a href="#" md-colors="{color: 'primary-50'}">TTBA SYMPOSIUM 2016</a>
+        <a ng-href={{$ctrl.navigationLinks.Home}} md-colors="{color: 'primary-50'}">TTBA SYMPOSIUM 2016</a>
     </div>
     <div class="md-display-1">
         <a href="#"  class="md-display-1" md-colors="{color: 'primary-800'}">Abstract Submission for Poster Session</a>
