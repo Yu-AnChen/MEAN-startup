@@ -57,6 +57,12 @@
     "mongodb": "^2.2.9",
     "request": "^2.74.0",
     "titlecase": "^1.1.2"
+    "gulp": "^3.9.0",
+    "gulp-mocha": "^3.0.1",
+    "gulp-nodemon": "^2.1.0",
+    "gulp-rename": "^1.2.2",
+    "gulp-template": "^3.0.0",
+    "gulp-util": "^3.0.7",
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
