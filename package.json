@@ -10,9 +10,8 @@
     "NodeJS"
   ],
   "scripts": {
-    "start": "", 
     "preinstall": "",
-    "postinstall": "npm run dev:back",
+    "postinstall": "",
     "check:port": "lsof -Pi | grep LISTEN",
     "kill": "kill -9 PID",
     "reinstall": "npm cache clean && rm -rf node_modules && npm run global && npm install",
@@ -56,13 +55,7 @@
     "marked": "^0.3.6",
     "mongodb": "^2.2.9",
     "request": "^2.74.0",
-    "titlecase": "^1.1.2",
-    "gulp": "^3.9.0",
-    "gulp-mocha": "^3.0.1",
-    "gulp-nodemon": "^2.1.0",
-    "gulp-rename": "^1.2.2",
-    "gulp-template": "^3.0.0",
-    "gulp-util": "^3.0.7",
+    "titlecase": "^1.1.2"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
