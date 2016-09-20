@@ -10,9 +10,9 @@
     "NodeJS"
   ],
   "scripts": {
-    "start": "http-server",
-    "preinstall": "npm install -g http-server",
-    "postinstall": "mv dist/* .",
+    "start": "", 
+    "preinstall": "",
+    "postinstall": "npm run dev:back",
     "check:port": "lsof -Pi | grep LISTEN",
     "kill": "kill -9 PID",
     "reinstall": "npm cache clean && rm -rf node_modules && npm run global && npm install",
