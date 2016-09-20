@@ -63,7 +63,9 @@
     "logger": "0.0.1",
     "lusca": "^1.4.1",
     "path": "^0.12.7",
-    "multer": "^1.2.0"
+    "multer": "^1.2.0",
+    "utf-8-validate": "^1.2.1",
+    "stylus": "^0.54.5"
   },
   "devDependencies": {
     "babel-core": "^6.7.7",
@@ -120,12 +122,10 @@
     "run-sequence": "^1.1.0",
     "sass-loader": "^4.0.0",
     "style-loader": "^0.13.1",
-    "stylus": "^0.54.5",
     "stylus-loader": "^2.1.1",
     "supports-color": "^3.1.2",
     "tls": "0.0.1",
     "url-loader": "^0.5.7",
-    "utf-8-validate": "^1.2.1",
     "webpack": "^1.13.1",
     "webpack-dashboard": "0.0.1",
     "webpack-dev-middleware": "^1.6.1",
