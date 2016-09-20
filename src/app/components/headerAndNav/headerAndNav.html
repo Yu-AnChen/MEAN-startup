@@ -1,6 +1,8 @@
 <md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" md-theme="navTheme" >
     <span ng-repeat="(name, link) in $ctrl.navigationLinks">
-        <md-nav-item md-nav-href="{{link}}" name="{{name}}">{{name}}/</md-nav-item>
+        <!--<md-nav-item md-nav-href="{{link}}" name="{{name}}">{{name}}/</md-nav-item>-->
+        <md-nav-item md-nav-href="#" ui-sref='app.underConstruction({navName: "{{name}}"})' name="{{name}}">{{name}}/</md-nav-item>
+
     </span>
 </md-nav-bar>
 
@@ -12,7 +14,10 @@
         <md-menu-content width="4" class="md-primary" md-theme="navTheme" md-colors="{background: 'primary', color: 'white'}">
             <md-menu-item class="md-primary"
                 ng-repeat="(name, link) in $ctrl.navigationLinks">
-                <md-button ng-href="{{link}}" md-colors="{color: 'white'}" style="letter-spacing: 0.07em; font-size: 18px;">
+                <md-button 
+                    ng-href="#" 
+                    ui-sref='app.underConstruction({navName: "{{name}}"})'
+                    md-colors="{color: 'white'}" style="letter-spacing: 0.07em; font-size: 18px;">
                     {{name}}/
                 </md-button>
             </md-menu-item>

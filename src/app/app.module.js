@@ -31,7 +31,7 @@ const appModule = angular
         'ngInject';
         $urlRouterProvider
             .when('/user/signin', '/user/edit')
-            .otherwise('/')
+            // .otherwise('/')
     })
     .name;
 

@@ -14,12 +14,12 @@
     <base href="<%= htmlWebpackPlugin.options.baseUrl %>">
 </head>
 
-<body ng-app="app" ng-strict-di ng-cloak layout="column">
-    <div flex layout="column" ui-view>
-        <div style="width:100%;height:100vh;text-align:center;padding-top:200px">
+<body ng-app="app" ng-strict-di ng-cloak>
+    <div ui-view>
+        <div style="width:100%;height:100vh;position: relative;">
             <img
                 
-                src="./assets/img/ring-alt.gif" alt="Loading..." />
+                src="./assets/img/ring-alt.gif" alt="Loading..." style="position: absolute; top: 50%; height: 120px; margin-top: -60px; left: 50%; width: 120px; margin-left: -60px;"/>
         </div>
     </div>
 </body>

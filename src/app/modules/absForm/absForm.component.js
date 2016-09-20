@@ -27,8 +27,8 @@ const absFormComponent = {
             this.absFormConst = absFormConst;
             this.buildForm();
             this.getCurrentUser();
-            // this.form = this.getAbstractNewUser();
-            this.fields = this.absFormConst.researchFields;
+            // this.form = this.absFormConst.abstractNewUser
+            this.fields = this.getFields();
             
             this.autoBackupConfig = {
                 status: false,
@@ -78,7 +78,7 @@ const absFormComponent = {
             });
         }
         
-        submit(){
+        submit() {
             console.log("submitting");
             console.log(this.form);
             this.form.submittedAt[0] = new Date();
@@ -326,6 +326,11 @@ const absFormComponent = {
             console.log(authorIndex);
             this.focus('author-'+authorIndex+'-affiliation-'+(this.form.authors[authorIndex].affiliationSup.length-1))
             // 'author-'+parentIndex+'-affiliation-'+(this.form.authors[parentIndex].affiliationSup.length-2)
+        }
+        setFooterClass(open) {
+            var footer = document.querySelector("footer div");
+            open ? footer.setAttribute("class", "p_relative") : 
+                footer.setAttribute("class", "p_absolute")
         }
 
     }

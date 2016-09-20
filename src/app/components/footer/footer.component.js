@@ -6,7 +6,8 @@ const footerComponent = {
     bindings: {
 
     },
-    controller: /* @ngInject */ class FooterController {
+    controller: /* @ngInject */ 
+    class FooterController {
         static get $inject() {
             return ['$log', '$timeout', '$scope'];
         }
