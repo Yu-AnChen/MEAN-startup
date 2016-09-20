@@ -12,7 +12,7 @@
   "scripts": {
     "start": "http-server",
     "preinstall": "npm install -g http-server",
-    "postinstall": "ng build && mv dist/* .",
+    "postinstall": "mv dist/* .",
     "check:port": "lsof -Pi | grep LISTEN",
     "kill": "kill -9 PID",
     "reinstall": "npm cache clean && rm -rf node_modules && npm run global && npm install",
