@@ -9,26 +9,36 @@ const absSubmitCompleteComponent = {
     controller: /* @ngInject */ 
     class AbsSubmitCompleteController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', 'FormApi', 'UserApi', '$state'];
+            return ['$window', '$log', '$timeout', '$scope', '$location', 'FormApi', 'UserApi', '$state', 'absFormService'];
         }
-        constructor($log, $timeout, $scope, FormApi, UserApi, $state) {
+        constructor($window, $log, $timeout, $scope, $location, FormApi, UserApi, $state, absFormService) {
+            this.$window = $window
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
+            this.$location = $location;
             this.FormApi = FormApi;
             this.UserApi = UserApi;
             this.$state = $state;
+            this.absFormService = absFormService;
         }
         $onInit() {
+            // this.form = {};
             this.buildForm();
             this.getSubmittedAbs = false;
-            this.resultTimeoutDelay = 2000;
+            this.resultTimeoutDelay = 1500;
+            this.pdfLink = '#';
+            this.absFormService.getPdfUrl()
         }
+        $onChange() {
+        }
+        
         // DATABASE
         buildForm() {
             this.UserApi.getCurrentUser().then((res)=>{
                 this.getAbstract(res.data.email);
-                this.currentUser = true;
+                this.getPdfLink(res.data.email);
+                this.currentUser = res.data;
             },(res)=>{
                 // this.submissionComplete = false;
                 // this.form = this.getFormNewUser();
@@ -50,6 +60,15 @@ const absSubmitCompleteComponent = {
                 this.$timeout(()=>{this.dataLoaded = true;}, this.resultTimeoutDelay);
             });
         }
+        getPdfLink(email) {
+            this.absFormService.getPdfUrl(email).then((res)=>{
+                // console.log(res);
+                this.pdfLink = res.data;
+            },()=>{
+                console.log('error: generate pdf link failed')
+                this.pdfLink = "#";
+            });
+        }
         
         // ROUTE
         goSignIn() {
@@ -58,18 +77,18 @@ const absSubmitCompleteComponent = {
         goAbsForm() {
             this.$state.go('app.absForm');
         }
+        goRoot() {
+            this.$state.go('app');
+        }
         signOut() {
-            console.log('signing out');
             this.UserApi.signout(this.userData).then((res)=>{
-                console.log(res);
                 if (res.status == 200) {
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
-                    console.log('sign out succed!')
                     // this.$state.go('app.user.signIn', {email: ''});
-                    window.location = "http://www.ttbatw.org/";
+                    window.location = "http://www.symposium2016.ttbatw.org/";
                     
                 } else {
-                    console.log('keeptrying');
+                    console.log('error: signout');
                 }
             });
         }

@@ -26,11 +26,11 @@ const headerAndNavComponent = {
         }
         getNavigationLinks() {
             return {
-                Home:     "https://www.google.com/",
-                Speakers: "#page2",
-                Schedule: "#page3",
-                Venue:    "#page4",
-                Register: "#page5",
+                Home:     "http://www.symposium2016.ttbatw.org/",
+                Speakers: "http://www.symposium2016.ttbatw.org/speakers",
+                Schedule: "http://www.symposium2016.ttbatw.org/schedule",
+                Venue:    "http://www.symposium2016.ttbatw.org/venue",
+                Register: "http://www.symposium2016.ttbatw.org/register",
             }
         }
     }

@@ -10,9 +10,9 @@ const absFormComponent = {
     controller: /* @ngInject */
     class absFormInputController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams'];
+            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams', 'absFormService'];
         }
-        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams) {
+        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams, absFormService) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
@@ -22,6 +22,7 @@ const absFormComponent = {
             this.$state = $state;
             this.focus = focus;
             this.$stateParams = $stateParams;
+            this.absFormService = absFormService;
         }
         $onInit() {
             this.absFormConst = absFormConst;
@@ -35,17 +36,18 @@ const absFormComponent = {
                 time: 2000, // ms
                 msg: 'DISABLED'
             }
-            this.addOn = 0;
             this.AuthorAffilTemplate = this.genAuthorAffilTemplate();
             this.absWithinPage = true;
+            this.submitBtnClicked = false;
         }
         $onDestroy() {
             this.$interval.cancel(this.autoBackup);
         }
         
         detectAbsOverflowY(callback) {
-            console.log("detectAbsOverflowY");
+            // console.log("detectAbsOverflowY");
             var el = document.querySelector("#abs_print");
+            // console.log(el.innerHTML);
             if (el.scrollHeight > el.clientHeight) {
                this.absWithinPage = false; 
             } else { this.absWithinPage = true; }
@@ -63,24 +65,37 @@ const absFormComponent = {
             });
         }
         getCurrentUser() {
+            console.log('get currentuser from server');
             this.UserApi.getCurrentUser().then((res)=>{
                 // console.log(res.data);
                 if (res.data.email) {
                     // this.$state.go('app.absForm', {email: res.data.email});
-                    console.log(res.data.email);
+                    // console.log(res.data.email);
                     this.currentUser = res.data;
                     // this.form.email = res.data.email;
                 } else { 
+                    console.log('error: getCurrentUser');
                     this.currentUser =false; 
                 }
             }, (res)=>{
                 this.currentUser = false;
             });
         }
-        
+        getAbstract(email, title) {
+            console.log('get abstract from server');
+            this.FormApi.get(email, title).then((res)=>{
+                // console.log(this.form._id);
+                this.form = res.data[0];
+                // console.log(this.form._id);
+            }, ()=>{
+                console.log('error: getAbstract');
+                this.form = this.absFormConst.abstractNewUser;
+            });
+        }
         submit() {
             console.log("submitting");
-            console.log(this.form);
+            // console.log(this.form);
+            this.submitBtnClicked = true;
             this.form.submittedAt[0] = new Date();
             this.fillInAuthorAndAffil(()=>{
                 this.decideUseAffiliationSup(()=>{
@@ -94,6 +109,7 @@ const absFormComponent = {
             });
         }
         saveToDatabase(submit){
+            console.log("save To Database");
             this.form.email = this.currentUser.email;
             this.form.updatedAt = new Date();
             this.FormApi.save(this.form).then((res)=>{
@@ -102,26 +118,28 @@ const absFormComponent = {
                     this.getAbstract(res.data.ops[0].email, res.data.ops[0].title);
                 }
                 if (submit) {
-                    this.$state.go('app.absSubmitComplete')
+                    this.generatePdfFile(this.currentUser.email);
+                    // this.$state.go('app.absSubmitComplete')
                 }
-            });
-        }
-        getAbstract(email, title) {
-            this.FormApi.get(email, title).then((res)=>{
-                console.log('get data from server');
-                // console.log(this.form._id);
-                this.form = res.data[0];
-                // console.log(this.form._id);
             }, ()=>{
-                this.form = this.absFormConst.abstractNewUser;
+                console.log('error: saveToDatabase');
             });
         }
-
+        generatePdfFile(email) {
+            var el = document.querySelector("abs-print");
+            var data = {
+                email: email,
+                html: el.innerHTML
+            }
+            this.absFormService.sendAbsPrintEl(data).then((res)=>{
+                // console.log(res);
+                this.$state.go('app.absSubmitComplete');
+            }, ()=>{
+                console.log('error: generatePdfFile');
+            });
+        }
         saveAndSignUp() {
             this.$state.go('app.user.signUp', {unsavedData: this.form});
-            // this.FormApi.save(this.form).then((res)=>{
-            //     console.log(res.data.ops[0]);
-            // });
         }
         
         // DATA STRUCTURE
@@ -189,7 +207,7 @@ const absFormComponent = {
         // AUTHOR AND AFFILIATION
         // this.form.affiliations = [unique affiliations]
         checkAffilUnique() {
-            console.log('checking');
+            console.log('checkAffilUnique');
             let affilRaw = [];
             for (let i=0; i<this.form.authors.length; i++) {
                 affilRaw = affilRaw.concat(this.form.authors[i].affiliationOfAuthor);
@@ -254,7 +272,7 @@ const absFormComponent = {
             for(let x=0; x<this.form.authors.length; x++){
                 this.filteredAuthors.push(this.form.authors[x].name);
             }
-            console.log(this.filteredAuthors);
+            // console.log(this.filteredAuthors);
             for(let i=0; i<this.filteredAuthors.length; i++) {
                 const pos = this.filteredAuthors[i].indexOf(name);
                 if (pos > -1){
@@ -306,8 +324,7 @@ const absFormComponent = {
             if (this.autoBackupConfig.status) {
                 this.autoBackupConfig.msg = 'Changes saved';
                 this.autoBackup = this.$interval(()=>{
-                    console.log('save');
-                    this.addOn ++;
+                    // console.log('save');
                     this.saveToDatabase(false);
                 }, this.autoBackupConfig.time);
             } else {
@@ -323,7 +340,7 @@ const absFormComponent = {
             this.focus('author-name-'+(this.form.authors.length-2));
         }
         focusNewAffiliation(authorIndex) {
-            console.log(authorIndex);
+            // console.log(authorIndex);
             this.focus('author-'+authorIndex+'-affiliation-'+(this.form.authors[authorIndex].affiliationSup.length-1))
             // 'author-'+parentIndex+'-affiliation-'+(this.form.authors[parentIndex].affiliationSup.length-2)
         }

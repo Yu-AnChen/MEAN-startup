@@ -1,0 +1,37 @@
+body {
+    font-family: sans-serif;
+    font-size: 11px;
+    line-height: 19.8px;
+}
+#abs_print {
+    height: 636px;
+    overflow: hidden;
+    padding-top: 30px;
+}
+h1 {
+    font-size: 11px;
+}
+
+.abs_title {
+    font-weight: 600;
+    margin-bottom: 22px;
+}
+.wrapper-author {
+    font-weight: 400;
+    margin-bottom: 0;
+}
+.wrapper-affil {
+    font-size: 10px;
+}
+.wrapper-keywords {
+    font-size: 10px;
+    font-style: italic;
+    font-weight: 600;
+    margin-top: 22px;
+    margin-bottom: 11px;
+}
+.wrapper-abs-content {
+    line-height: 19.8px;
+    text-align: justify;
+    margin-bottom: 0.5em;
+}

@@ -1,22 +1,21 @@
-<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" md-theme="navTheme" >
+<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" md-theme="navTheme" hide-xs>
     <span ng-repeat="(name, link) in $ctrl.navigationLinks">
-        <!--<md-nav-item md-nav-href="{{link}}" name="{{name}}">{{name}}/</md-nav-item>-->
-        <md-nav-item md-nav-href="#" ui-sref='app.underConstruction({navName: "{{name}}"})' name="{{name}}">{{name}}/</md-nav-item>
+        <md-nav-item md-nav-href="{{link}}" name="{{name}}">{{name}}/</md-nav-item>
+        <!--<md-nav-item md-nav-href="#" ui-sref='app.underConstruction({navName: "{{name}}"})' name="{{name}}">{{name}}/</md-nav-item>-->
 
     </span>
 </md-nav-bar>
 
-<div layout="row" layout-align="end center">
+<div layout="row" layout-align="end center" hide show-xs>
     <md-menu>
         <md-button aria-label="navigation links" class="md-fab md-primary" ng-click="$ctrl.openMenu($mdOpenMenu, $event)" md-theme="navTheme">
-            <ng-md-icon id="nav_icon" icon="menu" style="fill:white" size="32" md-menu-origin="" ><ng-md-icon>
+            <ng-md-icon icon="menu" style="fill:white" size="32" md-menu-origin="" ><ng-md-icon>
         </md-button>
         <md-menu-content width="4" class="md-primary" md-theme="navTheme" md-colors="{background: 'primary', color: 'white'}">
             <md-menu-item class="md-primary"
                 ng-repeat="(name, link) in $ctrl.navigationLinks">
                 <md-button 
-                    ng-href="#" 
-                    ui-sref='app.underConstruction({navName: "{{name}}"})'
+                    ng-href="{{link}}" 
                     md-colors="{color: 'white'}" style="letter-spacing: 0.07em; font-size: 18px;">
                     {{name}}/
                 </md-button>

@@ -1,22 +1,20 @@
 <div ui-view class="abs_form">
-    
     <div layout="column" layout-sm="column" layout-align="center center"
         ng-show="!$ctrl.form">
         <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
     </div>
-    <div> <!--this div is added to fix TypeError: Cannot read property 'insertBefore' of null-->
-    <form id="form" name="abstract_form"
-        layout="column" layout-gt-sm="row" layout-padding=""
-        ng-if="$ctrl.form"
-        ng-click="$ctrl.detectAbsOverflowY()"
-        ng-keyup="$ctrl.detectAbsOverflowY()">
+    <div layout="row" layout-gt-sm="row" layout-padding="" ng-show="$ctrl.form"> <!--this div is added to fix TypeError: Cannot read property 'insertBefore' of null-->
+    <!--<form id="form" name="abstract_form"-->
+    <!--    layout="column" layout-gt-sm="row" layout-padding=""-->
+    <!--    ng-if="$ctrl.form"-->
+    <!--    ng-click="$ctrl.detectAbsOverflowY()"-->
+    <!--    ng-keyup="$ctrl.detectAbsOverflowY()">-->
         
         <div flex="grow">
-            
-            <md-toolbar class="md-accent md-hue-1">
+            <md-toolbar class="md-accent md-hue-1" ng-if="$ctrl.form">
                 <div class="md-toolbar-tools" ng-if="!$ctrl.currentUser">
                     <span flex></span>
-                    <div layout-xs="column">
+                    <div layout-xs="column" style="text-align:center">
                         <span class="md-subhead">To save your changes, first,</span>
                         <md-button class="md-warn md-raised md-hue-1" 
                             ng-click="$ctrl.saveAndSignUp()"
@@ -33,104 +31,116 @@
                     <sign-out></sign-out>
                 </div>
             </md-toolbar>
-    
             <md-content class="formScroll">
-            <div layout="row" layout-align="start center" layout-padding="">
-                <span class="bullet">Autobackup</span> 
-                <md-switch 
-                    ng-model="$ctrl.autoBackupConfig.status"
-                    ng-change="!$ctrl.currentUser || $ctrl.toggleAutoBackup()" 
-                    ng-disabled="!$ctrl.currentUser"
-                    aria-label="Toggle Auto Backup">
-                    {{$ctrl.autoBackupConfig.msg}}
-                </md-switch>
-            </div>
-            
-            <div layout="column" layout-padding="">
-                <md-input-container>
-                    <label class="bullet">Abstract Title</label>
-                    <textarea type="textarea" name="title" 
-                        ng-model="$ctrl.form.title"
-                        ng-change="$ctrl.toTitleCase()"></textarea>
-                </md-input-container>
-                <md-input-container class="indent-left">
-                    <label>Field</label>
-                    <md-select required name="field"
-                        ng-model="$ctrl.form.field"
-                        md-on-open="$ctrl.setFooterClass(true)"
-                        md-on-close="$ctrl.setFooterClass(false)">
-                        <md-option 
-                            ng-repeat="field in $ctrl.fields | orderBy"
-                            ng-value="field">{{field}}
-                        </md-option>
-                        <md-option value="other">Other</md-option>
-                    </md-select>
-                    <div ng-messages="abstract_form.field.$error">
-                        <div ng-message="required">This is required</div>
+                <form name="abstract_form"
+                    ng-if="$ctrl.form"
+                    ng-click="$ctrl.detectAbsOverflowY()"
+                    ng-keyup="$ctrl.detectAbsOverflowY()">
+                    <div layout="row" layout-align="start center" layout-padding="">
+                        <span class="bullet">Autobackup</span> 
+                        <md-switch 
+                            ng-model="$ctrl.autoBackupConfig.status"
+                            ng-change="!$ctrl.currentUser || $ctrl.toggleAutoBackup()" 
+                            ng-disabled="!$ctrl.currentUser"
+                            aria-label="Toggle Auto Backup">
+                            {{$ctrl.autoBackupConfig.msg}}
+                        </md-switch>
                     </div>
-                </md-input-container>
-            </div>
-            
-    
-            <div layout="column" layout-padding="" ng-repeat="author in $ctrl.form.authors">
-                <md-input-container>
-                    <label class="bullet"><span
-                        ng-if="author.role!=='General'">{{author.role}}
-                    </span> Author<span
-                        ng-if="author.role=='General'"> {{$index+1}}</span>
-                    </label>
                     
-                    <input type="text" name="author-name" id="author-name-{{$index}}"
-                        ng-model="$ctrl.form.authors[$index].name" 
-                        ng-change="[$ctrl.validateAuthor(), $ctrl.matchAuthor($ctrl.form.authors[$index].name), $ctrl.decideUseAffiliationSup()]"/>
-                <!--<input type="text" ng-model="$ctrl.form.authors[$index].role"/>-->
-                </md-input-container>                
-                <md-input-container ng-repeat="sup in author.affiliationSup track by $index" class="indent-left">
-                        <label>Affiliation</label>
+                    <div layout="column" layout-padding="">
+                        <md-input-container>
+                            <label class="bullet">Abstract Title</label>
+                            <textarea type="textarea" name="title" 
+                                ng-model="$ctrl.form.title"
+                                ng-change="$ctrl.toTitleCase()"></textarea>
+                        </md-input-container>
+                        <md-input-container class="indent-left">
+                            <label>Field</label>
+                            <md-select required name="field"
+                                ng-model="$ctrl.form.field"
+                                md-on-open="$ctrl.setFooterClass(true)"
+                                md-on-close="$ctrl.setFooterClass(false)">
+                                <md-option 
+                                    ng-repeat="field in $ctrl.fields | orderBy"
+                                    ng-value="field">{{field}}
+                                </md-option>
+                                <md-option value="other">Other</md-option>
+                            </md-select>
+                            <div ng-messages="abstract_form.field.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
+                    </div>
+                    
+            
+                    <div layout="column" layout-padding="" ng-repeat="author in $ctrl.form.authors">
+                        <md-input-container>
+                            <label class="bullet"><span
+                                ng-if="author.role!=='General'">{{author.role}}
+                            </span> Author<span
+                                ng-if="author.role=='General'"> {{$index+1}}</span>
+                            </label>
+                            
+                            <input type="text" name="author-name" id="author-name-{{$index}}"
+                                ng-model="$ctrl.form.authors[$index].name" 
+                                ng-change="[$ctrl.validateAuthor(), $ctrl.matchAuthor($ctrl.form.authors[$index].name), $ctrl.decideUseAffiliationSup()]"/>
+                        <!--<input type="text" ng-model="$ctrl.form.authors[$index].role"/>-->
+                        </md-input-container>                
+                        <md-input-container ng-repeat="sup in author.affiliationSup track by $index" class="indent-left">
+                                <label>Affiliation</label>
+                                
+                                <textarea type="textarea" name="affiliation" id="author-{{$parent.$index}}-affiliation-{{$index}}"
+                                    ng-model="$ctrl.form.authors[$parent.$index].affiliationOfAuthor[$index]"
+                                    ng-change="[$ctrl.validateAuthor(), $ctrl.checkAffilUnique(), $ctrl.matchAffilSup(), $ctrl.decideUseAffiliationSup()]">
+                                </textarea>
+                        </md-input-container>
+                        <div layout="column"  layout-align="center end" layout-align-xs="center end">
+                            <md-button 
+                                ng-click="[$ctrl.addAffiliation($index), $ctrl.focusNewAffiliation($index)]" 
+                                class="md-raised md-primary md-hue-2">Add Affiliation
+                            </md-button>
+                        </div>
+                    </div>
+                    <div layout="column" layout-padding="">
+                        <div layout="column"  layout-align="center center" layout-align-xs="center end">
+                            <md-button 
+                                ng-click="[$ctrl.addAuthor(), $ctrl.focusNewAuthor()]" 
+                                class="md-raised md-primary ">Add Another Author
+                            </md-button>
+                        </div>
                         
-                        <textarea type="textarea" name="affiliation" id="author-{{$parent.$index}}-affiliation-{{$index}}"
-                            ng-model="$ctrl.form.authors[$parent.$index].affiliationOfAuthor[$index]"
-                            ng-change="[$ctrl.validateAuthor(), $ctrl.checkAffilUnique(), $ctrl.matchAffilSup(), $ctrl.decideUseAffiliationSup()]">
-                        </textarea>
-                </md-input-container>
-                <div layout="column"  layout-align="center end" layout-align-xs="center end">
-                    <md-button 
-                        ng-click="[$ctrl.addAffiliation($index), $ctrl.focusNewAffiliation($index)]" 
-                        class="md-raised md-primary md-hue-2">Add Affiliation
-                    </md-button>
-                </div>
-            </div>
-            <div layout="column" layout-padding="">
-                <div layout="column"  layout-align="center center" layout-align-xs="center end">
-                    <md-button 
-                        ng-click="[$ctrl.addAuthor(), $ctrl.focusNewAuthor()]" 
-                        class="md-raised md-primary ">Add Another Author
-                    </md-button>
-                </div>
-                
-                <md-input-container>
-                    <label class="bullet">Keywords</label>
-                    <input type="text" name="keywords" ng-model="$ctrl.form.keywords" ng-change="$ctrl.splitKeywords()"/>
-                </md-input-container>
-                
-                <md-input-container>
-                    <label class="bullet">Abstract</label>
-                    <textarea name="abs_content" class="js-abs_content js-hide-next"
-                        ng-model="$ctrl.form.absContent"></textarea>
-                </md-input-container>
-                
-            </div>   
+                        <md-input-container>
+                            <label class="bullet">Keywords</label>
+                            <input type="text" name="keywords" ng-model="$ctrl.form.keywords" ng-change="$ctrl.splitKeywords()"/>
+                        </md-input-container>
+                        
+                        <md-input-container>
+                            <label class="bullet">Abstract</label>
+                            <textarea name="abs_content" class="js-abs_content js-hide-next"
+                                ng-model="$ctrl.form.absContent"></textarea>
+                        </md-input-container>
+                        
+                    </div> 
+                </form>
             <md-content>
         </div>
         
-        <div flex="auto">    
+        <div flex="auto" hide-xs>    
             <div class="wrapper-abs_print" layout="column" layout-align="start center">
                 <abs-print
                     abs-data="$ctrl.form"
                     ng-if="$ctrl.form"></abs-print>
             </div>
         </div>
-    </form>
+    <!--</form>-->
+    </div>
+    
+    <div flex="auto" hide show-xs layout-margin>    
+        <div class="wrapper-abs_print" layout="column" layout-align="start center">
+            <abs-print
+                abs-data="$ctrl.form"
+                ng-if="$ctrl.form"></abs-print>
+        </div>
     </div>
     
     <div layout-padding="" layout-align="center center" layout="row"
@@ -149,9 +159,15 @@
         <md-button 
             ng-click="$ctrl.submit()"
             class="md-raised md-primary"
-            ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field"
+            ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field || $ctrl.submitBtnClicked"
             >Submit
         </md-button>
     </div>
-
+    
+    <div layout="column" layout-align="center center"
+        style="position:fixed; width:100%; height:100vh; top:0px; background:rgba(204, 208, 219, 0.7); z-index:2;"
+        ng-show="$ctrl.submitBtnClicked">
+        <div layout-margin>Confirming Your Submission...</div>
+        <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic" style="margin-top:0px;"></md-progress-circular>
+    </div>
 </div>

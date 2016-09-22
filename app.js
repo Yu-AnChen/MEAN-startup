@@ -87,6 +87,7 @@ const abstracts = require('./routes/abstracts');
 const user = require('./routes/user');
 const users = require('./routes/users');
 const currentUser = require('./routes/currentUser');
+const toPdf = require('./routes/toPdf');
 // login, logout, signup
 // app.use(auth);
 app.use('/currentUser', currentUser);
@@ -94,6 +95,7 @@ app.use('/user', user);
 app.use('/users', users);
 app.use('/abstract', abstract);
 app.use('/abstracts', abstracts);
+app.use('/toPdf', toPdf);
 
 // Errors
 app.use(errorHandler());
