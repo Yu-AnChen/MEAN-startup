@@ -98,7 +98,7 @@ app.use('/user', user);
 app.use('/users', users);
 app.use('/abstract', abstract);
 app.use('/abstracts', abstracts);
-app.use('/toPdf', toPdf);
+// app.use('/toPdf', toPdf);
 
 // Errors
 app.use(errorHandler());
