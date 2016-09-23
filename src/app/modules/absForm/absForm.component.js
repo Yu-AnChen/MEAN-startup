@@ -169,7 +169,7 @@ const absFormComponent = {
             if (this.form.authors.length < 2) {
                 this.form.authors.push(newAuthor);
             } else {
-                // this.form.authors.splice(this.form.authors.length-1, 0, newAuthor);
+                this.form.authors.splice(this.form.authors.length-1, 0, newAuthor);
             }
         }
         genAuthorAffilTemplate() {
