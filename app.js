@@ -10,13 +10,16 @@ const cookieParser = require('cookie-parser');
 const logger = require('morgan');
 const errorHandler = require('errorhandler');
 const lusca = require('lusca');
-const dotenv = require('dotenv');
 const flash = require('express-flash');
 const path = require('path');
 const multer = require('multer');
-dotenv.load({
-    path: '.env.file'
-});
+
+if (process.env.NODE_ENV == 'development') {
+    const dotenv = require('dotenv');
+    dotenv.load({
+        path: '.env.file'
+    });
+}
 
 // Setup Express Server
 const port = process.env.PORT || 3000;
