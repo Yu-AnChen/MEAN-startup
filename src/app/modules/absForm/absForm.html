@@ -143,12 +143,37 @@
         </div>
     </div>
     
+        <form name="elevator_talk" 
+            flex="100" layout="row" layout-xs="column" layout-align="center center"
+            ng-show="$ctrl.form">
+            <p>
+                Are you willing to give an <strong>elevator talk</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
+                    <md-tooltip md-direction="top">
+                        3-minute presentation to highlight your research.
+                      </md-tooltip>
+                </ng-md-icon>?
+            </p>
+            <md-input-container class="indent-left">
+                <label>Please select your answer</label>
+                <md-select required name="canGiveATalk"
+                    ng-model="$ctrl.form.canGiveATalk"
+                    md-on-open="$ctrl.setFooterClass(true)"
+                    md-on-close="$ctrl.setFooterClass(false)">
+                    <md-option value="true">Yes!</md-option>
+                    <md-option value="false">No.</md-option>
+                </md-select>
+                <div ng-messages="elevator_talk.canGiveATalk.$error">
+                    <div ng-message="required">This is required</div>
+                </div>
+            </md-input-container>
+        </form>
+    
     <div layout-padding="" layout-align="center center" layout="row"
         ng-show="$ctrl.form && !$ctrl.absWithinPage">
-        Your content is <span md-colors="{color: 'orange-800'}">more than one page</span>, please trim it.
+        Your content is <span md-colors="{color: 'orange-800'}">more than one page</span>, please shorten it.
     </div>
     
-    <div layout="row" layout-align="center center"
+    <div layout="row" layout-align="center center" layout-wrap
         style="margin: 20px 0px;"
         ng-show="$ctrl.form">
         <md-button 
@@ -159,7 +184,7 @@
         <md-button 
             ng-click="$ctrl.submit()"
             class="md-raised md-primary"
-            ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field || $ctrl.submitBtnClicked"
+            ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field || $ctrl.submitBtnClicked || !$ctrl.form.canGiveATalk"
             >Submit
         </md-button>
     </div>
