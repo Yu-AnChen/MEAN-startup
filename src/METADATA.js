@@ -9,7 +9,7 @@ const METADATA = {
     webAuthor: 'Yu-An Chen atwood12@gmail.com',
     webDescription: 'TTBA Symposium 2016 is hosted by Texas Taiwanese Biotechnology Association (TTBA) at UT Southwestern, Dallas TX.',
     baseUrl: '/',
-    iconUrl: './assets/img/',
+    iconUrl: './assets/img/favicon.ico',
     // for app metadatas
     appName: 'My Web App',
     version: '0.0.1',
