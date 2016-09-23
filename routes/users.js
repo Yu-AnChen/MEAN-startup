@@ -1,6 +1,7 @@
 const Users = require('express').Router();
+const Auth = require('./auth');
 
-Users.get('/', (req, res) => {
+Users.get('/', Auth, (req, res) => {
     req.db.collection('users')
         .find({}).toArray((err, results) => {
             if (!err) {
