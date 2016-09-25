@@ -27,7 +27,7 @@ const userSignInComponent = {
             this.email = this.$stateParams.email;
             this.notExist = false;
             this.notMatch = false;
-            this.autofocus();
+            // this.autofocus();
         }
         autofocus() {
             this.focus('userEmail');
@@ -46,6 +46,7 @@ const userSignInComponent = {
                 }
             }, ()=>{
                 this.showView = true;
+                this.autofocus();
             })
         }
         signIn() {

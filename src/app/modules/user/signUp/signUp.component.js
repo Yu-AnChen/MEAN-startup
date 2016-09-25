@@ -26,7 +26,8 @@ const userSignUpComponent = {
             this.getCurrentUser();
             this.userData = this.getUserData();
             this.alreadyExist = false;
-            this.autofocus = this.autofocus();
+            // this.autofocus();
+            // this.focus('userEmail');
             // console.log(this.$stateParams);
         }
         autofocus() {
@@ -48,6 +49,7 @@ const userSignUpComponent = {
                 } 
             }, ()=>{
                 this.showView = true;
+                this.autofocus();
             })
         }
         signUp() {

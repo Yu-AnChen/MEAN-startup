@@ -182,10 +182,10 @@ const absFormComponent = {
         addAffiliation(authorIndex) {
             this.form.authors[authorIndex].affiliationSup.push(NaN);
         }
-        // toTitleCase() {
-        //     const toTitleCase = require('titlecase');
-        //     this.form.title = toTitleCase(this.form.title);
-        // }
+        toTitleCase() {
+            const toTitleCase = require('titlecase');
+            this.form.title = toTitleCase(this.form.title);
+        }
 
         // TOOLS
         genUniqueArray(theArray) {

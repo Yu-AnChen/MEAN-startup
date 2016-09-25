@@ -19,11 +19,17 @@ const absFormModule = angular
         $stateProvider
             .state('app.absForm', {
                 url: 'abstract',
-                component: 'absForm'
+                component: 'absForm',
+                data: {
+                    pageTitle: 'Submission Form'
+                }
             })
             .state('app.absSubmitComplete', {
                 url: 'abstract-submitted',
-                component: 'absSubmitComplete'
+                component: 'absSubmitComplete',
+                data: {
+                    pageTitle: 'Submission Status'
+                }
             });
     })
     .name;

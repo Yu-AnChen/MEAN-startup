@@ -40,6 +40,7 @@
     "angular-sanitize": "^1.5.8",
     "angular-smart-table": "^2.1.8",
     "angular-ui-router": "^1.0.0-beta.1",
+    "angular-ui-router-title": "0.0.4",
     "body-parser": "^1.15.2",
     "compass": "^0.1.1",
     "compass-mixins": "^0.12.10",

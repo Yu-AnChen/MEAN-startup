@@ -1,6 +1,7 @@
 // cores
 import angular from 'angular';
 import uiRouter from 'angular-ui-router';
+// import uiRouterTitle from 'angular-ui-router-title';
 import ngAria from 'angular-aria';
 import ngMaterial from 'angular-material';
 import 'angular-material/angular-material.css';
@@ -30,10 +31,10 @@ import 'angular-material/angular-material.css';
 
 // entry modules
 import app from './app';
-
 angular
     .module('app', [
         uiRouter,
+        // uiRouterTitle,
         ngAnimate,
         ngAria,
         ngMaterial,
@@ -48,6 +49,17 @@ angular
         appFactories,
         app
     ])
+    .run([ '$rootScope', '$state', '$timeout',
+    function ($rootScope, $state, $timeout) {
+        
+        $timeout(function(){
+            $rootScope.$state = $state;
+        },0)
+        
+        // $rootScope.$on('$stateChangeSuccess', function() {
+        //     $rootScope.$state = $state
+        // })
+    }])
     .config(($stateProvider, $urlRouterProvider) => {
         'ngInject';
         $urlRouterProvider.otherwise('/');

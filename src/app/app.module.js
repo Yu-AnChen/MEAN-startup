@@ -22,8 +22,8 @@ const appModule = angular
                 url: '/',
                 component: 'app',
                 data: {
-                    pageTitle: 'TTBA SYMPOSIUM 2016'
-                }
+                    pageTitle: 'Abstract - Home'
+                },
             })
             ;
     })

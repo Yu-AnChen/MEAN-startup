@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="app" >
 <head>
     <meta charset="utf-8">
-    <title><%= htmlWebpackPlugin.options.title %></title>
+    <title ng-bind="$state.current.data.pageTitle + ' | TTBA SYMPOSIUM 2016'"><%= htmlWebpackPlugin.options.title %></title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="<%= htmlWebpackPlugin.options.author %>">
@@ -14,7 +14,7 @@
     <base href="<%= htmlWebpackPlugin.options.baseUrl %>">
 </head>
 
-<body ng-app="app" ng-strict-di ng-cloak>
+<body ng-strict-di ng-cloak>
     <div ui-view>
         <div style="width:100%;height:100vh;position: relative;">
             <img

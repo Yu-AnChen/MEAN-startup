@@ -1,8 +1,8 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" ng-app="app" >
 <head>
     <meta charset="utf-8">
-    <title>TTBA SYMPOSIUM 2016 | Abstract Submission</title>
+    <title ng-bind="$state.current.data.pageTitle + ' | TTBA SYMPOSIUM 2016'">TTBA SYMPOSIUM 2016</title>
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="author" content="Yu-An Chen atwood12@gmail.com">
@@ -14,7 +14,7 @@
     <base href="/">
 </head>
 
-<body ng-app="app" ng-strict-di ng-cloak>
+<body ng-strict-di ng-cloak>
     <div ui-view>
         <div style="width:100%;height:100vh;position: relative;">
             <img
@@ -22,5 +22,5 @@
                 src="./assets/img/ring-alt.gif" alt="Loading..." style="position: absolute; top: 50%; height: 120px; margin-top: -60px; left: 50%; width: 120px; margin-left: -60px;"/>
         </div>
     </div>
-<script type="text/javascript" src="vendor.bundle.js?f03a6891e44ecd550bb0"></script><script type="text/javascript" src="app.bundle.js?f03a6891e44ecd550bb0"></script></body>
+<script type="text/javascript" src="vendor.bundle.js?c77f24416b16d1b825c4"></script><script type="text/javascript" src="app.bundle.js?c77f24416b16d1b825c4"></script></body>
 </html>

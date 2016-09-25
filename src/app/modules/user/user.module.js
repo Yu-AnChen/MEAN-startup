@@ -25,11 +25,17 @@ const userModule = angular
             .state('app.user.signUp', {
                 url: '/create',
                 params: { email : '', favoritePhrase : '', absId : '', unsavedData : {} },
+                data: {
+                  pageTitle: 'Create Abstract'
+                },
                 component: 'signUp'
             })
             .state('app.user.signIn', {
                 url: '/edit',
                 params: { email : '', favoritePhrase : '', absId : '', unsavedData : {} },
+                data: {
+                  pageTitle: 'Edit Abstract'
+                },
                 component: 'signIn'
             })
             .state('app.user.signOut', {
