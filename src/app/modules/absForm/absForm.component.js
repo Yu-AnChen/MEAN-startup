@@ -39,6 +39,7 @@ const absFormComponent = {
             this.AuthorAffilTemplate = this.genAuthorAffilTemplate();
             this.absWithinPage = true;
             this.submitBtnClicked = false;
+            // this.submittedInTime = false;
         }
         $onDestroy() {
             this.$interval.cancel(this.autoBackup);
@@ -61,6 +62,7 @@ const absFormComponent = {
                 // this.currentUser = true;
             },(res)=>{
                 this.form = this.absFormConst.abstractNewUser;
+                this._submittedInTime(this.absFormConst.abstractNewUser);
                 // this.currentUser = false;
             });
         }
@@ -81,26 +83,28 @@ const absFormComponent = {
                 this.currentUser = false;
             });
         }
-        convertNullToNaN(data) {
-            for (let i; i<data.authors.length; i++) {
-                for (let j; j<i.affiliationSup.length; j++) {
-                    if (data.authors[i].affiliationSup[j] == null) {
-                        data.authors[i].affiliationSup[j] = NaN;
-                    }
-                }
-            }
-            return data;
-        }
+        // convertNullToNaN(data) {
+        //     for (let i; i<data.authors.length; i++) {
+        //         for (let j; j<i.affiliationSup.length; j++) {
+        //             if (data.authors[i].affiliationSup[j] == null) {
+        //                 data.authors[i].affiliationSup[j] = NaN;
+        //             }
+        //         }
+        //     }
+        //     return data;
+        // }
         getAbstract(email, title) {
             console.log('get abstract from server');
             this.FormApi.get(email, title).then((res)=>{
                 // console.log(this.form._id);
-                this.form = this.convertNullToNaN(res.data[0]);
-                console.log(this.convertNullToNaN(res.data[0]))
+                this.form = res.data[0];
+                this._submittedInTime(res.data[0]);
+                // console.log(this.convertNullToNaN(res.data[0]))
                 // console.log(this.form._id);
             }, ()=>{
                 console.log('error: getAbstract');
                 this.form = this.absFormConst.abstractNewUser;
+                this._submittedInTime(this.absFormConst.abstractNewUser);
             });
         }
         submit() {
@@ -359,6 +363,25 @@ const absFormComponent = {
             var footer = document.querySelector("footer div");
             open ? footer.setAttribute("class", "p_relative") : 
                 footer.setAttribute("class", "p_absolute")
+        }
+        _submittedInTime(data) {
+            const createdTime = Date.parse(data.createdAt);
+            const deadline = Date.parse("2016-10-17T22:57:36.910Z");
+            if (createdTime <= deadline) {
+                console.log('before deadline');
+                // return true;
+                this.submittedInTime = true;
+            } else { console.log('after deadline'); this.submittedInTime = false; }
+            // if (this.form) {
+            //     const createdTime = Date.parse(this.form.createdAt);
+            //     const deadline = Date.parse("2016-10-17T22:57:36.910Z");
+            //     if (createdTime <= deadline) {
+            //         console.log('before deadline');
+            //         // return true;
+            //         this.submittedInTime = true;
+            //     } else { console.log('after deadline'); this.submittedInTime = false; }
+            // } else { console.log('no form'); this.submittedInTime = false; }
+            
         }
 
     }

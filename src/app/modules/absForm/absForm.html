@@ -142,35 +142,60 @@
                 ng-if="$ctrl.form"></abs-print>
         </div>
     </div>
-    
-        <!--<form name="elevator_talk" -->
-        <!--    flex="100" layout="row" layout-xs="column" layout-align="center center"-->
-        <!--    ng-show="$ctrl.form">-->
-            <!--<p>-->
-            <!--    Are you willing to give an <strong>elevator talk</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">-->
-            <!--        <md-tooltip md-direction="top">-->
-            <!--            3-minute presentation to highlight your research.-->
-            <!--          </md-tooltip>-->
-            <!--    </ng-md-icon>?-->
-            <!--</p>-->
+        <div>
         <form name="elevator_talk" 
-            flex="100" layout="column" layout-gt-md="row" layout-align="center center"
-            ng-show="$ctrl.form">
+            flex="100" layout="row" layout-xs="column" layout-align="center center"
+            ng-show="$ctrl.form"
+            ng-if="$ctrl.submittedInTime">
             <p>
-                Abstracts submitted after Oct 16 are not eligiable for <strong>elevator talks</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
+                Are you willing to give an <strong>elevator talk</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
                     <md-tooltip md-direction="top">
                         3-minute presentation to highlight your research.
                       </md-tooltip>
                 </ng-md-icon>?
             </p>
             <md-input-container class="indent-left">
-                <!--<label>Please select your answer</label>-->
-                <label>Please select</label>
+                <label>
+                    <span ng-if="$ctrl.submittedInTime">Please select your answer</span>
+                </label>
+                <!--<label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>-->
+                <!--<label ng-hide="$ctrl.submittedInTime()">Please select</label>-->
+                <md-select required name="canGiveATalk"
+                    ng-model="$ctrl.form.canGiveATalk"
+                    md-on-open="$ctrl.setFooterClass(true)"
+                    md-on-close="$ctrl.setFooterClass(false)">
+                    <md-option value="true">Yes!</md-option>
+                    <md-option value="false">No</md-option>
+                    <!--<md-option value="false">Got it!</md-option>-->
+                </md-select>
+                <div ng-messages="elevator_talk.canGiveATalk.$error">
+                    <div ng-message="required">This is required</div>
+                </div>
+            </md-input-container>
+        </form>
+        <form name="elevator_talk" 
+            flex="100" layout="column" layout-gt-md="row" layout-align="center center"
+            ng-show="$ctrl.form"
+            ng-if="!$ctrl.submittedInTime">
+            <p>
+                Abstracts submitted <strong>after Oct 16</strong> are not eligible for <strong>elevator talks</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
+                    <md-tooltip md-direction="top">
+                        3-minute presentation to highlight your research.
+                      </md-tooltip>
+                </ng-md-icon>
+            </p>
+            <md-input-container class="indent-left">
+                <label>
+                    <span ng-if="!$ctrl.submittedInTime">Please select</span>
+                </label>
+                <!--<label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>-->
+                <!--<label ng-hide="$ctrl.submittedInTime()">Please select</label>-->
                 <md-select required name="canGiveATalk"
                     ng-model="$ctrl.form.canGiveATalk"
                     md-on-open="$ctrl.setFooterClass(true)"
                     md-on-close="$ctrl.setFooterClass(false)">
                     <!--<md-option value="true">Yes!</md-option>-->
+                    <!--<md-option value="false">No</md-option>-->
                     <md-option value="false">Got it!</md-option>
                 </md-select>
                 <div ng-messages="elevator_talk.canGiveATalk.$error">
@@ -178,6 +203,7 @@
                 </div>
             </md-input-container>
         </form>
+        </div>
     
     <div layout-padding="" layout-align="center center" layout="row"
         ng-show="$ctrl.form && !$ctrl.absWithinPage">

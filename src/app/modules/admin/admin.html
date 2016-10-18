@@ -65,7 +65,7 @@
             
             <md-list-item class="md-3-line" 
                 ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
-                ng-class="{no_elevator_talk: item.canGiveATalk}">
+                ng-class="{no_elevator_talk: !$ctrl.test(item)}">
                 <div  layout="row" layout-align="start start" layout-padding>
                     <div layout-padding>
                         <md-checkbox aria-label="Select this abstract"
@@ -73,7 +73,7 @@
                             ng-click="$ctrl.toggleSelectAbs(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)"
                             id="label_{{item.fieldNoSpace+'-'+item.fileId}}"
                             >
-                            {{ $index+1 }}
+                            {{ $index+1 }} {{item.canGiveATalk}}
                         </md-checkbox>
                     </div>
                     <!--<label layout-margin>{{ $index+1 }}</label>-->
