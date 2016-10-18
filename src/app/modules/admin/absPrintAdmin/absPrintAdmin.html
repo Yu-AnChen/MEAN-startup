@@ -1,0 +1,56 @@
+<div id="abs_print_admin">
+    <div hide style="font-size: 12px"><em>{{$ctrl.absData.field}}</em></div>
+    <h3 class="abs_title">{{$ctrl.absData.title}}</h3>
+    <!--<h3>Existing authors: {{$ctrl.existingAuthorCounts}}</h3>-->
+    <div class="wrapper-author-and-affil">
+        <div class="wrapper-author">
+           <div>
+                <span 
+                    ng-repeat="author in $ctrl.absData.authors | filter:{validAuthor: true} as results">
+                    <span ng-if="results.length === 1">
+                        {{author.name}}
+                    </span>
+                    <span ng-if="results.length > 1">
+                        <span ng-if="$first"><u>{{author.name}}</u><sup
+                            ng-if=" $ctrl.absData.useAffiliationSup"
+                            ng-hide="!$ctrl.displaySetting.showAffil"
+                            ng-repeat="n in author.affiliationSup | orderBy:num | hasValue track by $index"
+                            >{{n}}<span ng-if="!$last">,</span></sup><span ng-if="results.length > 2">,</span>
+                        </span>
+                        <span ng-if="!$first && !$last">{{author.name}}<sup 
+                            ng-if=" $ctrl.absData.useAffiliationSup"
+                            ng-hide="!$ctrl.displaySetting.showAffil"
+                            ng-repeat="n in author.affiliationSup | orderBy:num | hasValue track by $index"
+                            >{{n}}<span ng-if="!$last">,</span></sup>,
+                        </span>
+                        <span ng-if="$last">and {{author.name}}*<sup ng-if=" $ctrl.absData.useAffiliationSup && $ctrl.displaySetting.showAffil">,</sup><sup 
+                            ng-if=" $ctrl.absData.useAffiliationSup"
+                            ng-hide="!$ctrl.displaySetting.showAffil"
+                            ng-repeat="n in author.affiliationSup | orderBy:num | hasValue track by $index"
+                            >{{n}}<span ng-if="!$last">,</span></sup>
+                        </span>
+                    </span>
+                </span>
+                <span ng-if="results.length === 0">no valid author</span>
+            </div>
+        </div>
+        <div class="wrapper-affil md-list-item-text" ng-show="$ctrl.displaySetting.showAffil">
+            <span ng-repeat="affil in $ctrl.absData.affiliations">
+                <sup ng-if=" $ctrl.absData.useAffiliationSup"
+                    ng-hide="!$ctrl.displaySetting.showAffil">{{$index+1}}</sup>{{affil}}<br />
+            </span>
+        </div>
+    </div>
+    <div class="wrapper-keywords" ng-show="$ctrl.displaySetting.showKeywords">
+        <p>Keywords: 
+        <span 
+            ng-repeat="keyword in $ctrl.splitKeywords($ctrl.absData.keywords) track by $index">
+            {{keyword}}<span ng-if="!$last">,</span>
+        </span>
+        </p>
+    </div>
+    
+    <div class="wrapper-abs-content" ng-show="$ctrl.displaySetting.showAbsContent"
+        ng-bind-html="$ctrl.parseMarkdown($ctrl.absData.absContent)"></div>
+    
+</div>

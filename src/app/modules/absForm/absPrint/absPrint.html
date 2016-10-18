@@ -12,17 +12,17 @@
                     <span ng-if="results.length > 1">
                         <span ng-if="$first"><u>{{author.name}}</u><sup
                             ng-if="$ctrl.absData.useAffiliationSup"
-                            ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
+                            ng-repeat="n in author.affiliationSup | orderBy:num | hasValue track by $index"
                             >{{n}}<span ng-if="!$last">,</span></sup><span ng-if="results.length > 2">,</span>
                         </span>
                         <span ng-if="!$first && !$last">{{author.name}}<sup 
                             ng-if="$ctrl.absData.useAffiliationSup"
-                            ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
+                            ng-repeat="n in author.affiliationSup | orderBy:num | hasValue track by $index"
                             >{{n}}<span ng-if="!$last">,</span></sup>,
                         </span>
                         <span ng-if="$last">and {{author.name}}*<sup ng-if="$ctrl.absData.useAffiliationSup">,</sup><sup 
                             ng-if="$ctrl.absData.useAffiliationSup"
-                            ng-repeat="n in author.affiliationSup | orderBy:num | filter:'!NaN' track by $index"
+                            ng-repeat="n in author.affiliationSup | orderBy:num | hasValue track by $index"
                             >{{n}}<span ng-if="!$last">,</span></sup>
                         </span>
                     </span>
@@ -37,11 +37,12 @@
         </div>
     </div>
     <div md-ink-ripple="#FF0000" class="wrapper-keywords">
-        keywords: 
+        <p>Keywords: 
         <span 
             ng-repeat="keyword in $ctrl.splitKeywords($ctrl.absData.keywords) track by $index">
             {{keyword}}<span ng-if="!$last">,</span>
         </span>
+        </p>
     </div>
     
     <div md-ink-ripple="#FF0000" class="wrapper-abs-content" 

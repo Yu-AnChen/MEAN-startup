@@ -72,7 +72,7 @@ gulp.task('webpack', ['clean'], (cb) => {
     });
 });
 
-gulp.task('build', ['webpack', 'copy-assets']);
+gulp.task('build', ['webpack']);
 
 gulp.task('serve', () => {
     const config = require('./webpack.dev.config');

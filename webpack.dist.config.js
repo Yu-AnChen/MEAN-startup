@@ -1,6 +1,7 @@
 var webpack = require('webpack');
 var path = require('path');
 const CompressionPlugin = require('compression-webpack-plugin');
+var CopyWebpackPlugin = require('copy-webpack-plugin');
 
 var config = require('./webpack.config');
 
@@ -11,6 +12,12 @@ config.output = {
     publicPath: '',
     path: path.resolve(__dirname, 'dist')
 };
+
+const copyAssets = [{
+    from: './src/assets',
+    to: 'assets'
+}];
+config.plugins.push(new CopyWebpackPlugin(copyAssets));
 
 config.plugins = config.plugins.concat([
   // Reduces bundles total size

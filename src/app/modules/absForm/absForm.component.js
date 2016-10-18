@@ -81,11 +81,22 @@ const absFormComponent = {
                 this.currentUser = false;
             });
         }
+        convertNullToNaN(data) {
+            for (let i; i<data.authors.length; i++) {
+                for (let j; j<i.affiliationSup.length; j++) {
+                    if (data.authors[i].affiliationSup[j] == null) {
+                        data.authors[i].affiliationSup[j] = NaN;
+                    }
+                }
+            }
+            return data;
+        }
         getAbstract(email, title) {
             console.log('get abstract from server');
             this.FormApi.get(email, title).then((res)=>{
                 // console.log(this.form._id);
-                this.form = res.data[0];
+                this.form = this.convertNullToNaN(res.data[0]);
+                console.log(this.convertNullToNaN(res.data[0]))
                 // console.log(this.form._id);
             }, ()=>{
                 console.log('error: getAbstract');

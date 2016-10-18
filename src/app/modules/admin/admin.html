@@ -1,0 +1,92 @@
+<div layout="column" class="admin" layout-padding ng-if="$ctrl.abstracts">
+
+<div flex="">
+
+    <md-toolbar class="md-hue-3">
+        <div class="md-toolbar-tools">
+            <span>Order By</span>
+        
+        <md-select name="sortBy" aria-label="sort abstract by"
+            ng-model="$ctrl.sortBy"
+            md-on-open="$ctrl.setFooterClass(true)"
+            md-on-close="$ctrl.setFooterClass(false)"
+            layout-margin>
+            <md-option 
+                ng-repeat="sortName in $ctrl.sortByOptions.name"
+                ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
+            </md-option>
+        </md-select>
+        <md-button 
+            ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
+            class="md-raised md-primary">
+            download selected
+        </md-button>
+        
+        </div>
+        
+        <!--<md-option -->
+        <!--    ng-repeat="sort in $ctrl.sortByOptions | orderBy"-->
+        <!--    ng-model="$ctrl.sortBy">{{sort}}-->
+        <!--</md-option>-->
+    </md-toolbar>
+
+    <md-content>
+
+      <!--<md-list class="md-dense" flex="">-->
+        <md-list flex="">
+
+            <md-subheader class="md-no-sticky">
+                <h3>Show</h3>
+                <md-checkbox ng-model="$ctrl.displaySetting.showAffil" aria-label="Show affiliations">
+                    Affiliations
+                </md-checkbox>
+                <md-checkbox ng-model="$ctrl.displaySetting.showKeywords" aria-label="Show keywords">
+                    Keywords
+                </md-checkbox>
+                <md-checkbox ng-model="$ctrl.displaySetting.showAbsContent" aria-label="Show abstract content">
+                    Abstract
+                </md-checkbox>
+            </md-subheader>
+            
+            <md-list-item>
+                <div layout-padding>
+                    <div layout-padding >
+                        <md-checkbox aria-label="Select all abstract"
+                            style="margin-bottom: 0px;"
+                            ng-checked="$ctrl.allSelected();" 
+                            ng-click="$ctrl.toggleSelectAll();"
+                            >
+                            <span ng-if="$ctrl.allSelected();">UN-</span>SELECT ALL
+                        </md-checkbox>
+                    </div>
+                </div>
+            </md-list-item>
+            
+            <md-list-item class="md-3-line" 
+                ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy">
+                <div  layout="row" layout-align="start start" layout-padding>
+                    <div layout-padding>
+                        <md-checkbox aria-label="Select this abstract"
+                            ng-checked="$ctrl.absSelected(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)" 
+                            ng-click="$ctrl.toggleSelectAbs(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)"
+                            id="label_{{item.fieldNoSpace+'-'+item.fileId}}"
+                            >
+                            {{ $index+1 }}
+                        </md-checkbox>
+                    </div>
+                    <!--<label layout-margin>{{ $index+1 }}</label>-->
+                    <div layout="column">
+                        <div><span id="wrapper-abs_field">{{ item.field }}</span></div>
+                        <!--<h3>{{ item.title }}</h3>-->
+                        <!--<p>{{ item.authors }}</p>-->
+                        <div class="wrapper-abs_print" >
+                            <abs-print-admin id="abs_{{item.fieldNoSpace+'-'+item.fileId}}"
+                               abs-data="item"
+                               display-setting="$ctrl.displaySetting"></abs-print-admin>
+                        </div>
+                    </div>
+                </div>
+            </md-list-item>
+        </md-list>
+    </md-content>
+</div>
