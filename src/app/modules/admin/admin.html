@@ -64,7 +64,8 @@
             </md-list-item>
             
             <md-list-item class="md-3-line" 
-                ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy">
+                ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
+                ng-class="{no_elevator_talk: item.canGiveATalk}">
                 <div  layout="row" layout-align="start start" layout-padding>
                     <div layout-padding>
                         <md-checkbox aria-label="Select this abstract"

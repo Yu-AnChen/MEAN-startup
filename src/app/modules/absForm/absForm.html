@@ -125,7 +125,7 @@
             <md-content>
         </div>
         
-        <div flex="auto" hide-xs>    
+        <div flex="grow" hide-xs style="overflow-x:hidden;">    
             <div class="wrapper-abs_print" layout="column" layout-align="start center">
                 <abs-print
                     abs-data="$ctrl.form"
@@ -143,24 +143,35 @@
         </div>
     </div>
     
+        <!--<form name="elevator_talk" -->
+        <!--    flex="100" layout="row" layout-xs="column" layout-align="center center"-->
+        <!--    ng-show="$ctrl.form">-->
+            <!--<p>-->
+            <!--    Are you willing to give an <strong>elevator talk</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">-->
+            <!--        <md-tooltip md-direction="top">-->
+            <!--            3-minute presentation to highlight your research.-->
+            <!--          </md-tooltip>-->
+            <!--    </ng-md-icon>?-->
+            <!--</p>-->
         <form name="elevator_talk" 
-            flex="100" layout="row" layout-xs="column" layout-align="center center"
+            flex="100" layout="column" layout-gt-md="row" layout-align="center center"
             ng-show="$ctrl.form">
             <p>
-                Are you willing to give an <strong>elevator talk</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
+                Abstracts submitted after Oct 16 are not eligiable for <strong>elevator talks</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
                     <md-tooltip md-direction="top">
                         3-minute presentation to highlight your research.
                       </md-tooltip>
                 </ng-md-icon>?
             </p>
             <md-input-container class="indent-left">
-                <label>Please select your answer</label>
+                <!--<label>Please select your answer</label>-->
+                <label>Please select</label>
                 <md-select required name="canGiveATalk"
                     ng-model="$ctrl.form.canGiveATalk"
                     md-on-open="$ctrl.setFooterClass(true)"
                     md-on-close="$ctrl.setFooterClass(false)">
-                    <md-option value="true">Yes!</md-option>
-                    <md-option value="false">No.</md-option>
+                    <!--<md-option value="true">Yes!</md-option>-->
+                    <md-option value="false">Got it!</md-option>
                 </md-select>
                 <div ng-messages="elevator_talk.canGiveATalk.$error">
                     <div ng-message="required">This is required</div>
