@@ -2,26 +2,27 @@
 
 <div flex="">
 
-    <md-toolbar class="md-hue-3">
-        <div class="md-toolbar-tools">
-            <span>Sort By</span>
-        
-        <md-select name="sortBy" aria-label="sort abstract by"
-        placeholder="Select to sort"
-            ng-model="$ctrl.sortBy"
-            md-on-open="$ctrl.setFooterClass(true)"
-            md-on-close="$ctrl.setFooterClass(false)"
-            layout-margin>
-            <md-option 
-                ng-repeat="sortName in $ctrl.sortByOptions.name"
-                ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
-            </md-option>
-        </md-select>
-        <md-button 
-            ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
-            class="md-raised md-primary">
-            download selected
-        </md-button>
+    <md-toolbar class="md-hue-3" layout-padding>
+        <div class="md-toolbar-tools" layout="column" layout-gt-xs="row">
+            <span>Sort Abstracts By</span>
+            <div>
+                <md-select name="sortBy" aria-label="sort abstract by"
+                placeholder="Select to sort"
+                    ng-model="$ctrl.sortBy"
+                    md-on-open="$ctrl.setFooterClass(true)"
+                    md-on-close="$ctrl.setFooterClass(false)"
+                    layout-margin>
+                    <md-option 
+                        ng-repeat="sortName in $ctrl.sortByOptions.name"
+                        ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
+                    </md-option>
+                </md-select>
+            </div>
+            <md-button 
+                ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
+                class="md-raised md-primary">
+                download selected
+            </md-button>
         
         </div>
         
@@ -63,6 +64,15 @@
                 </div>
             </md-list-item>
             
+            <md-list-item class="no_elevator_talk">
+            <!--<md-list-item md-theme="dark">-->
+                        <span 
+                            md-colors="{color: 'primary-50'}"
+                            >Abstracts in dark background are not eligible for elevator talk.
+                        </span>
+            </md-list-item>
+            <md-divider ></md-divider>
+            
             <md-list-item class="md-3-line" 
                 ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
                 ng-class="{no_elevator_talk: !$ctrl.test(item)}">
@@ -73,7 +83,7 @@
                             ng-click="$ctrl.toggleSelectAbs(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)"
                             id="label_{{item.fieldNoSpace+'-'+item.fileId}}"
                             >
-                            {{ $index+1 }} {{item.canGiveATalk}}
+                            {{ $index+1 }}
                         </md-checkbox>
                     </div>
                     <!--<label layout-margin>{{ $index+1 }}</label>-->
