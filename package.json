@@ -19,7 +19,7 @@
     "clean": "rm -rf ./dist",
     "dev:front:only": "echo Running Frontend with Dev Server && NODE_ENV=development gulp serve",
     "dev:front": "echo Frontend Dev with Server && NODE_ENV=development node app.js",
-    "dev:back": "NODE_ENV=development gulp start",
+    "dev:back": "NODE_ENV=development-back nodemon app.js",
     "dist:front": "gulp build",
     "test": "karma start",
     "eslint": "eslint --init",

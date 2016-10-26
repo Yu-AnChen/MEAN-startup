@@ -4,7 +4,8 @@ const ObjectId = mongodb.ObjectId;
 const Auth = require('./auth');
 // const Auth = require('./auth');
 
-Abstract.get('/:email', Auth, (req, res, next)=> {
+// Abstract.get('/:email', Auth, (req, res, next)=> {
+Abstract.get('/:email', (req, res, next)=> {
     // get '/abstract/currentUser'
     if (req.params.email == 'currentUser') {
         // console.log(req.currentUser);
@@ -41,12 +42,9 @@ Abstract.put('/', Auth, (req, res)=> {
     if (req.body._id) {
         // update
         const _id = req.body._id;
-        var submittedAt
+        const submittedAt = (req.body.submittedAt.length)?req.body.submittedAt[0]:null;
         delete req.body['_id'];
         delete req.body['createdAt'];
-        if(req.body.submittedAt.length) {
-            submittedAt = req.body.submittedAt[0];
-        }
         delete req.body['submittedAt'];
         
         req.db.collection('abstracts')
@@ -81,14 +79,20 @@ Abstract.put('/', Auth, (req, res)=> {
                 }
             });
     }
-
 });
-Abstract.put('/:absId', Auth, (req, res) => {
+
+// Abstract.put('/:absId', Auth, (req, res) => {
+Abstract.put('/:absId', (req, res) => {
+    // console.log(req.body.selectedForTalk);
+    // console.log(req.params.absId);
+    
+    // const isSelected = req.body.selectedForTalk;
+    // console.log(req.body)
     req.db.collection('abstracts')
     .update({
         _id: ObjectId(req.params.absId)
     }, {
-        $set: req.body
+        $set: req.body,
     }, (err) => {
         if (!err) {
             res.sendStatus(200);

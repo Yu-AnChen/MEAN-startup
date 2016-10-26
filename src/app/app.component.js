@@ -19,6 +19,9 @@ const appComponent = {
         goSignUp() {
             this.$state.go('app.user.signUp');
         }
+        goResults() {
+            this.$state.go('app.absResults');
+        }
     },
 };
 

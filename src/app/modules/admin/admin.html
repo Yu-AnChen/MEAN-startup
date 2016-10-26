@@ -1,35 +1,22 @@
-<div layout="column" class="admin" layout-padding ng-if="$ctrl.abstracts">
-
+<div layout="column" layout-sm="column" layout-align="center center"
+    ng-if="!$ctrl.abstracts">
+    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+</div>
+<div layout="column" class="admin" layout-padding layout-margin ng-if="$ctrl.abstracts">
 <div flex="">
 
-    <md-toolbar class="md-hue-3" layout-padding>
+    <md-toolbar class="md-hue-3" 
+        ng-show="$ctrl.$state.current.url=='admin'">
         <div class="md-toolbar-tools" layout="column" layout-gt-xs="row">
-            <span>Sort Abstracts By</span>
-            <div>
-                <md-select name="sortBy" aria-label="sort abstract by"
-                placeholder="Select to sort"
-                    ng-model="$ctrl.sortBy"
-                    md-on-open="$ctrl.setFooterClass(true)"
-                    md-on-close="$ctrl.setFooterClass(false)"
-                    layout-margin>
-                    <md-option 
-                        ng-repeat="sortName in $ctrl.sortByOptions.name"
-                        ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
-                    </md-option>
-                </md-select>
-            </div>
-            <md-button 
-                ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
-                class="md-raised md-primary">
-                download selected
-            </md-button>
-        
+            <span>Admin View</span>
         </div>
-        
-        <!--<md-option -->
-        <!--    ng-repeat="sort in $ctrl.sortByOptions | orderBy"-->
-        <!--    ng-model="$ctrl.sortBy">{{sort}}-->
-        <!--</md-option>-->
+    </md-toolbar>
+    
+    <md-toolbar class="md-accent md-hue-1" 
+        ng-show="$ctrl.$state.current.url=='results'">
+        <div class="md-toolbar-tools" layout="column" layout-gt-xs="row">
+            <span>Posters and <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span></span>
+        </div>
     </md-toolbar>
 
     <md-content>
@@ -48,8 +35,56 @@
                 <md-checkbox ng-model="$ctrl.displaySetting.showAbsContent" aria-label="Show abstract content">
                     Abstract
                 </md-checkbox>
+                <md-checkbox ng-model="$ctrl.displaySetting.showEmails" aria-label="Show author's email"
+                    ng-if="$ctrl.$state.current.url=='admin'">
+                    Email
+                </md-checkbox>
+                <div ng-show="$ctrl.displaySetting.showEmails"
+                    ng-if="$ctrl.$state.current.url=='admin'">
+                    <strong>Authors' emails:</strong>
+                        <span 
+                            ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
+                            >{{ item.email }}<span ng-if="!$last">, </span>
+                        </span>
+                </div>
+                <h3 style="margin-bottom:0px;">Sort Abstracts By</h3>
+                <div layout="row" layout-fill>
+                    <md-select name="sortBy" aria-label="sort abstract by"
+                        placeholder="Select to sort"
+                        ng-model="$ctrl.sortBy"
+                        md-on-open="$ctrl.setFooterClass(true)"
+                        md-on-close="$ctrl.setFooterClass(false)"
+                        layout-margin>
+                        <md-option 
+                            ng-repeat="sortName in $ctrl.sortByOptions.name"
+                            ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
+                        </md-option>
+                        
+                    </md-select>
+                    <md-button layout-margin
+                        ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
+                        class="md-raised md-accent">
+                        <span style="font-size:14px">download selected</span>
+                    </md-button>
+                </div>
             </md-subheader>
             
+            
+            
+            
+            <md-list-item class="no_elevator_talk"
+                ng-show="$ctrl.$state.current.url=='admin'">
+                <span 
+                    md-colors="{color: 'primary-50'}"
+                    >Abstracts in dark background are not eligible for elevator talk.
+                </span>
+            </md-list-item>
+            <md-list-item class="selected_for_talk"
+                ng-show="$ctrl.$state.current.url=='results'">
+                <span 
+                    >Abstracts in yellow background are selected for elevator talk.
+                </span>
+            </md-list-item>
             <md-list-item>
                 <div layout-padding>
                     <div layout-padding >
@@ -62,21 +97,20 @@
                         </md-checkbox>
                     </div>
                 </div>
+                <span flex></span>
+                <span layout-padding
+                    md-colors="{color: 'warn-900'}"
+                    ng-show="$ctrl.$state.current.url=='admin'"
+                    ><strong>Elevator talk?</strong>
+                </span>
             </md-list-item>
-            
-            <md-list-item class="no_elevator_talk">
-            <!--<md-list-item md-theme="dark">-->
-                        <span 
-                            md-colors="{color: 'primary-50'}"
-                            >Abstracts in dark background are not eligible for elevator talk.
-                        </span>
-            </md-list-item>
-            <md-divider ></md-divider>
+            <!--<md-divider ></md-divider>-->
             
             <md-list-item class="md-3-line" 
                 ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
-                ng-class="{no_elevator_talk: !$ctrl.test(item)}">
-                <div  layout="row" layout-align="start start" layout-padding>
+                ng-class="{no_elevator_talk: !$ctrl.strToBoolean(item.canGiveATalk) && $ctrl.$state.current.url=='admin',
+                           selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='results'}">
+                <div  layout="row" layout-align="" layout-fill layout-padding>
                     <div layout-padding>
                         <md-checkbox aria-label="Select this abstract"
                             ng-checked="$ctrl.absSelected(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)" 
@@ -88,7 +122,14 @@
                     </div>
                     <!--<label layout-margin>{{ $index+1 }}</label>-->
                     <div layout="column">
-                        <div><span id="wrapper-abs_field">{{ item.field }}</span></div>
+                        <div>
+                            <span id="wrapper-abs_field"
+                                >{{ item.field }}<span ng-show="$ctrl.displaySetting.showEmails"
+                                    ng-if="$ctrl.$state.current.url=='admin'"
+                                    > | {{ item.email }}
+                                </span>
+                            </span>
+                        </div>
                         <!--<h3>{{ item.title }}</h3>-->
                         <!--<p>{{ item.authors }}</p>-->
                         <div class="wrapper-abs_print" >
@@ -97,7 +138,20 @@
                                display-setting="$ctrl.displaySetting"></abs-print-admin>
                         </div>
                     </div>
+                    <div flex></div>
+                    <md-switch aria-label="selected for talk switch"
+                        ng-if="$ctrl.$state.current.url=='admin'"
+                        ng-disabled="$ctrl.isTaskOn() || !$ctrl.strToBoolean(item.canGiveATalk)"
+                        ng-model="item.selectedForTalk" 
+                        ng-change="$ctrl.updateTalkStatus(item)"
+                        class="md-warn md-hue-1">
+                        <span ng-show="item.selectedForTalk">Yes!</span>
+                        <span ng-show="!item.selectedForTalk">Nope</span>
+                        <!--{{ item.selectedForTalk }}-->
+                    </md-switch>
+                    
                 </div>
+                
             </md-list-item>
         </md-list>
     </md-content>

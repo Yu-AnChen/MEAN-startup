@@ -14,7 +14,10 @@ const flash = require('express-flash');
 const path = require('path');
 const multer = require('multer');
 
-if (process.env.NODE_ENV == 'development') {
+if (
+    process.env.NODE_ENV == 'development' ||
+    process.env.NODE_ENV.indexOf('development') > -1
+) {
     const dotenv = require('dotenv');
     dotenv.load({
         path: '.env.file'
@@ -37,7 +40,7 @@ app.use(expressValidator());
 const dbClient = mongodb.MongoClient;
 // const ObjectId = mongodb.ObjectId;
 const dbUrl = process.env.MONGODB_URI || process.env.MONGOLAB_URI;
-
+console.log(dbUrl)
 app.use((req, res, next) => {
     dbClient.connect(dbUrl, (err, db) => {
         // app.set('db', db);  => req.app.get('db')

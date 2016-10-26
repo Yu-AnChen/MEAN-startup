@@ -42,12 +42,20 @@ class formApiService {
         const _title = title || '';
         return this.$http.get('/abstract/'+email+'?title='+_title);
     }
+    
     save(data) {
         return this.$http.put('/abstract/', data);
     }
-    updateEmail(absId, data) {
-        return this.$http.put('/abstract/' + absId, data);
+    update(absId, updateData) {
+        return this.$http.put('/abstract/' + absId, updateData);
     }
+    // updateEmail(absId, data) {
+    //     return this.$http.put('/abstract/' + absId, data);
+    // }
+    // updateTalkStatus(absId, data) {
+    //     return this.$http.put('/abstract/' + absId, data);
+    // }
+    
     delete(_id) {
         return this.$http.delete('/abstract/' + _id);
     }

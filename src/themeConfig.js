@@ -29,8 +29,8 @@ function themeConfig($mdThemingProvider) {
             'hue-1': '800',
         })
     
-    $mdThemingProvider.theme('navTheme')
-        .accentPalette('white')
+    // $mdThemingProvider.theme('navTheme')
+        // .accentPalette('white')
         // .backgroundPalette('light-green')
     //     .backgroundPalette('white')
     //     .primaryPalette('customBlue', {
