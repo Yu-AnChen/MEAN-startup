@@ -8,7 +8,7 @@
     <md-toolbar class="md-hue-3" 
         ng-show="$ctrl.$state.current.url=='admin'">
         <div class="md-toolbar-tools" layout="column" layout-gt-xs="row">
-            <span>Admin View</span>
+            <span>Admin Portal</span>
         </div>
     </md-toolbar>
     
@@ -140,8 +140,8 @@
                     </div>
                     <div flex></div>
                     <md-switch aria-label="selected for talk switch"
-                        ng-if="$ctrl.$state.current.url=='admin'"
-                        ng-disabled="$ctrl.isTaskOn() || !$ctrl.strToBoolean(item.canGiveATalk)"
+                        ng-show="$ctrl.$state.current.url=='admin'"
+                        ng-disabled="$ctrl.isTaskOn() || !$ctrl.strToBoolean(item.canGiveATalk) || !$ctrl.$state.current.url=='admin'"
                         ng-model="item.selectedForTalk" 
                         ng-change="$ctrl.updateTalkStatus(item)"
                         class="md-warn md-hue-1">
