@@ -2,19 +2,19 @@
     ng-if="!$ctrl.abstracts">
     <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
 </div>
-<div layout="column" class="admin" layout-padding layout-margin ng-if="$ctrl.abstracts">
+<div layout="column" class="admin" layout-padding  ng-if="$ctrl.abstracts">
 <div flex="">
 
     <md-toolbar class="md-hue-3" 
         ng-show="$ctrl.$state.current.url=='admin'">
-        <div class="md-toolbar-tools" layout="column" layout-gt-xs="row">
+        <div class="md-toolbar-tools" layout="row">
             <span>Admin Portal</span>
         </div>
     </md-toolbar>
     
     <md-toolbar class="md-accent md-hue-1" 
         ng-show="$ctrl.$state.current.url=='results'">
-        <div class="md-toolbar-tools" layout="column" layout-gt-xs="row">
+        <div class="md-toolbar-tools" layout="row">
             <span>Posters and <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span></span>
         </div>
     </md-toolbar>
@@ -61,7 +61,7 @@
                         </md-option>
                         
                     </md-select>
-                    <md-button layout-margin
+                    <md-button layout-margin hide-xs
                         ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
                         class="md-raised md-accent">
                         <span style="font-size:14px">download selected</span>
@@ -86,7 +86,7 @@
                 </span>
             </md-list-item>
             <md-list-item>
-                <div layout-padding>
+                <div layout-padding hide-xs>
                     <div layout-padding >
                         <md-checkbox aria-label="Select all abstract"
                             style="margin-bottom: 0px;"
@@ -111,7 +111,7 @@
                 ng-class="{no_elevator_talk: !$ctrl.strToBoolean(item.canGiveATalk) && $ctrl.$state.current.url=='admin',
                            selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='results'}">
                 <div  layout="row" layout-align="" layout-fill layout-padding>
-                    <div layout-padding>
+                    <div layout-padding hide-xs>
                         <md-checkbox aria-label="Select this abstract"
                             ng-checked="$ctrl.absSelected(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)" 
                             ng-click="$ctrl.toggleSelectAbs(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)"
@@ -120,6 +120,7 @@
                             {{ $index+1 }}
                         </md-checkbox>
                     </div>
+                    <div hide-gt-xs>{{ $index+1 }}</div>
                     <!--<label layout-margin>{{ $index+1 }}</label>-->
                     <div layout="column">
                         <div>
