@@ -2,7 +2,9 @@
     ng-if="!$ctrl.abstracts">
     <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
 </div>
-<div layout="column" class="admin" layout-padding  ng-if="$ctrl.abstracts">
+<div layout="row" class="admin" layout-padding  ng-if="$ctrl.abstracts">
+<div flex="20" show-lg hide></div>
+<div flex="30" show-xl hide></div>
 <div flex="">
 
     <md-toolbar class="md-hue-3" 
@@ -156,4 +158,7 @@
             </md-list-item>
         </md-list>
     </md-content>
+</div>
+<div flex="20" show-lg hide></div>
+<div flex="30" show-xl hide></div>
 </div>
