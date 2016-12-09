@@ -6,8 +6,8 @@ import absResults from './absResults';
 
 const Modules = angular
     .module('app.core.modules', [
-        // user,
-        // absForm,
+        user,
+        absForm,
         // underConstruction,
         admin,
         absResults,
