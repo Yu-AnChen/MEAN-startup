@@ -1,23 +1,31 @@
 <div layout="column" layout-sm="column" layout-align="center center"
     ng-if="!$ctrl.abstracts">
-    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" class="md-primary md-hue-3 progress_indic"></md-progress-circular>
 </div>
 <div layout="row" class="admin" layout-padding  ng-if="$ctrl.abstracts">
-<div flex="20" show-lg hide></div>
-<div flex="30" show-xl hide></div>
-<div flex="">
+<!--<div flex="20" show-lg hide></div>
+<div flex="30" show-xl hide></div>-->
+<div flex="100" flex-gt-sm="90" flex-gt-md="80" flex-offset-md="5" flex-offset-gt-md="10">
 
     <md-toolbar class="md-hue-3" 
         ng-show="$ctrl.$state.current.url=='admin'">
-        <div class="md-toolbar-tools" layout="row">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
             <span>Admin Portal</span>
+            <md-button class="md-accent md-raised"
+                ng-click="$ctrl.$state.go('app.absResults')">
+                User View
+            </md-button>
         </div>
     </md-toolbar>
     
     <md-toolbar class="md-accent md-hue-1" 
         ng-show="$ctrl.$state.current.url=='results'">
-        <div class="md-toolbar-tools" layout="row">
+        <div class="md-toolbar-tools" layout="row" layout-align="space-between center">
             <span>Posters and <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span></span>
+            <md-button class="md-primary md-raised md-hue-3"
+                ng-click="$ctrl.$state.go('app.admin')">
+                Admin View
+            </md-button>
         </div>
     </md-toolbar>
 
@@ -65,7 +73,8 @@
                     </md-select>
                     <md-button layout-margin hide-xs
                         ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
-                        class="md-raised md-accent">
+                        class="md-raised"
+                        ng-class="{'md-accent': $ctrl.$state.current.url=='results', 'md-primary': $ctrl.$state.current.url=='admin'}">
                         <span style="font-size:14px">download selected</span>
                     </md-button>
                 </div>
@@ -159,6 +168,6 @@
         </md-list>
     </md-content>
 </div>
-<div flex="20" show-lg hide></div>
-<div flex="30" show-xl hide></div>
+<!--<div flex="20" show-lg hide></div>
+<div flex="30" show-xl hide></div>-->
 </div>

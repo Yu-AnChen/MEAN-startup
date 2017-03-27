@@ -10,9 +10,9 @@ const absFormComponent = {
     controller: /* @ngInject */
     class absFormInputController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams', 'absFormService'];
+            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams', 'absFormService', '$mdMedia'];
         }
-        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams, absFormService) {
+        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams, absFormService, $mdMedia) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
@@ -23,6 +23,7 @@ const absFormComponent = {
             this.focus = focus;
             this.$stateParams = $stateParams;
             this.absFormService = absFormService;
+            this.$mdMedia = $mdMedia;
         }
         $onInit() {
             this.absFormConst = absFormConst;
@@ -366,7 +367,7 @@ const absFormComponent = {
         }
         _submittedInTime(data) {
             const createdTime = Date.parse(data.createdAt);
-            const deadline = Date.parse("2016-10-17T22:57:36.910Z");
+            const deadline = Date.parse("2017-10-17T22:57:36.910Z");
             if (createdTime <= deadline) {
                 console.log('before deadline');
                 // return true;

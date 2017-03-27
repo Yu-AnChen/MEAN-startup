@@ -1,17 +1,19 @@
 <div ui-view class="abs_form">
     <div layout="column" layout-sm="column" layout-align="center center"
         ng-show="!$ctrl.form">
-        <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+        <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-3 progress_indic"></md-progress-circular>
     </div>
-    <div layout="row" layout-gt-sm="row" layout-padding="" ng-show="$ctrl.form"> <!--this div is added to fix TypeError: Cannot read property 'insertBefore' of null-->
+    <div flex="100" flex-gt-sm="90" flex-gt-md="80" flex-offset-md="5" flex-offset-gt-md="10"
+        layout="row" layout-margin ng-show="$ctrl.form"> <!--this div is added to fix TypeError: Cannot read property 'insertBefore' of null-->
     <!--<form id="form" name="abstract_form"-->
     <!--    layout="column" layout-gt-sm="row" layout-padding=""-->
     <!--    ng-if="$ctrl.form"-->
     <!--    ng-click="$ctrl.detectAbsOverflowY()"-->
     <!--    ng-keyup="$ctrl.detectAbsOverflowY()">-->
         
-        <div flex="grow">
-            <md-toolbar class="md-accent md-hue-1" ng-if="$ctrl.form">
+        <div flex="grow" class="md-whiteframe-5dp"
+            ng-class="{'layout-fill': $ctrl.$mdMedia('xs')}">
+            <md-toolbar class="md-accent" ng-if="$ctrl.form">
                 <div class="md-toolbar-tools" ng-if="!$ctrl.currentUser">
                     <span flex></span>
                     <div layout-xs="column" style="text-align:center">
@@ -97,7 +99,7 @@
                         <div layout="column"  layout-align="center end" layout-align-xs="center end">
                             <md-button 
                                 ng-click="[$ctrl.addAffiliation($index), $ctrl.focusNewAffiliation($index)]" 
-                                class="md-raised md-primary md-hue-2">Add Affiliation
+                                class="md-raised md-accent">Add Affiliation
                             </md-button>
                         </div>
                     </div>
@@ -105,7 +107,7 @@
                         <div layout="column"  layout-align="center center" layout-align-xs="center end">
                             <md-button 
                                 ng-click="[$ctrl.addAuthor(), $ctrl.focusNewAuthor()]" 
-                                class="md-raised md-primary ">Add Another Author
+                                class="md-raised md-accent md-hue-3">Add Another Author
                             </md-button>
                         </div>
                         
@@ -125,7 +127,7 @@
             <md-content>
         </div>
         
-        <div flex="grow" hide-xs style="overflow-x:hidden;">    
+        <div flex="grow" hide-xs style="overflow-x:hidden;" class="md-whiteframe-5dp">    
             <div class="wrapper-abs_print" layout="column" layout-align="start center">
                 <abs-print
                     abs-data="$ctrl.form"
@@ -135,7 +137,7 @@
     <!--</form>-->
     </div>
     
-    <div flex="auto" hide show-xs layout-margin>    
+    <div flex="auto" hide show-xs layout-margin class="md-whiteframe-5dp">    
         <div class="wrapper-abs_print" layout="column" layout-align="start center">
             <abs-print
                 abs-data="$ctrl.form"
@@ -145,39 +147,15 @@
         <div>
         <form name="elevator_talk" 
             flex="100" layout="row" layout-xs="column" layout-align="center center"
-            ng-show="$ctrl.form"
-            ng-if="$ctrl.submittedInTime">
-            <p>
+            ng-show="$ctrl.form">
+            <p ng-show="$ctrl.submittedInTime"> 
                 Are you willing to give an <strong>elevator talk</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
                     <md-tooltip md-direction="top">
                         3-minute presentation to highlight your research.
                       </md-tooltip>
                 </ng-md-icon>?
             </p>
-            <md-input-container class="indent-left">
-                <label>
-                    <span ng-if="$ctrl.submittedInTime">Please select your answer</span>
-                </label>
-                <!--<label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>-->
-                <!--<label ng-hide="$ctrl.submittedInTime()">Please select</label>-->
-                <md-select required name="canGiveATalk"
-                    ng-model="$ctrl.form.canGiveATalk"
-                    md-on-open="$ctrl.setFooterClass(true)"
-                    md-on-close="$ctrl.setFooterClass(false)">
-                    <md-option value="true">Yes!</md-option>
-                    <md-option value="false">No</md-option>
-                    <!--<md-option value="false">Got it!</md-option>-->
-                </md-select>
-                <div ng-messages="elevator_talk.canGiveATalk.$error">
-                    <div ng-message="required">This is required</div>
-                </div>
-            </md-input-container>
-        </form>
-        <form name="elevator_talk" 
-            flex="100" layout="column" layout-gt-md="row" layout-align="center center"
-            ng-show="$ctrl.form"
-            ng-if="!$ctrl.submittedInTime">
-            <p>
+            <p ng-show="!$ctrl.submittedInTime">
                 Abstracts submitted <strong>after Oct 16</strong> are not eligible for <strong>elevator talks</strong><ng-md-icon icon="info_outline" style="fill: #222" size="20px">
                     <md-tooltip md-direction="top">
                         3-minute presentation to highlight your research.
@@ -186,17 +164,19 @@
             </p>
             <md-input-container class="indent-left">
                 <label>
-                    <span ng-if="!$ctrl.submittedInTime">Please select</span>
+                    <span>Please select <span ng-show="$ctrl.submittedInTime">your answer</span></span>
                 </label>
-                <!--<label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>-->
-                <!--<label ng-hide="$ctrl.submittedInTime()">Please select</label>-->
                 <md-select required name="canGiveATalk"
                     ng-model="$ctrl.form.canGiveATalk"
                     md-on-open="$ctrl.setFooterClass(true)"
                     md-on-close="$ctrl.setFooterClass(false)">
-                    <!--<md-option value="true">Yes!</md-option>-->
-                    <!--<md-option value="false">No</md-option>-->
-                    <md-option value="false">Got it!</md-option>
+                    <span ng-if="$ctrl.submittedInTime">
+                        <md-option value="true">Yes!</md-option>
+                        <md-option value="false">No</md-option>
+                    </span>
+                    <span ng-if="!$ctrl.submittedInTime">
+                    <md-option value="null">Got it!</md-option>
+                    </span>
                 </md-select>
                 <div ng-messages="elevator_talk.canGiveATalk.$error">
                     <div ng-message="required">This is required</div>
@@ -215,12 +195,12 @@
         ng-show="$ctrl.form">
         <md-button 
             ng-click="$ctrl.goSignUp()"
-            class="md-raised md-primary"
+            class="md-raised md-accent"
             >Back
         </md-button>
         <md-button 
             ng-click="$ctrl.submit()"
-            class="md-raised md-primary"
+            class="md-raised md-accent"
             ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field || $ctrl.submitBtnClicked || !$ctrl.form.canGiveATalk"
             >Submit
         </md-button>

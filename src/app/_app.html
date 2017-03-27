@@ -1,0 +1,59 @@
+<!--<header-and-nav></header-and-nav>-->
+<showcase-header-and-nav layout layout-align="center center"></showcase-header-and-nav>
+<div ui-view>
+    <div layout="row" layout-padding="" layout-align="center center" class="root">
+        <md-content layout="column" layout-padding="" flex-gt-xs="80" flex="100">
+            <div class="abs-root" md-colors="{color: 'grey-800'}">
+        		<h2 >
+        		    <span class="form_bullet">Poster Session and Elevator Talk</span>
+        		</h2>
+        		<p style="line-height:1.5em; padding-left:20px">The poster session will be held on the first day of the symposium, <u>November 12</u>, <u>7:30 pm to 9 pm</u>. The format is rather casual. The goal of the poster session is for you to showcase your work and to foster discussion with fellow symposium attendees.</p>
+        		<p style="line-height:1.5em; padding-left:20px">We also encourage you to sign up for <strong>elevator talk</strong> when submitting your poster abstract. The elevator talk is on the same date, <u>from 6:30 to 7 pm</u>. For those selected, you will give <strong>a 3-minute presentation</strong> to highlight your research.</p>
+        		<p style="line-height:1.5em; padding-left:20px">TTBA Symposium now offers an <u>extended abstract submission deadline</u>. The goal is to enrich the symposium with more diverse studies and facilitate more conversations. <strong>The extended deadline for submission is October 22, 2016, 11:59 a.m. Central Time.</strong></p>
+        		<p style="line-height:1.5em; padding-left:20px">Guidlines:</p>
+        		
+        		<div layout="row" layout-xs="column">
+        		<ol layout-margin="" class="md-subhead body_font_spacing" flex="nogrow" >
+        			<li md-colors="{color: 'warn-900'}">
+        			    The poster holder's size is <strong>8 feet (96 inches) in width and 4 feet (48 inches) in height.</strong><br /><strike md-colors="{color: 'warn-100'}">The maximum dimensions for each poster is 48 inches by 48 inches.</strike>
+        			    <div hide-gt-xs flex="nogrow" layout-padding layout-align="center start" layout="row" style="max-width: 350px; min-width:225px;">
+    	                    <img style="width:100%; position: relative; top: -10px; left:-10px" src="assets/img/poster_dimensions.png"></img>
+    	                </div>
+    	            </li>
+        			<li>Extended submission deadline: <u>October 22, 2016, 11:59 a.m. Central Time</u>.</li>
+        			<li>Abstracts submitted after the general submission deadline are not eligible for elevator talk.</li>
+        			<li>General submission deadline: October 16, 2016.</li>
+        			<li md-colors="{color: 'warn-900'}">Decisions for elevator talk will be sent by October 25, 2016.</li>
+        			<li>You may updated your abstract before the deadline.</li>
+        			
+        		</ol>
+        		<div flex></div>
+        		<div hide-xs flex="nogrow" flex-offset-xs="10" layout-padding layout-align="center start" layout="row" style="max-width: 350px; min-width:250px;">
+    	            <img style="width:100%; position: relative; top: -20px;" src="assets/img/poster_dimensions.png"></img>
+    	        </div>
+    	        <div flex></div>
+    	        </div>
+    	    </div>
+    	    
+    	    <div layout="row" layout-align="center center">
+                <!--<md-button -->
+                <!--    ng-href="http://www.symposium2016.ttbatw.org/register"-->
+                <!--    class="md-raised md-primary">-->
+                <!--    Back-->
+                <!--</md-button>-->
+                <!--<md-button -->
+                <!--    ng-click="$ctrl.goSignUp()"-->
+                <!--    class="md-raised md-primary"-->
+                <!--    ng-disabled="signUpForm.$invalid">-->
+                <!--    Next-->
+                <!--</md-button>-->
+                <md-button 
+                    ng-click="$ctrl.goResults()"
+                    class="md-raised md-warn md-hue-1">
+                    Browse Abstracts
+                </md-button>
+            </div>
+        </md-content>
+    </div>
+</div>
+<footer></footer>
