@@ -89,6 +89,9 @@ const absSubmitCompleteComponent = {
         goRoot() {
             this.$state.go('app');
         }
+        goAbsResults() {
+            this.$state.go('app.absResults');
+        }
         signOut() {
             this.UserApi.signout(this.userData).then((res)=>{
                 if (res.status == 200) {

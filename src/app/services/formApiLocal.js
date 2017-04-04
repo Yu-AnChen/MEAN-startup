@@ -76,19 +76,31 @@ class formApiService {
         res.data = data;
         return Promise.resolve(res);
     }
-    update(absId, updateData) {
-        return this.$http.put('/abstract/' + absId, updateData);
-    }
+    // update(absId, updateData) {
+    //     return this.$http.put('/abstract/' + absId, data);
+    // }
     // updateEmail(absId, data) {
     //     return this.$http.put('/abstract/' + absId, data);
     // }
-    // updateTalkStatus(absId, data) {
-    //     return this.$http.put('/abstract/' + absId, data);
-    // }
-    
-    delete(_id) {
-        return this.$http.delete('/abstract/' + _id);
+    updateTalkStatus(absId, data) {
+        this.setAbstracts();
+
+        let res = {};
+        if (!absId || !data || data.selectedForTalk === undefined)
+            return reject('bad request');
+        let indexOfTargetAbstract;
+        indexOfTargetAbstract = this.abstracts.findIndex(element => element._id == absId);
+        if (indexOfTargetAbstract === -1) 
+            return reject('cannot find abstract in db');
+        this.abstracts[indexOfTargetAbstract]['selectedForTalk'] = data.selectedForTalk;
+        this._saveToLocalStorage(this.abstracts);
+        res.status = 200;
+        return Promise.resolve(res);
     }
+    
+    // delete(_id) {
+    //     return this.$http.delete('/abstract/' + _id);
+    // }
 }
 
 export default formApiService;

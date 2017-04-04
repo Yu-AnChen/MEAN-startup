@@ -45,7 +45,7 @@ const adminComponent = {
             // this.adminService.cleanup();
         }
         strToBoolean(str) {
-            return str === "true" ? true : false
+            return str === "true" ? true : false;
         }
         getAbstracts() {
             // let rawData = [];
@@ -96,8 +96,8 @@ const adminComponent = {
         updateTalkStatus(obj) {
             this.taskOn();
             const _id = obj._id;
-            const updateData = { selectedForTalk: obj.selectedForTalk }
-            this.FormApi.update(_id, updateData)
+            const updateData = { selectedForTalk: obj.selectedForTalk };
+            this.FormApi.updateTalkStatus(_id, updateData)
             .then(
                 ()=> {
                     console.log('sucess: updateTalkStatus');
@@ -106,7 +106,7 @@ const adminComponent = {
                 ()=> {
                     console.log('error: updateTalkStatus');
                     this.taskDone();
-                })
+                });
 
         }
         replaceSpace(str) {

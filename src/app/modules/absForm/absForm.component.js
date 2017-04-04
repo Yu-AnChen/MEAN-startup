@@ -1,6 +1,6 @@
 import template from './absForm.html';
 import './absForm.styl';
-var absFormConst = require('./absForm.constant.js')
+var absFormConst = require('./absForm.constant.js');
 
 const absFormComponent = {
     template,
@@ -40,10 +40,10 @@ const absFormComponent = {
         }
         init() {
             let confirm = this.$mdDialog.prompt({
-                title: 'Please enter an unique identifier',
+                title: 'Please enter an unique ID',
                 textContent: 'To save and retrieve your abstract',
-                placeholder: 'Unique identifier',
-                ariaLabel: 'Unique identifier',
+                placeholder: 'Unique ID',
+                ariaLabel: 'Unique ID',
                 initialValue: 'sunny day',
                 ok: 'Go',
                 theme: 'navTheme',
@@ -54,7 +54,7 @@ const absFormComponent = {
             .then((result) => {
                 this.confirmResult = result;
                 return this.UserApi.signup({email: result});
-            })
+            }, () => this.init())
             .then((res) => {
                 return this.UserApi.signin({email: res.data.email});
             })
@@ -128,7 +128,6 @@ const absFormComponent = {
                     // this.$state.go('app.absForm', {email: res.data.email});
                     // console.log(res.data.email);
                     this.currentUser = res.data;
-                    console.log(this.currentUser);
                     // this.form.email = res.data.email;
                 } else { 
                     console.log('error: getCurrentUser');
@@ -172,7 +171,7 @@ const absFormComponent = {
                     this.detectAbsOverflowY(()=>{
                         console.log(this.absWithinPage);
                         if (this.absWithinPage) { 
-                           this.saveToDatabase(true); 
+                            this.saveToDatabase(true); 
                         } 
                     });
                 });
@@ -235,7 +234,7 @@ const absFormComponent = {
                 affiliationSup: [NaN],
                 affiliationOfAuthor: [""],
                 validAuthor: false
-            }
+            };
             if (this.form.authors.length < 2) {
                 this.form.authors.push(newAuthor);
             } else {
