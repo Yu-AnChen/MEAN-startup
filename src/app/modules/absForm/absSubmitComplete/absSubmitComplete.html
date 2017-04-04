@@ -1,6 +1,6 @@
 <div layout="column" layout-sm="column" layout-align="center center"
     ng-if="!$ctrl.dataLoaded">
-    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-3 progress_indic"></md-progress-circular>
 </div>
 
 <div layout="row" layout-align="center center" layout-padding="" class="abs_complete"
@@ -39,26 +39,26 @@
     		<ul class="md-subhead body_font_spacing"
     		    style="margin-top:0px; list-style:none; padding-left:16px; text-align:center;">
     		    <li>
-    			    <md-button id="pdf" ng-href="{{$ctrl.pdfLink}}" target="_blank" class="md-accent">
-    			    <!--<md-button id="pdf" ng-click="$ctrl.testLink()" class="md-accent">-->
+    			    <!--<md-button id="pdf" ng-href="{{$ctrl.pdfLink}}" target="_blank" class="md-accent">-->
+    			    <md-button id="pdf" ng-click="$ctrl.genDocx()" class="md-accent md-raised">
     			        Download your abstract
                     </md-button>
 			    </li>
-    			<li>
+    			<!--<li>
     			    <md-button ng-click="$ctrl.goRoot()" class="md-accent">
     			        Check out the rules again
 			        </md-button>
-		        </li>
+		        </li>-->
     			<li>
-    			    <md-button ng-click="$ctrl.goSignIn()" class="md-accent">
+    			    <md-button ng-click="$ctrl.goSignIn()" class="md-accent md-raised">
     			        Edit your abstract
 			        </md-button>
 		        </li>
-    			<li>
+    			<!--<li>
     			    <md-button ng-click="$ctrl.signOut()" class="md-accent">
     			        Leave for Symposium site
 			        </md-button>
-		        </li>
+		        </li>-->
     		</ul>
             <div class="wrapper-abs_print" hide>
                 <abs-print

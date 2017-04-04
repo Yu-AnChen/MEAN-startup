@@ -34,19 +34,19 @@
       <!--<md-list class="md-dense" flex="">-->
         <md-list flex="">
 
-            <md-subheader class="md-no-sticky">
+            <md-subheader class="md-no-sticky md-primary">
                 <h3>Show</h3>
-                <md-checkbox ng-model="$ctrl.displaySetting.showAffil" aria-label="Show affiliations">
+                <md-checkbox ng-model="$ctrl.displaySetting.showAffil" aria-label="Show affiliations" ng-class="{'md-primary': $ctrl.$state.current.url=='admin', 'md-accent': $ctrl.$state.current.url=='results'}">
                     Affiliations
                 </md-checkbox>
-                <md-checkbox ng-model="$ctrl.displaySetting.showKeywords" aria-label="Show keywords">
+                <md-checkbox ng-model="$ctrl.displaySetting.showKeywords" aria-label="Show keywords" ng-class="{'md-primary': $ctrl.$state.current.url=='admin', 'md-accent': $ctrl.$state.current.url=='results'}">
                     Keywords
                 </md-checkbox>
-                <md-checkbox ng-model="$ctrl.displaySetting.showAbsContent" aria-label="Show abstract content">
+                <md-checkbox ng-model="$ctrl.displaySetting.showAbsContent" aria-label="Show abstract content" ng-class="{'md-primary': $ctrl.$state.current.url=='admin', 'md-accent': $ctrl.$state.current.url=='results'}">
                     Abstract
                 </md-checkbox>
                 <md-checkbox ng-model="$ctrl.displaySetting.showEmails" aria-label="Show author's email"
-                    ng-if="$ctrl.$state.current.url=='admin'">
+                    ng-if="$ctrl.$state.current.url=='admin'" ng-class="{'md-primary': $ctrl.$state.current.url=='admin', 'md-accent': $ctrl.$state.current.url=='results'}">
                     Email
                 </md-checkbox>
                 <div ng-show="$ctrl.displaySetting.showEmails"
@@ -103,6 +103,7 @@
                             style="margin-bottom: 0px;"
                             ng-checked="$ctrl.allSelected();" 
                             ng-click="$ctrl.toggleSelectAll();"
+                            ng-class="{'md-primary': $ctrl.$state.current.url=='admin', 'md-accent': $ctrl.$state.current.url=='results'}"
                             >
                             <span ng-if="$ctrl.allSelected();">UN-</span>SELECT ALL
                         </md-checkbox>
@@ -127,8 +128,12 @@
                             ng-checked="$ctrl.absSelected(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)" 
                             ng-click="$ctrl.toggleSelectAbs(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)"
                             id="label_{{item.fieldNoSpace+'-'+item.fileId}}"
+                            ng-class="{'md-primary': $ctrl.$state.current.url=='admin', 'md-accent': $ctrl.$state.current.url=='results'}"
                             >
-                            {{ $index+1 }}
+                            <!--added for angular version change-->
+                            <span class="js-order_label">
+                                {{ $index+1 }}
+                            </span>
                         </md-checkbox>
                     </div>
                     <div hide-gt-xs>{{ $index+1 }}</div>
@@ -156,7 +161,7 @@
                         ng-disabled="$ctrl.isTaskOn() || !$ctrl.strToBoolean(item.canGiveATalk) || !$ctrl.$state.current.url=='admin'"
                         ng-model="item.selectedForTalk" 
                         ng-change="$ctrl.updateTalkStatus(item)"
-                        class="md-warn md-hue-1">
+                        class="md-warn">
                         <span ng-show="item.selectedForTalk">Yes!</span>
                         <span ng-show="!item.selectedForTalk">Nope</span>
                         <!--{{ item.selectedForTalk }}-->

@@ -21,6 +21,7 @@
                         required md-no-asterisk="true"
                         ng-model="$ctrl.userData.email"
                         ng-change="$ctrl.alreadyExist = false;"/>
+                    <div><small>You need this to come back and edit your abstract</small></div>
                     <div ng-messages="signUpForm.email.$error">
                         <div ng-message="email">Please enter a valid email.</div>
                         <div ng-message="required">This is required</div>
