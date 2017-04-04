@@ -1,6 +1,7 @@
 import uiRouter from 'angular-ui-router';
 import absFormComponent from './absForm.component';
 import absFormService from './services/absForm.service';
+import absFormServiceLocal from './services/absFormLocal.service';
 import absPrintComponent from './absPrint';
 import absSubmitCompleteComponent from './absSubmitComplete';
 // import signOutComponent from '../user/signOut';
@@ -14,6 +15,7 @@ const absFormModule = angular
     .component('absSubmitComplete', absSubmitCompleteComponent)
     // .component('signOut',signOutComponent )
     .service('absFormService', absFormService)
+    .service('absFormServiceLocal', absFormServiceLocal)
     .config(($stateProvider) => {
         'ngInject';
         $stateProvider
@@ -28,7 +30,7 @@ const absFormModule = angular
                 url: 'abstract-submitted',
                 component: 'absSubmitComplete',
                 data: {
-                    pageTitle: 'Submission Status'
+                    pageTitle: 'Submission Complete'
                 }
             });
     })

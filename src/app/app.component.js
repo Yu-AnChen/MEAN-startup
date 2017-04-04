@@ -17,7 +17,7 @@ const appComponent = {
             // this.$state.go('app.directions');
         }
         goSignUp() {
-            this.$state.go('app.user.signUp');
+            this.$state.go('app.absForm');
         }
         goResults() {
             this.$state.go('app.absResults');
