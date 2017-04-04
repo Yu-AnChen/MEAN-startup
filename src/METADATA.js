@@ -5,9 +5,9 @@ constructor(metadata){
 */
 const METADATA = {
     // for web metadatas
-    webTitle: 'TTBA SYMPOSIUM 2016',
+    webTitle: 'FLOW THROUGH - abstract submission made easy',
     webAuthor: 'Yu-An Chen atwood12@gmail.com',
-    webDescription: 'TTBA Symposium 2016 is hosted by Texas Taiwanese Biotechnology Association (TTBA) at UT Southwestern, Dallas TX.',
+    webDescription: 'The idea of Flow Through is to ease the process of submitting and generating abstract document with modern web technologies.',
     baseUrl: '/',
     iconUrl: './assets/img/favicon.ico',
     // for app metadatas

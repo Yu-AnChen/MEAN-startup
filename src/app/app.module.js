@@ -22,7 +22,7 @@ const appModule = angular
                 url: '/',
                 component: 'app',
                 data: {
-                    pageTitle: 'Abstract - Home'
+                    pageTitle: 'Abstract Manager'
                 },
             })
             ;

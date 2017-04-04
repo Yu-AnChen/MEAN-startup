@@ -19,9 +19,12 @@ function themeConfigNav($mdThemingProvider) {
     //     })
         
     $mdThemingProvider.theme('navTheme')
-        .primaryPalette('customGreenMap', {
-            'default': '50',
-            'hue-1': '800',
+        // .primaryPalette('customGreenMap', {
+        //     'default': '50',
+        //     'hue-1': '800',
+        // })
+        .primaryPalette('light-blue', {
+            'default': '400',
         })
         .accentPalette('white')
         .warnPalette('customGreenMap', {
