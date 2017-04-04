@@ -9,13 +9,14 @@ const userSignOutComponent = {
     controller: /* @ngInject */ 
     class UserSignUpController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', 'UserApi', '$state', '$stateParams'];
+            return ['$log', '$timeout', '$scope', 'UserApi','UserApiLocal', '$state', '$stateParams'];
         }
-        constructor($log, $timeout, $scope, UserApi, $state, $stateParams) {
+        constructor($log, $timeout, $scope, UserApi, UserApiLocal, $state, $stateParams) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
-            this.UserApi = UserApi;
+            this.UserApi = UserApiLocal;
+            this.UserApiLocal = UserApiLocal;
             this.$state = $state;
             this.$stateParams = $stateParams;
         }
@@ -39,7 +40,7 @@ const userSignOutComponent = {
                 if (res.status == 200) {
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
                     console.log('sign out succed!')
-                    this.$state.go('app.user.signIn', {email: ''});
+                    this.$state.go('app', {email: ''});
                     
                 } else {
                     console.log('keeptrying');

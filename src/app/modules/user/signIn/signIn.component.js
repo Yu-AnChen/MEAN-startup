@@ -9,13 +9,14 @@ const userSignInComponent = {
     controller: /* @ngInject */ 
     class UserSignUpController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', 'UserApi', '$state', '$stateParams', 'focus'];
+            return ['$log', '$timeout', '$scope', 'UserApi', 'UserApiLocal', '$state', '$stateParams', 'focus'];
         }
-        constructor($log, $timeout, $scope, UserApi, $state, $stateParams, focus) {
+        constructor($log, $timeout, $scope, UserApi, UserApiLocal, $state, $stateParams, focus) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
-            this.UserApi = UserApi;
+            this.UserApi = UserApiLocal;
+            this.UserApiLocal = UserApiLocal;
             this.$state = $state;
             this.$stateParams = $stateParams;
             this.focus = focus;
@@ -36,7 +37,7 @@ const userSignInComponent = {
             return {
                 email: this.$stateParams.email,
                 favoritePhrase: this.$stateParams.favoritePhrase,
-            }
+            };
         }
         getCurrentUser() {
             this.UserApi.getCurrentUser().then((res)=>{
@@ -47,14 +48,14 @@ const userSignInComponent = {
             }, ()=>{
                 this.showView = true;
                 this.autofocus();
-            })
+            });
         }
         signIn() {
             let userDbData = {
                 email: this.userData.email.toLocaleLowerCase(),
                 favoritePhrase: this.userData.favoritePhrase,
                 signInDate: new Date()
-            }
+            };
             console.log('signing in');
             this.UserApi.signin(userDbData).then((res)=>{
                 if (res.status == 200) {
@@ -63,13 +64,15 @@ const userSignInComponent = {
                 }
             }, (res)=>{
                 if (res.status == 404 && res.data == 'db.find:x,db.update:x') {
-                    this.notExist = true;
+                    // fix for using locally
+                    this.$timeout(() => { this.notExist = true; }, 10);
+                    // this.notExist = true;
                     // console.log(res);
                 } 
                 if (res.status == 404 && res.data =='db.find:x-password,db.update:x') {
                     this.notMatch = true;
                     // console.log('password error!')
-                }else {
+                } else {
                     console.log('other error');
                 }
             });

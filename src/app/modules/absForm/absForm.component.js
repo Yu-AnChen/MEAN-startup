@@ -10,48 +10,101 @@ const absFormComponent = {
     controller: /* @ngInject */
     class absFormInputController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams', 'absFormService', '$mdMedia'];
+            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'FormApiLocal', 'UserApi', 'UserApiLocal', '$state', 'focus', '$stateParams', 'absFormService', 'absFormServiceLocal', '$mdMedia', '$mdDialog'];
         }
-        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams, absFormService, $mdMedia) {
+        constructor($log, $timeout, $scope, $interval, FormApi, FormApiLocal,  UserApi, UserApiLocal, $state, focus, $stateParams, absFormService, absFormServiceLocal, $mdMedia, $mdDialog) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
             this.$interval = $interval;
-            this.FormApi = FormApi;
-            this.UserApi = UserApi;
+            this.FormApi = FormApiLocal;
+            this.FormApiLocal = FormApiLocal;
+            this.UserApi = UserApiLocal;
+            this.UserApiLocal = UserApiLocal;
             this.$state = $state;
             this.focus = focus;
             this.$stateParams = $stateParams;
-            this.absFormService = absFormService;
+            this.absFormService = absFormServiceLocal;
+            this.absFormServiceLocal = absFormServiceLocal;
             this.$mdMedia = $mdMedia;
+            this.$mdDialog = $mdDialog;
         }
+        
         $onInit() {
             this.absFormConst = absFormConst;
-            this.buildForm();
-            this.getCurrentUser();
-            // this.form = this.absFormConst.abstractNewUser
+            this.$timeout(()=>this.init(), 0);
+            this.config();
+        }
+        $onDestroy() {
+            this.$interval.cancel(this.autoBackup);
+        }
+        init() {
+            let confirm = this.$mdDialog.prompt({
+                title: 'Please enter an unique identifier',
+                textContent: 'To save and retrieve your abstract',
+                placeholder: 'Unique identifier',
+                ariaLabel: 'Unique identifier',
+                initialValue: 'sunny day',
+                ok: 'Go',
+                theme: 'navTheme',
+                focusOnOpen: true
+            });
+            
+            this.$mdDialog.show(confirm)
+            .then((result) => {
+                this.confirmResult = result;
+                return this.UserApi.signup({email: result});
+            })
+            .then((res) => {
+                return this.UserApi.signin({email: res.data.email});
+            })
+            .then((res) => {
+                this.buildForm();
+                this.getCurrentUser();
+            })
+            .catch((err) => {
+                if (err.status == 403 && err.data == 'email already exist') {
+                    let alert = this.$mdDialog.alert({
+                        title: 'Abstract already exist!',
+                        ok: 'Load saved abstract',
+                        theme: 'navTheme'
+                    });
+                    return this.$mdDialog.show(alert);
+                } else {
+                    return Promise.reject(err);
+                }
+                
+            })
+            .then(() => {
+                return this.UserApi.signin({email: this.confirmResult});
+            })
+            .then((res) => {
+                this.buildForm();
+                this.getCurrentUser();
+            })
+            .catch((err) => {
+                console.log('other error');
+            });
+        }
+        config() {
             this.fields = this.getFields();
             
             this.autoBackupConfig = {
                 status: false,
                 time: 2000, // ms
                 msg: 'DISABLED'
-            }
+            };
             this.AuthorAffilTemplate = this.genAuthorAffilTemplate();
             this.absWithinPage = true;
             this.submitBtnClicked = false;
-            // this.submittedInTime = false;
+            this.submittedInTime = false;
         }
-        $onDestroy() {
-            this.$interval.cancel(this.autoBackup);
-        }
-        
         detectAbsOverflowY(callback) {
             // console.log("detectAbsOverflowY");
             var el = document.querySelector("#abs_print");
             // console.log(el.innerHTML);
             if (el.scrollHeight > el.clientHeight) {
-               this.absWithinPage = false; 
+                this.absWithinPage = false; 
             } else { this.absWithinPage = true; }
             if (typeof callback === "function") {
                 callback();
@@ -62,7 +115,7 @@ const absFormComponent = {
                 this.getAbstract(res.data.email);
                 // this.currentUser = true;
             },(res)=>{
-                this.form = this.absFormConst.abstractNewUser;
+                this.$timeout(() => {this.form = this.absFormConst.abstractNewUser;}, 0);
                 this._submittedInTime(this.absFormConst.abstractNewUser);
                 // this.currentUser = false;
             });
@@ -75,6 +128,7 @@ const absFormComponent = {
                     // this.$state.go('app.absForm', {email: res.data.email});
                     // console.log(res.data.email);
                     this.currentUser = res.data;
+                    console.log(this.currentUser);
                     // this.form.email = res.data.email;
                 } else { 
                     console.log('error: getCurrentUser');
@@ -98,13 +152,13 @@ const absFormComponent = {
             console.log('get abstract from server');
             this.FormApi.get(email, title).then((res)=>{
                 // console.log(this.form._id);
-                this.form = res.data[0];
+                this.$timeout(() => this.form = res.data[0], 0);
                 this._submittedInTime(res.data[0]);
                 // console.log(this.convertNullToNaN(res.data[0]))
                 // console.log(this.form._id);
             }, ()=>{
                 console.log('error: getAbstract');
-                this.form = this.absFormConst.abstractNewUser;
+                this.$timeout(() => this.form = this.absFormConst.abstractNewUser, 0);
                 this._submittedInTime(this.absFormConst.abstractNewUser);
             });
         }

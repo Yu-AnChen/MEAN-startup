@@ -9,18 +9,21 @@ const absSubmitCompleteComponent = {
     controller: /* @ngInject */ 
     class AbsSubmitCompleteController {
         static get $inject() {
-            return ['$window', '$log', '$timeout', '$scope', '$location', 'FormApi', 'UserApi', '$state', 'absFormService'];
+            return ['$window', '$log', '$timeout', '$scope', '$location', 'FormApi', 'FormApiLocal', 'UserApi', 'UserApiLocal', '$state', 'absFormService', 'absFormServiceLocal'];
         }
-        constructor($window, $log, $timeout, $scope, $location, FormApi, UserApi, $state, absFormService) {
-            this.$window = $window
+        constructor($window, $log, $timeout, $scope, $location, FormApi, FormApiLocal, UserApi, UserApiLocal, $state, absFormService, absFormServiceLocal) {
+            this.$window = $window;
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
             this.$location = $location;
-            this.FormApi = FormApi;
-            this.UserApi = UserApi;
+            this.FormApi = FormApiLocal;
+            this.FormApiLocal = FormApiLocal;
+            this.UserApi = UserApiLocal;
+            this.UserApiLocal = UserApiLocal;
             this.$state = $state;
-            this.absFormService = absFormService;
+            this.absFormService = absFormServiceLocal;
+            this.absFormServiceLocal = absFormServiceLocal;
         }
         $onInit() {
             // this.form = {};
@@ -28,7 +31,7 @@ const absSubmitCompleteComponent = {
             this.getSubmittedAbs = false;
             this.resultTimeoutDelay = 1500;
             this.pdfLink = '#';
-            this.absFormService.getPdfUrl()
+            this.absFormService.getPdfUrl();
         }
         $onChange() {
         }
@@ -37,7 +40,7 @@ const absSubmitCompleteComponent = {
         buildForm() {
             this.UserApi.getCurrentUser().then((res)=>{
                 this.getAbstract(res.data.email);
-                this.getPdfLink(res.data.email);
+                // this.getPdfLink(res.data.email);
                 this.currentUser = res.data;
             },(res)=>{
                 // this.submissionComplete = false;
@@ -68,6 +71,12 @@ const absSubmitCompleteComponent = {
                 console.log('error: generate pdf link failed')
                 this.pdfLink = "#";
             });
+        }
+        genDocx() {
+            saveAs(
+                this.absFormService.convertHtmlToDocx('abs-print'),
+                'test.docx'
+            );
         }
         
         // ROUTE

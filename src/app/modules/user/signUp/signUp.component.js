@@ -9,13 +9,14 @@ const userSignUpComponent = {
     controller: /* @ngInject */ 
     class UserSignUpController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', 'UserApi', 'FormApi', '$state', 'focus', '$stateParams'];
+            return ['$log', '$timeout', '$scope', 'UserApi', 'UserApiLocal','FormApi', '$state', 'focus', '$stateParams'];
         }
-        constructor($log, $timeout, $scope, UserApi, FormApi, $state, focus, $stateParams) {
+        constructor($log, $timeout, $scope, UserApi, UserApiLocal, FormApi, $state, focus, $stateParams) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
-            this.UserApi = UserApi;
+            this.UserApi = UserApiLocal;
+            this.UserApiLocal = UserApiLocal;
             this.FormApi = FormApi;
             this.$state = $state;
             this.$stateParams = $stateParams;
@@ -37,9 +38,9 @@ const userSignUpComponent = {
             return {
                 email: this.$stateParams.email,
                 favoritePhrase: this.$stateParams.favoritePhrase,
-                favoritePhraseConfirm: "",
-                primaryAffiliation: ""
-            }
+                favoritePhraseConfirm: '',
+                primaryAffiliation: ''
+            };
         }
         getCurrentUser() {
             this.UserApi.getCurrentUser().then((res)=>{
@@ -50,7 +51,7 @@ const userSignUpComponent = {
             }, ()=>{
                 this.showView = true;
                 this.autofocus();
-            })
+            });
         }
         signUp() {
             let userDbData = {
@@ -59,7 +60,7 @@ const userSignUpComponent = {
                 primaryAffiliation: this.userData.primaryAffiliation,
                 signInDate: [new Date()],
                 signInCount: 1
-            }
+            };
             
             console.log('saving to db now');
             this.UserApi.signup(userDbData).then((res)=>{
@@ -83,7 +84,9 @@ const userSignUpComponent = {
                 }
             }, (res)=>{
                 if (res.status == 403 && res.data == 'email already exist') {
-                    this.alreadyExist = true;
+                    // fix for using locally
+                    this.$timeout(() => { this.alreadyExist = true; }, 10);
+                    // this.alreadyExist = true;
                     console.log(res);
                 } else {
                     console.log('other error');
