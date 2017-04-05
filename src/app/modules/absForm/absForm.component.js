@@ -36,6 +36,7 @@ const absFormComponent = {
             this.config();
         }
         $onDestroy() {
+            this.form = null;
             this.$interval.cancel(this.autoBackup);
         }
         init() {
@@ -157,7 +158,7 @@ const absFormComponent = {
                 // console.log(this.form._id);
             }, ()=>{
                 console.log('error: getAbstract');
-                this.$timeout(() => this.form = this.absFormConst.abstractNewUser, 0);
+                this.$timeout(() => {this.form = this.absFormConst.abstractNewUser; return;}, 0);
                 this._submittedInTime(this.absFormConst.abstractNewUser);
             });
         }
@@ -373,19 +374,31 @@ const absFormComponent = {
         // FIELDS
         getFields() {
             return [
-                "Translational biology", 
-                "Developmental biology", 
-                "Neuroscience", 
-                "Bioinformatics", 
-                "Bioengineering", 
-                "Biostatistics", 
-                "Immunology", 
-                "Molecule biology", 
-                "Microbiology", 
-                "Genetics", 
-                "Biophysics", 
-                "Biochemistry", 
-                "Pharmacology"
+                'Biology',
+                'Engineering',
+                'English',
+                'Chemistry',
+                'Computer Science', 
+                'linguistics',
+                'Material Science',
+                'Math',
+                'Physics',
+                'Psycology',
+                'Social Science',
+                'Other'
+                // "Translational biology", 
+                // "Developmental biology", 
+                // "Neuroscience", 
+                // "Bioinformatics", 
+                // "Bioengineering", 
+                // "Biostatistics", 
+                // "Immunology", 
+                // "Molecule biology", 
+                // "Microbiology", 
+                // "Genetics", 
+                // "Biophysics", 
+                // "Biochemistry", 
+                // "Pharmacology"
             ]
         }
         // DATABASE
