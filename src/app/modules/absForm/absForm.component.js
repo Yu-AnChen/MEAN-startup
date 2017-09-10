@@ -10,9 +10,9 @@ const absFormComponent = {
     controller: /* @ngInject */
     class absFormInputController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams', 'absFormService'];
+            return ['$log', '$timeout', '$scope', '$interval', 'FormApi', 'UserApi', '$state', 'focus', '$stateParams', 'absFormService', '$mdMedia'];
         }
-        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams, absFormService) {
+        constructor($log, $timeout, $scope, $interval, FormApi, UserApi, $state, focus, $stateParams, absFormService, $mdMedia) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
@@ -23,6 +23,7 @@ const absFormComponent = {
             this.focus = focus;
             this.$stateParams = $stateParams;
             this.absFormService = absFormService;
+            this.$mdMedia = $mdMedia;
         }
         $onInit() {
             this.absFormConst = absFormConst;
@@ -35,7 +36,7 @@ const absFormComponent = {
                 status: false,
                 time: 2000, // ms
                 msg: 'DISABLED'
-            }
+            };
             this.AuthorAffilTemplate = this.genAuthorAffilTemplate();
             this.absWithinPage = true;
             this.submitBtnClicked = false;
