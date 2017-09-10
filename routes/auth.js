@@ -7,7 +7,7 @@ Auth.use((req, res, next) => {
         .find({
             token: req.cookies.TTBASymposium
         }).toArray((err, results)=>{
-            if (!err && results.length >0) {
+            if (!err && results.length) {
                 req.currentUser = results[0];
                 console.log(req.currentUser);
                 // login 
@@ -21,7 +21,7 @@ Auth.use((req, res, next) => {
                 // 401 unauthorized
                 res.sendStatus(401);
             } 
-        })
+        });
 });
 
 module.exports = Auth;

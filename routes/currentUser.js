@@ -6,8 +6,8 @@ CurrentUser.get('/', (req, res) => {
     req.db.collection('users')
         .find({
             token: req.cookies.TTBASymposium
-        }).toArray((err, results)=>{
-            if (!err && results.length >0) {
+        }).toArray((err, results) => {
+            if (!err && results.length > 0) {
                 res.json(results[0]);
                 req.db.close();
                 // req.currentUser = results[0];
@@ -20,12 +20,11 @@ CurrentUser.get('/', (req, res) => {
                 // res.clearCookie('TTBASymposium');
                 // next();
             } else {
-                console.log("ERROR");
                 // 401 unauthorized
                 res.sendStatus(401);
                 req.db.close();
-            } 
-        })
+            }
+        });
     // res.send("hello current user");
 });
 

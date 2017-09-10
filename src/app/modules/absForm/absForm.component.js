@@ -110,7 +110,7 @@ const absFormComponent = {
         }
         submit() {
             console.log("submitting");
-            // console.log(this.form);
+            console.log(this.form);
             this.submitBtnClicked = true;
             this.form.submittedAt[0] = new Date();
             this.fillInAuthorAndAffil(()=>{

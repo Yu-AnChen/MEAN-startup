@@ -16,7 +16,7 @@ Users.get('/', Auth, (req, res) => {
                 res.sendStatus(403);
             }
             req.db.close();
-        })
+        });
 });
 
 module.exports = Users;
