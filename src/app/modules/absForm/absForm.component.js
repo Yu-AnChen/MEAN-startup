@@ -367,7 +367,7 @@ const absFormComponent = {
         }
         _submittedInTime(data) {
             const createdTime = Date.parse(data.createdAt);
-            const deadline = Date.parse("2016-10-17T22:57:36.910Z");
+            const deadline = Date.parse("2017-10-01T05:30:00.000Z");
             if (createdTime <= deadline) {
                 console.log('before deadline');
                 // return true;
