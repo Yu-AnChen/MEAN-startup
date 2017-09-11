@@ -8,7 +8,7 @@
         </div>
         <nav layout layout-align="end" hide show-gt-sm>
             <span ng-repeat="(name, link) in $ctrl.navigationLinks">
-                <md-button class="md-primary"><strong>{{name}}</strong></md-button>
+                <md-button class="md-primary" ng-href="{{link}}"><strong>{{name}}</strong></md-button>
                 <!--<md-nav-item md-nav-href="#" ui-sref='app.underConstruction({navName: "{{name}}"})' name="{{name}}">{{name}}/</md-nav-item>-->
             </span>
         </nav>
