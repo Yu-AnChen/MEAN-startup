@@ -1,37 +1,55 @@
-<md-nav-bar md-selected-nav-item="currentNavItem" nav-bar-aria-label="navigation links" md-theme="navTheme" hide-xs>
-    <span ng-repeat="(name, link) in $ctrl.navigationLinks">
-        <md-nav-item md-nav-href="{{link}}" name="{{name}}">{{name}}/</md-nav-item>
-        <!--<md-nav-item md-nav-href="#" ui-sref='app.underConstruction({navName: "{{name}}"})' name="{{name}}">{{name}}/</md-nav-item>-->
+<div layout layout-align="center" class="container-header" md-colors="{background: 'accent'}">
+    <div flex="80" flex-xs="95" layout="row" layout-align="space-between center" layout-align-gt-sm="space-between end">
+        <div>
+            <a ng-href={{$ctrl.navigationLinks.Home}} style="max-width:300px; display:block">
+                <img src="assets/img/header-logo.png" alt="" style="width:100%; padding:5% 1%">
+            </a>
+            <div class="header-hide">TTBA SYMPOSIUM 2017, Austin TX, 11/4-5</div>
+        </div>
+        <nav layout layout-align="end" hide show-gt-sm>
+            <span ng-repeat="(name, link) in $ctrl.navigationLinks">
+                <md-button class="md-primary"><strong>{{name}}</strong></md-button>
+                <!--<md-nav-item md-nav-href="#" ui-sref='app.underConstruction({navName: "{{name}}"})' name="{{name}}">{{name}}/</md-nav-item>-->
+            </span>
+        </nav>
+        <md-menu hide-gt-sm>
+            <md-button aria-label="navigation links" class="md-fab md-primary" ng-click="$ctrl.openMenu($mdOpenMenu, $event)">
+                <ng-md-icon icon="menu" style="fill:#fff" size="32" md-menu-origin="">
+                    <ng-md-icon>
+            </md-button>
+            <md-menu-content width="4" class="md-primary">
+                <md-menu-item ng-repeat="(name, link) in $ctrl.navigationLinks">
+                    <md-button ng-href="{{link}}" style="font-size: 18px;">
+                        {{name}}
+                    </md-button>
+                </md-menu-item>
+            </md-menu-content>
+        </md-menu>
+    </div>
+</div>
 
-    </span>
-</md-nav-bar>
+<div layout layout-align="center center" layout-wrap class="container-header" md-colors="{background: 'primary'}"
+    style="min-height:120px">
+    <div flex="80" flex-xs="95">
+        <a href="#" class="md-display-1 silent-link">
+            Abstract Submission for Elevator Talk
+        </a>
 
-<div layout="row" layout-align="end center" hide show-xs>
-    <md-menu>
-        <md-button aria-label="navigation links" class="md-fab md-primary" ng-click="$ctrl.openMenu($mdOpenMenu, $event)" md-theme="navTheme">
-            <ng-md-icon icon="menu" style="fill:white" size="32" md-menu-origin="" ><ng-md-icon>
-        </md-button>
-        <md-menu-content width="4" class="md-primary" md-theme="navTheme" md-colors="{background: 'primary', color: 'white'}">
-            <md-menu-item class="md-primary"
-                ng-repeat="(name, link) in $ctrl.navigationLinks">
-                <md-button 
-                    ng-href="{{link}}" 
-                    md-colors="{color: 'white'}" style="letter-spacing: 0.07em; font-size: 18px;">
-                    {{name}}/
-                </md-button>
-            </md-menu-item>
-        </md-menu-content>
-    </md-menu>
+    </div>
+    <div flex="80" flex-xs="95">
+        Powered by <a class="silent-link" href="http://flow-through.herokuapp.com/#!/">FLOW THROUGH</a>
+    </div>
 </div>
 
 
 
-<h1 layout="column" layout-padding>
-    <div class="md-headline">
-        <div id="color-bar" class="md-headline" md-colors="{background: 'yellow-500'}"></div>
-        <a ng-href={{$ctrl.navigationLinks.Home}} md-colors="{color: 'primary-50'}">TTBA SYMPOSIUM 2016</a>
+
+<!-- <h1 layout="column" layout-padding>
+    <div style="max-width:300px">
+        <a ng-href={{$ctrl.navigationLinks.Home}}><img src="assets/img/header-logo.png" alt="" style="width:100%"></a>
+        <div class="header-hide">TTBA SYMPOSIUM 2017, Austin TX, 11/4-5</div>
     </div>
     <div class="md-display-1">
-        <a href="#"  class="md-display-1" md-colors="{color: 'primary-800'}">Abstract Submission for Poster Session</a>
+        <a href="#"  class="md-display-1" md-colors="{color: 'accent-800'}">Abstract Submission for Elevator Talk</a>
     </div>
-</h1>
+</h1> -->
