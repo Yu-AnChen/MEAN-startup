@@ -20,18 +20,18 @@ const headerAndNavComponent = {
             this.navigationLinks = this.getNavigationLinks();
         }
 
-        openMenu($mdOpenMenu, ev) {
-          this.originatorEv = ev;
-          $mdOpenMenu(ev);
+        openMenu($mdMenu, ev) {
+            this.originatorEv = ev;
+            $mdMenu.open(ev);
         }
         getNavigationLinks() {
             return {
-                Home:     "http://www.symposium2016.ttbatw.org/",
-                Speakers: "http://www.symposium2016.ttbatw.org/speakers",
-                Schedule: "http://www.symposium2016.ttbatw.org/schedule",
-                Venue:    "http://www.symposium2016.ttbatw.org/venue",
-                Register: "http://www.symposium2016.ttbatw.org/register",
-            }
+                Home:     "https://symposium2017.ttbatw.org/",
+                About:    "https://symposium2017.ttbatw.org/",
+                Talk:     "https://symposium2017.ttbatw.org/",
+                Location: "https://symposium2017.ttbatw.org/",
+                Register: "https://symposium2017.ttbatw.org/",
+            };
         }
     }
 };
