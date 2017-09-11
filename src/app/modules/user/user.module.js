@@ -18,32 +18,51 @@ const userModule = angular
         'ngInject';
         $stateProvider
             .state('app.user', {
-                url: 'user',  // url: '/' << app
-                params: { email : '', favoritePhrase : '', absId : '', unsavedData : {} },
+                url: 'user', // url: '/' << app
+                params: {
+                    email: '',
+                    favoritePhrase: '',
+                    absId: '',
+                    unsavedData: {}
+                },
                 component: 'user'
             })
             .state('app.user.signUp', {
                 url: '/create',
-                params: { email : '', favoritePhrase : '', absId : '', unsavedData : {} },
+                params: {
+                    email: '',
+                    favoritePhrase: '',
+                    absId: '',
+                    unsavedData: {}
+                },
                 data: {
-                  pageTitle: 'Create Abstract'
+                    pageTitle: 'Create Abstract'
                 },
                 component: 'signUp'
             })
             .state('app.user.signIn', {
                 url: '/edit',
-                params: { email : '', favoritePhrase : '', absId : '', unsavedData : {} },
+                params: {
+                    email: '',
+                    favoritePhrase: '',
+                    absId: '',
+                    unsavedData: {}
+                },
                 data: {
-                  pageTitle: 'Edit Abstract'
+                    pageTitle: 'Edit Abstract'
                 },
                 component: 'signIn'
             })
             .state('app.user.signOut', {
                 url: '/signOut',
-                params: { email : '', favoritePhrase : '', absId : '', unsavedData : {} },
+                params: {
+                    email: '',
+                    favoritePhrase: '',
+                    absId: '',
+                    unsavedData: {}
+                },
                 component: 'signOut'
-            })
-            ;
+            });
     })
     .name;
 
