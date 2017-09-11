@@ -1,8 +1,9 @@
 <div layout="column" layout-sm="column" layout-align="center center"
     ng-if="!$ctrl.abstracts">
-    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1 progress_indic"></md-progress-circular>
 </div>
 <div layout="row" class="admin" layout-padding  ng-if="$ctrl.abstracts">
+<div flex="10" show-md hide></div>
 <div flex="20" show-lg hide></div>
 <div flex="30" show-xl hide></div>
 <div flex="">
@@ -14,7 +15,7 @@
         </div>
     </md-toolbar>
     
-    <md-toolbar class="md-accent md-hue-1" 
+    <md-toolbar class="md-accent" 
         ng-show="$ctrl.$state.current.url=='results'">
         <div class="md-toolbar-tools" layout="row">
             <span>Posters and <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span></span>
@@ -159,6 +160,7 @@
         </md-list>
     </md-content>
 </div>
+<div flex="10" show-md hide></div>
 <div flex="20" show-lg hide></div>
 <div flex="30" show-xl hide></div>
 </div>

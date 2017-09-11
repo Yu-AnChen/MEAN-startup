@@ -18,7 +18,7 @@
                     <span flex></span>
                     <div layout-xs="column" style="text-align:center">
                         <span class="md-subhead">To save your changes, first,</span>
-                        <md-button class="md-warn md-raised md-hue-1" 
+                        <md-button class="md-raised" 
                             ng-click="$ctrl.saveAndSignUp()"
                             >
                             Create Abstract!
@@ -144,7 +144,7 @@
                 ng-if="$ctrl.form"></abs-print>
         </div>
     </div>
-        <div>
+        <!-- <div>
         <form name="elevator_talk" 
             flex="100" layout="row" layout-xs="column" layout-align="center center"
             ng-show="$ctrl.form"
@@ -159,23 +159,23 @@
             <md-input-container class="indent-left">
                 <label>
                     <span ng-if="$ctrl.submittedInTime">Please select your answer</span>
-                </label>
+                </label> -->
                 <!--<label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>-->
                 <!--<label ng-hide="$ctrl.submittedInTime()">Please select</label>-->
-                <md-select required name="canGiveATalk"
+                <!-- <md-select required name="canGiveATalk"
                     ng-model="$ctrl.form.canGiveATalk"
                     md-on-open="$ctrl.setFooterClass(true)"
                     md-on-close="$ctrl.setFooterClass(false)">
                     <md-option value="true">Yes!</md-option>
-                    <md-option value="false">No</md-option>
+                    <md-option value="false">No</md-option> -->
                     <!--<md-option value="false">Got it!</md-option>-->
-                </md-select>
+                <!-- </md-select>
                 <div ng-messages="elevator_talk.canGiveATalk.$error">
                     <div ng-message="required">This is required</div>
                 </div>
             </md-input-container>
         </form>
-        <!-- <form name="elevator_talk" 
+        <form name="elevator_talk" 
             flex="100" layout="column" layout-gt-md="row" layout-align="center center"
             ng-show="$ctrl.form"
             ng-if="!$ctrl.submittedInTime">
@@ -204,8 +204,8 @@
                     <div ng-message="required">This is required</div>
                 </div>
             </md-input-container>
-        </form> -->
-        </div>
+        </form>
+        </div> -->
     
     <div layout-padding="" layout-align="center center" layout="row"
         ng-show="$ctrl.form && !$ctrl.absWithinPage">
