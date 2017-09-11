@@ -1,13 +1,13 @@
 <div layout="column" layout-sm="column" layout-align="center center"
     ng-if="!$ctrl.dataLoaded">
-    <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+    <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1 progress_indic"></md-progress-circular>
 </div>
 
 <div layout="row" layout-align="center center" layout-padding="" class="abs_complete"
     ng-if="$ctrl.dataLoaded">
     
     <md-button
-        class="md-accent md-hue-2 md-raised"
+        class="md-accent md-raised md-hue-2 md-raised"
         ng-click="$ctrl.goSignIn()"
         ng-if="!$ctrl.currentUser">
         Check Submission Status
@@ -20,7 +20,7 @@
             Looks like you haven't submitted yet.
         </h3>
         <md-button
-            class="md-accent md-hue-2 md-raised"
+            class="md-accent md-raised md-hue-2 md-raised"
             ng-click="$ctrl.goAbsForm()">
             Create Abstract
         </md-button>
@@ -39,23 +39,23 @@
     		<ul class="md-subhead body_font_spacing"
     		    style="margin-top:0px; list-style:none; padding-left:16px; text-align:center;">
     		    <li>
-    			    <md-button id="pdf" ng-href="{{$ctrl.pdfLink}}" target="_blank" class="md-accent">
-    			    <!--<md-button id="pdf" ng-click="$ctrl.testLink()" class="md-accent">-->
+    			    <md-button id="pdf" ng-href="{{$ctrl.pdfLink}}" target="_blank" class="md-accent md-raised">
+    			    <!--<md-button id="pdf" ng-click="$ctrl.testLink()" class="md-accent md-raised">-->
     			        Download your abstract
                     </md-button>
 			    </li>
     			<li>
-    			    <md-button ng-click="$ctrl.goRoot()" class="md-accent">
+    			    <md-button ng-click="$ctrl.goRoot()" class="md-accent md-raised">
     			        Check out the rules again
 			        </md-button>
 		        </li>
     			<li>
-    			    <md-button ng-click="$ctrl.goSignIn()" class="md-accent">
+    			    <md-button ng-click="$ctrl.goSignIn()" class="md-accent md-raised">
     			        Edit your abstract
 			        </md-button>
 		        </li>
     			<li>
-    			    <md-button ng-click="$ctrl.signOut()" class="md-accent">
+    			    <md-button ng-click="$ctrl.signOut()" class="md-accent md-raised">
     			        Leave for Symposium site
 			        </md-button>
 		        </li>

@@ -1,7 +1,7 @@
 <div ui-view class="abs_form">
     <div layout="column" layout-sm="column" layout-align="center center"
         ng-show="!$ctrl.form">
-        <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic"></md-progress-circular>
+        <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1 progress_indic"></md-progress-circular>
     </div>
     <div flex="100" flex-gt-sm="90" flex-gt-md="80" flex-offset-md="5" flex-offset-gt-md="10"
         layout="row" layout-margin ng-show="$ctrl.form"> <!--this div is added to fix TypeError: Cannot read property 'insertBefore' of null-->
@@ -13,7 +13,7 @@
         
         <div flex="grow" class="md-whiteframe-5dp"
             ng-class="{'layout-fill': $ctrl.$mdMedia('xs')}">
-            <md-toolbar class="md-accent md-hue-1" ng-if="$ctrl.form">
+            <md-toolbar class="md-accent" ng-if="$ctrl.form">
                 <div class="md-toolbar-tools" ng-if="!$ctrl.currentUser">
                     <span flex></span>
                     <div layout-xs="column" style="text-align:center">
@@ -175,7 +175,7 @@
                 </div>
             </md-input-container>
         </form>
-        <form name="elevator_talk" 
+        <!-- <form name="elevator_talk" 
             flex="100" layout="column" layout-gt-md="row" layout-align="center center"
             ng-show="$ctrl.form"
             ng-if="!$ctrl.submittedInTime">
@@ -190,21 +190,21 @@
                 <label>
                     <span ng-if="!$ctrl.submittedInTime">Please select</span>
                 </label>
-                <!--<label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>-->
-                <!--<label ng-hide="$ctrl.submittedInTime()">Please select</label>-->
+                <label>Please select <span ng-show="!$ctrl.submittedInTime()">your answer</span></label>
+                <label ng-hide="$ctrl.submittedInTime()">Please select</label>
                 <md-select required name="canGiveATalk"
                     ng-model="$ctrl.form.canGiveATalk"
                     md-on-open="$ctrl.setFooterClass(true)"
                     md-on-close="$ctrl.setFooterClass(false)">
-                    <!--<md-option value="true">Yes!</md-option>-->
-                    <!--<md-option value="false">No</md-option>-->
+                    <md-option value="true">Yes!</md-option>
+                    <md-option value="false">No</md-option>
                     <md-option value="false">Got it!</md-option>
                 </md-select>
                 <div ng-messages="elevator_talk.canGiveATalk.$error">
                     <div ng-message="required">This is required</div>
                 </div>
             </md-input-container>
-        </form>
+        </form> -->
         </div>
     
     <div layout-padding="" layout-align="center center" layout="row"
@@ -232,6 +232,6 @@
         style="position:fixed; width:100%; height:100vh; top:0px; background:rgba(204, 208, 219, 0.7); z-index:2;"
         ng-show="$ctrl.submitBtnClicked">
         <div layout-margin>Confirming Your Submission...</div>
-        <md-progress-circular md-mode="indeterminate" class="md-warn md-hue-1 progress_indic" style="margin-top:0px;"></md-progress-circular>
+        <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1 progress_indic" style="margin-top:0px;"></md-progress-circular>
     </div>
 </div>

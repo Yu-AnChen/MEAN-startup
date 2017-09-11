@@ -5,14 +5,14 @@ function themeConfig($mdThemingProvider) {
         'contrastDarkColors': ['50'],
         '50': 'ffffff'
     });
-    var customWhiteMap = $mdThemingProvider.extendPalette('grey', {
-        'contrastDefaultColor': 'light',
-        'contrastDarkColors': ['50'],
-        '50': 'ffffff'
-    });
+    // var customWhiteMap = $mdThemingProvider.extendPalette('grey', {
+    //     'contrastDefaultColor': 'light',
+    //     'contrastDarkColors': ['50'],
+    //     '50': 'ffffff'
+    // });
 
     $mdThemingProvider.definePalette('customBlue', customBlueMap);
-    $mdThemingProvider.definePalette('white', customWhiteMap);
+    // $mdThemingProvider.definePalette('white', customWhiteMap);
     $mdThemingProvider.theme('default')
         .primaryPalette('grey', {
             'default': '800',
@@ -20,14 +20,16 @@ function themeConfig($mdThemingProvider) {
             'hue-2': '200',
             'hue-3': '500'
         })
-        .accentPalette('brown', {
-            'default': '600',
-            'hue-1': '300',
+        .accentPalette('light-blue', {
+            default: '100',
+            'hue-1': '500',
+            'hue-2': '100',
         })
-        .warnPalette('orange', {
-            'default': '50',
-            'hue-1': '800',
-        })
+        .warnPalette('red', {
+            // 'default': '900',
+            // 'hue-1': '800',
+            // 'hue-2': '200',
+        });
     
     // $mdThemingProvider.theme('navTheme')
         // .accentPalette('white')
