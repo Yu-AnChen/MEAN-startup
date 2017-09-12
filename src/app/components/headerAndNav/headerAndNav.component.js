@@ -26,11 +26,11 @@ const headerAndNavComponent = {
         }
         getNavigationLinks() {
             return {
-                Home:     "https://symposium2017.ttbatw.org/",
-                About:    "https://symposium2017.ttbatw.org/",
-                Talk:     "https://symposium2017.ttbatw.org/",
-                Location: "https://symposium2017.ttbatw.org/",
-                Register: "https://symposium2017.ttbatw.org/",
+                Home:     "https://symposium2017.ttbatw.org/website",
+                About:    "https://symposium2017.ttbatw.org/website#about",
+                Talk:     "https://symposium2017.ttbatw.org/website#talk",
+                Location: "https://symposium2017.ttbatw.org/website#location",
+                Register: "https://www.eventbrite.com/e/ttba-symposium-2017-registration-37658097383",
             };
         }
     }
