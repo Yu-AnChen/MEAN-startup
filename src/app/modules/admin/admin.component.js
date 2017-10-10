@@ -135,14 +135,14 @@ const adminComponent = {
         generateFile(selectedAbs) {
             for (let i=0; i<selectedAbs.length; i++) {
                 let label = document.querySelector(
-                                '#label_' + selectedAbs[i] + ' span'
+                                '#label_' + selectedAbs[i] + ' .md-label'
                             ).innerHTML.trim();
                 if (label.length === 1) {
                     label = "0" + label;
                 }
                 console.log(label);
                 let absElId = '#abs_' + selectedAbs[i];
-                saveAs(this.convertHtmlToDocx(absElId), label + '_' + selectedAbs[i] + '.docx');
+                saveAs(this.convertHtmlToDocx(absElId),  label + '_' + selectedAbs[i] + '.docx');
             }
         }
         
