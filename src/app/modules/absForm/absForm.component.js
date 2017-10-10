@@ -1,6 +1,6 @@
 import template from './absForm.html';
 import './absForm.styl';
-var absFormConst = require('./absForm.constant.js')
+var absFormConst = require('./absForm.constant.js');
 
 const absFormComponent = {
     template,
@@ -112,13 +112,14 @@ const absFormComponent = {
             console.log("submitting");
             console.log(this.form);
             this.submitBtnClicked = true;
+            this.form.canGiveATalk = true;
             this.form.submittedAt[0] = new Date();
             this.fillInAuthorAndAffil(()=>{
                 this.decideUseAffiliationSup(()=>{
                     this.detectAbsOverflowY(()=>{
                         console.log(this.absWithinPage);
                         if (this.absWithinPage) { 
-                           this.saveToDatabase(true); 
+                            this.saveToDatabase(true); 
                         } 
                     });
                 });

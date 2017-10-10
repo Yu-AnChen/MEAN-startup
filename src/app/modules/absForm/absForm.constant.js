@@ -27,7 +27,7 @@ const absFormConstant = {
         createdAt: new Date(),
         updatedAt: new Date(),
         submittedAt: [],
-        canGiveATalk: 'True',
+        canGiveATalk: 'true',
     },
     
 };
