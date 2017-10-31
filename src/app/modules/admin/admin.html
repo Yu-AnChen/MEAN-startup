@@ -18,63 +18,68 @@
     <md-toolbar class="md-accent" 
         ng-show="$ctrl.$state.current.url=='results'">
         <div class="md-toolbar-tools" layout="row">
-            <span>Posters and <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span></span>
+            <span>Elevator Talks
+                <!-- <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span> -->
+            </span>
         </div>
     </md-toolbar>
 
     <md-content>
-
+        <md-subheader class="md-primary" ng-show="$ctrl.$state.current.url=='admin'">
+            <h2 class="md-display-1">Settings</h2>
+        </md-subheader>
+        <!-- <admin-settings ng-show="$ctrl.$state.current.url=='admin'"></admin-settings> -->
+        
       <!--<md-list class="md-dense" flex="">-->
+        <md-subheader class="md-primary">
+            <h2 class="md-display-1" ng-show="$ctrl.$state.current.url=='admin'">Abstracts</h2>
+            <h3>Show</h3>
+            <md-checkbox ng-model="$ctrl.displaySetting.showAffil" aria-label="Show affiliations">
+                Affiliations
+            </md-checkbox>
+            <md-checkbox ng-model="$ctrl.displaySetting.showKeywords" aria-label="Show keywords">
+                Keywords
+            </md-checkbox>
+            <md-checkbox ng-model="$ctrl.displaySetting.showAbsContent" aria-label="Show abstract content">
+                Abstract
+            </md-checkbox>
+            <md-checkbox ng-model="$ctrl.displaySetting.showEmails" aria-label="Show author's email"
+                ng-if="$ctrl.$state.current.url=='admin'">
+                Email
+            </md-checkbox>
+            <div ng-show="$ctrl.displaySetting.showEmails"
+                ng-if="$ctrl.$state.current.url=='admin'">
+                <strong>Authors' emails:</strong>
+                    <span 
+                        ng-repeat="item in $ctrl.filterSelected($ctrl.abstracts) | orderBy:$ctrl.sortBy"
+                        >{{ item.email }}<span ng-if="!$last">, </span>
+                    </span>
+            </div>
+            <h3 style="margin-bottom:0px;">Sort Abstracts By</h3>
+            <div layout="row" layout-fill>
+                <md-select name="sortBy" aria-label="sort abstract by"
+                    placeholder="Select to sort"
+                    ng-model="$ctrl.sortBy"
+                    md-on-open="$ctrl.setFooterClass(true)"
+                    md-on-close="$ctrl.setFooterClass(false)"
+                    layout-margin>
+                    <md-option 
+                        ng-repeat="sortName in $ctrl.sortByOptions.name"
+                        ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
+                    </md-option>
+                    
+                </md-select>
+                <md-button layout-margin hide-xs
+                    ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
+                    class="md-raised md-accent">
+                    <span style="font-size:14px">download selected</span>
+                </md-button>
+            </div>
+        </md-subheader>
+            
+            
+            
         <md-list flex="">
-
-            <md-subheader class="md-no-sticky">
-                <h3>Show</h3>
-                <md-checkbox ng-model="$ctrl.displaySetting.showAffil" aria-label="Show affiliations">
-                    Affiliations
-                </md-checkbox>
-                <md-checkbox ng-model="$ctrl.displaySetting.showKeywords" aria-label="Show keywords">
-                    Keywords
-                </md-checkbox>
-                <md-checkbox ng-model="$ctrl.displaySetting.showAbsContent" aria-label="Show abstract content">
-                    Abstract
-                </md-checkbox>
-                <md-checkbox ng-model="$ctrl.displaySetting.showEmails" aria-label="Show author's email"
-                    ng-if="$ctrl.$state.current.url=='admin'">
-                    Email
-                </md-checkbox>
-                <div ng-show="$ctrl.displaySetting.showEmails"
-                    ng-if="$ctrl.$state.current.url=='admin'">
-                    <strong>Authors' emails:</strong>
-                        <span 
-                            ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
-                            >{{ item.email }}<span ng-if="!$last">, </span>
-                        </span>
-                </div>
-                <h3 style="margin-bottom:0px;">Sort Abstracts By</h3>
-                <div layout="row" layout-fill>
-                    <md-select name="sortBy" aria-label="sort abstract by"
-                        placeholder="Select to sort"
-                        ng-model="$ctrl.sortBy"
-                        md-on-open="$ctrl.setFooterClass(true)"
-                        md-on-close="$ctrl.setFooterClass(false)"
-                        layout-margin>
-                        <md-option 
-                            ng-repeat="sortName in $ctrl.sortByOptions.name"
-                            ng-value="$ctrl.sortByOptions.value[$index]">{{sortName}}
-                        </md-option>
-                        
-                    </md-select>
-                    <md-button layout-margin hide-xs
-                        ng-click="$ctrl.generateFile($ctrl.selectedAbs)"
-                        class="md-raised md-accent">
-                        <span style="font-size:14px">download selected</span>
-                    </md-button>
-                </div>
-            </md-subheader>
-            
-            
-            
-            
             <md-list-item class="no_elevator_talk"
                 ng-show="$ctrl.$state.current.url=='admin'">
                 <span 
@@ -85,7 +90,8 @@
             <md-list-item class="selected_for_talk"
                 ng-show="$ctrl.$state.current.url=='results'">
                 <span 
-                    >Abstracts marked yellow are selected for elevator talks.
+                    >All the submitted abstracts have been reviewed. The following abstracts are selected for elevator talks. 
+                    <!-- Abstracts marked yellow are selected for elevator talks. -->
                 </span>
             </md-list-item>
             <md-list-item>
@@ -110,7 +116,7 @@
             <!--<md-divider ></md-divider>-->
             
             <md-list-item class="md-3-line" 
-                ng-repeat="item in $ctrl.abstracts | orderBy:$ctrl.sortBy"
+                ng-repeat="item in $ctrl.filterSelected($ctrl.abstracts) | orderBy:$ctrl.sortBy"
                 ng-class="{no_elevator_talk: !$ctrl.strToBoolean(item.canGiveATalk) && $ctrl.$state.current.url=='admin',
                            selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='results'}">
                 <div  layout="row" layout-align="" layout-fill layout-padding>

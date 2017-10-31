@@ -20,14 +20,21 @@ const adminComponent = {
             this.$state = $state;
         }
         $onInit() {
+            // this.adminService.getSettings()
+            //     .then(res => {
+            //         res.data.eventName = 'some symposium';
+            //         this.adminService.updateSettings(res.data)
+            //             .then(res => this.adminService.getSettings()
+            //                 .then(res => console.log(res)));
+            //     });
             
             console.log(this.$state.current.url);
             this.selectAllAbs = [];
             this.getAbstracts();
-            this.sortBy = '';
+            this.sortBy = 'elevatorTalkOrder';
             this.sortByOptions = {
-                name: ["Title", "Author", "Field"],
-                value: ["title", "fileId", "field"]
+                name: ["Title", "Author", "Field", 'Talk order'],
+                value: ["title", "fileId", "field", 'elevatorTalkOrder']
             };
             this.displaySetting = {
                 showAffil: false,
@@ -79,6 +86,12 @@ const adminComponent = {
             // }
             // console.log(this.selectAllAbs);
             // return rawData;
+            
+        }
+        filterSelected(abstracts) {
+            return this.$state.current.url === 'results'
+                ? abstracts.filter(element => element.selectedForTalk)
+                : abstracts;
             
         }
         taskOn(){
