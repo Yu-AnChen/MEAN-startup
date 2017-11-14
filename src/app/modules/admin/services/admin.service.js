@@ -1,10 +1,33 @@
 /* @ngInject */
 class adminService {
-    constructor() {
+
+    static get $inject() {
+        return ['$http'];
+    }
+
+    constructor($http) {
+        this.$http = $http;
         this.data = {
             // something: 'string'
         };
     }
+
+    getSettings() {
+        return this.$http.get('/admin/')
+            .then(res => {
+                let data = res.data[0];
+                data.submissionDeadline = new Date(data.submissionDeadline);
+                return Promise.resolve(data);
+            });
+    }
+    initSettings() {
+        return this.$http.post('/admin/init');
+    }
+    updateSettings(data) {
+        console.log(data);
+        return this.$http.put('/admin/', data);
+    }
+
     // public api
     cleanup(){
         this.data = null;

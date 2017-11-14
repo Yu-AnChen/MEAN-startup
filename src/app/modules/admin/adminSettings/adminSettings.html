@@ -1,0 +1,88 @@
+<!-- <p ng-repeat="(key, value) in $ctrl.settings" class="md-body-1">
+    <span ng-if="!key.includes('_') && !key.includes('Description')">
+        {{key}}: {{value}}
+    </span>
+</p> -->
+<span ng-if="$ctrl.settings" class="admin-settings">
+
+
+<form name="admin_setting_form" layout="row" layout-padding layout-wrap>
+    <div flex="50" layout="column">
+        
+        <md-input-container>
+            <div class="md-title">Set {{ $ctrl.parseCamelCase('eventName') }}</div>
+            <div class="md-body-1 m-b-6px">description text</div>
+            <input type="text" name="" ng-model="$ctrl.settings.eventName">
+            
+        </md-input-container>
+    </div>
+
+    <div flex="50" layout="column">
+            
+        <md-input-container>
+            <div class="md-title">Set {{ $ctrl.parseCamelCase('submissionDeadline') }}</div>
+            <div class="md-body-1 m-b-6px">{{ $ctrl.settings.submissionDeadlineDescription }}</div>
+            <md-datepicker ng-model="$ctrl.settings.submissionDeadline" md-open-on-focus md-hide-icons="calendar"></md-datepicker>
+        </md-input-container>
+    </div>
+
+
+    <div flex="50" layout="column">
+            
+        <div layout="row" ng-repeat="email in $ctrl.settings.emailsOfAdmins track by $index">
+            <md-input-container flex="grow">
+                <div class="md-title" ng-if="$first">Set {{ $ctrl.parseCamelCase('emailsOfAdmins') }}</div>
+                <div class="md-body-1 m-b-6px" ng-if="$first">{{ $ctrl.settings.emailsOfAdminsDescription }}</div>
+                <input type="text" name="" ng-model="$ctrl.settings.emailsOfAdmins[$index]">
+            </md-input-container>
+            <div>
+                <md-button ng-click="$ctrl.settings.emailsOfAdmins.push('')" class="md-fab md-accent" ng-if="$last">
+                    <ng-md-icon icon="person_add" size="32" style="fill: #222"></ng-md-icon>
+                </md-button>
+            </div>
+        </div>
+        
+
+        <!-- <md-input-container>
+            <label for="">{{ $ctrl.parseCamelCase('emailsOfAdmins') }}</label>
+            <input type="text" name="" ng-model="$ctrl.settings.emailsOfAdmins">
+            <div class="md-caption">{{ $ctrl.settings.emailsOfAdminsDescription }}</div>
+        </md-input-container>
+        <md-input-container>
+            <label for="">{{ $ctrl.parseCamelCase('emailsOfAdmins') }}</label>
+            <input type="text" name="" ng-model="$ctrl.settings.emailsOfAdmins">
+            <div class="md-caption">{{ $ctrl.settings.emailsOfAdminsDescription }}</div>
+        </md-input-container> -->
+    </div>
+
+    <div flex="50" layout="column">
+        <md-input-container>
+            <div class="md-title">Set {{ $ctrl.parseCamelCase('abstractResctricToOnePage') }}</div>
+            <div class="md-body-1 m-b-6px">{{ $ctrl.settings.abstractResctricToOnePageDescription }}</div>
+            <!-- <label>{{ $ctrl.parseCamelCase('abstractResctricToOnePage') }}</label> -->
+            <md-select ng-model="$ctrl.settings.abstractResctricToOnePage">
+                <md-option ng-value="true">
+                    One page abstract
+                </md-option>
+                <md-option ng-value="false">
+                    Multipage abstract
+                </md-option>
+            </md-select>
+            <!-- <div class="md-caption">{{ $ctrl.settings.abstractResctricToOnePageDescription }}</div> -->
+        </md-input-container>
+    </div>
+
+    <!-- <div ng-repeat="(key, value) in $ctrl.settings" flex="50">
+        <md-input-container ng-if="!key.includes('_') && !key.includes('Description')">
+            <label for="">{{key}}</label>
+            <input type="text" name="" ng-model="$ctrl.settings[key]">
+        </md-input-container>
+    </div> -->
+</form>
+<div layout="column" layout-align="center center" layout-margin layout-padding>
+    <md-button ng-click="$ctrl.submit()" class="md-raised md-accent">
+        update settings
+    </md-button>
+    <div class="md-body-1">{{ $ctrl.settings._updatedTrace.slice(-1)[0].updatedAt }}</div>
+</div>
+</span>

@@ -1,6 +1,7 @@
 import uiRouter from 'angular-ui-router';
-import absPrintAdminComponent from './absPrintAdmin'
+import absPrintAdminComponent from './absPrintAdmin';
 import adminComponent from './admin.component';
+import adminSettingsComponent from './adminSettings';
 import adminService from './services/admin.service';
 
 const adminModule = angular
@@ -9,6 +10,7 @@ const adminModule = angular
     ])
     .component('absPrintAdmin', absPrintAdminComponent)
     .component('admin', adminComponent)
+    .component('adminSettings', adminSettingsComponent)
     .service('adminService', adminService)
     .config(($stateProvider) => {
         'ngInject';
