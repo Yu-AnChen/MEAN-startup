@@ -10,13 +10,14 @@ Auth.use((req, res, next) => {
             if (!err && results.length) {
                 req.currentUser = results[0];
                 console.log(req.currentUser);
+                next();
                 // login 
                 // res.cookie('TTBASymposium', newToken)
                 // check
                 // token: req.cookies.TTBASymposium
                 // logout
                 // res.clearCookie('TTBASymposium');
-                next();
+                
             } else {
                 // 401 unauthorized
                 res.sendStatus(401);

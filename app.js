@@ -14,6 +14,9 @@ const flash = require('express-flash');
 const path = require('path');
 const multer = require('multer');
 
+const insertAdminSettingsInit = require('./init/adminSetting');
+const initSystemSettings = require('./init/systemSetting');
+
 if (
     process.env.NODE_ENV == 'development' ||
     process.env.NODE_ENV.indexOf('development') > -1
@@ -48,6 +51,14 @@ app.use((req, res, next) => {
         return err ? next(err) : next();
     });
 });
+let DB;
+dbClient.connect(dbUrl)
+    .then(db => DB = db)
+    .then(() => insertAdminSettingsInit(DB.collection('admin')))
+    // .then(data => console.log(data))
+    .then((docInserted) => initSystemSettings(DB.collection('systemSetting'), docInserted))
+    .then(() => DB.close())
+    .catch(err => console.log(err));
 
 // Frontend development
 if (process.env.NODE_ENV == 'development') {
@@ -94,6 +105,8 @@ const user = require('./routes/user');
 const users = require('./routes/users');
 const currentUser = require('./routes/currentUser');
 const toPdf = require('./routes/toPdf');
+const admin = require('./routes/admin');
+const systemSetting = require('./routes/systemSetting');
 // login, logout, signup
 // app.use(auth);
 app.use('/currentUser', currentUser);
@@ -102,6 +115,8 @@ app.use('/users', users);
 app.use('/abstract', abstract);
 app.use('/abstracts', abstracts);
 app.use('/toPdf', toPdf);
+app.use('/admin', admin);
+app.use('/systemSetting', systemSetting);
 
 // Errors
 app.use(errorHandler());
