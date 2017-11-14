@@ -5,9 +5,9 @@ constructor(metadata){
 */
 const METADATA = {
     // for web metadatas
-    webTitle: 'TTBA SYMPOSIUM 2017 - Abstract submission for elevator talk',
+    webTitle: 'Taiwan-TBA Year-End Symposium 2017 - Abstract submission for poster session',
     webAuthor: 'Yu-An Chen atwood12@gmail.com',
-    webDescription: 'TTBA Symposium 2017 is hosted by Texas Taiwanese Biotechnology Association (TTBA) at UT Austin, Austin TX.',
+    webDescription: 'Taiwan-TBA Year-End Symposium 2017 12/23/2017 NCKU & 12/30/2017 Academia Sinica',
     baseUrl: '/',
     iconUrl: './assets/img/favicon.ico',
     message: 'Login Message'
