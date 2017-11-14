@@ -1,0 +1,2 @@
+import redirectDialogWhenSubmissionIsCloseComponent from './redirectDialogWhenSubmissionIsClose.component';
+export default redirectDialogWhenSubmissionIsCloseComponent;
