@@ -1,3 +1,4 @@
+<redirect-dialog-when-submission-is-close></redirect-dialog-when-submission-is-close>
 <span ng-if="$ctrl.showView">
     
     <div layout="row" layout-padding="" layout-align="center center">
@@ -74,6 +75,10 @@
                     class="md-accent md-hue-2 md-raised">Edit it!</md-button>
             </div>
             
+            <div layout="row" layout-align="center center">
+                <go-to-result-button></go-to-result-button>
+            </div>
+
             <div layout="row" layout-align="center center">
                 <md-button 
                     ng-click="$ctrl.goRoot()"

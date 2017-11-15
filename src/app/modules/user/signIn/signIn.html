@@ -1,3 +1,4 @@
+<redirect-dialog-when-submission-is-close></redirect-dialog-when-submission-is-close>
 <span ng-if="$ctrl.showView">
     <div layout="row" layout-padding="" layout-align="center center">
     
@@ -5,7 +6,7 @@
             <div layout-gt-sm="row" layout="column" >
                 <h3 md-colors="{color: 'grey-800'}" flex class="form_bullet">
                     Edit Existing Abstract
-                    <div><small>Update it before September 30th</small></div>
+                    <div><small>Update it before {{$ctrl.submissionDeadline | date: 'MMMM d'}}</small></div>
                 </h3>
                 <div layout="row" layout-align="center center" flex>
                     <md-button href="" 
@@ -64,6 +65,11 @@
                     
                 </span>
             </div>
+
+            <div layout="row" layout-align="center center">
+                <go-to-result-button></go-to-result-button>
+            </div>
+            
             
             <div layout="row" layout-align="center center">
                 <md-button 

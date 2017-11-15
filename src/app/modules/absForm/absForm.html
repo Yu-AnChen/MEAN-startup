@@ -1,3 +1,4 @@
+<redirect-dialog-when-submission-is-close></redirect-dialog-when-submission-is-close>
 <div ui-view class="abs_form">
     <div layout="column" layout-sm="column" layout-align="center center"
         ng-show="!$ctrl.form">
@@ -50,6 +51,21 @@
                     </div>
                     
                     <div layout="column" layout-padding="">
+                        <md-input-container>
+                            <label>Taipei or Tainan?</label>
+                            <md-select required name="which location"
+                                ng-model="$ctrl.form.whichLocation"
+                                md-on-open="$ctrl.setFooterClass(true)"
+                                md-on-close="$ctrl.setFooterClass(false)">
+                                <md-option 
+                                    ng-repeat="field in ['12/30, Institute of Molecular Biology at Academia Sinica, Taipei', '12/23,  Medical School of National Cheng-Kung University, Tainan', 'Both'] | orderBy"
+                                    ng-value="field">{{field}}
+                                </md-option>
+                            </md-select>
+                            <div ng-messages="abstract_form.field.$error">
+                                <div ng-message="required">This is required</div>
+                            </div>
+                        </md-input-container>
                         <md-input-container>
                             <label class="bullet">Abstract Title</label>
                             <textarea type="textarea" name="title" 
@@ -223,7 +239,7 @@
         <md-button 
             ng-click="$ctrl.submit()"
             class="md-raised md-primary"
-            ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field || $ctrl.submitBtnClicked || !$ctrl.form.canGiveATalk"
+            ng-disabled="!$ctrl.currentUser || !$ctrl.absWithinPage || !$ctrl.form.field || $ctrl.submitBtnClicked || !$ctrl.form.canGiveATalk || !$ctrl.isBeforeDeadline"
             >Submit
         </md-button>
     </div>
