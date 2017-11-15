@@ -3,9 +3,11 @@ module.exports = {
     submissionDeadline: new Date(),
     emailsOfAdmins: ['eventAdminEmail'],
     abstractResctricToOnePage: true,
+    showGoToResultButton: true,
 
     eventNameDescription: 'The unique identifier for your event',
     submissionDeadlineDescription: 'The system will not accept abstracts submitted after the deadline',
     emailsOfAdminsDescription: 'Users with admin level access, add them using their emails',
-    abstractResctricToOnePageDescription: 'Only accept single page abstract?'
+    abstractResctricToOnePageDescription: 'Only accept single page abstract?',
+    showGoToResultButtonDescription: 'Show/hide browse all abstracts button'
 };
