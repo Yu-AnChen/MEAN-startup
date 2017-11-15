@@ -4,26 +4,39 @@
         <md-content layout="column" layout-padding="" flex-gt-xs="80" flex="100" flex-gt-md="70">
             <div class="abs-root" md-colors="{color: 'grey-800'}">
                 <h2>
-                    <span class="form_bullet">Elevator Talk</span>
+                    <span class="form_bullet">Poster Session</span>
                 </h2>
                 <div style="padding-left:20px" md-theme="navTheme">
-                    <h4>
-                        The 5-minute elevator talk competition includes an abstract competition and an oral competition.
-                    </h4>
-                    <h3>Abstract competition</h3>
-                    <p>The abstracts should be submitted no later than <strong>September 30th</strong>. Each abstract will be judged by at least 3 referees with related expertise. The top 3 contestants will receive <strong>travel funds</strong> ($50 per person), and the selected 10 finalists will enter oral competition.</p>
-                    <h3>Oral competition</h3>
-                    <p>The elevator talk is on <strong>November 4th from 5:30 to 6:30 pm</strong>. Those selected will give <strong>a 5-minute presentation</strong> to highlight their research. The participants will be judged by a panel of 3 or more judges. Each judge scores speakers on a scale of 1 to 10 in each of the 3 criteria below. The judges' scores are combined and the top 3 are winners. The participants will be judged on the following criteria:</p>
-                    <ul>
-                        <li>Comprehension: Does the presentation help the audience understand the research?</li>
-                        <li>Engagement: Does the oration make the audience want to know more?</li>
-                        <li>Communication: Is the information delivered clearly and simply?</li>
-                    </ul>
-                    <h4>1st, 2nd, and 3rd place winners will be awarded $150, $100, and $50 accordingly.</h4>
+                    <h3>
+                        There will be a 30 - 60 minutes poster session in the symposium. Please submit your abstract.
+                    </h3>
+                    <div layout="row" layout-wrap layout-align="space-around">
+                        <div flex-gt-xs="45" flex="100"> 
+                            <h4>I. On Dec 23, at Medical School of National Cheng-Kung University, Tainan</h4>
+                            <div layout="column" layout-align="center center">
+                                <img src="assets/img/NCKU-square.png" alt="" style="width: 80%; max-width:250px">
+                            </div>
+                        </div>
+                        <div flex-gt-xs="45" flex="100">
+                            <h4>II. On Dec 30, at Institute of Molecular Biology at Academia Sinica, Taipei</h4>
+                            <div layout="column" layout-align="center center">
+                                <img src="assets/img/IMBAS.png" alt="" style="width: 80%; max-width:250px">
+                            </div>
+                        </div>
+                    </div>
+                    <h3>
+                        Start your submission by clicking 
+                        <md-button ng-click="$ctrl.goSignUp()" class="" ng-disabled="signUpForm.$invalid">
+                            NEXT
+                        </md-button>
+                    </h3>
                 </div>
             </div>
             <div layout="row" layout-align="center center">
-                <md-button ng-href="https://symposium2017.ttbatw.org/" class="md-raised md-primary">
+                <go-to-result-button></go-to-result-button>
+            </div>
+            <div layout="row" layout-align="center center">
+                <md-button ng-href="http://twbiogroup.org/index_news.aspx?&pn=12" class="md-raised md-primary">
                     Back
                 </md-button>
                 <md-button ng-click="$ctrl.goSignUp()" class="md-raised md-primary" ng-disabled="signUpForm.$invalid">
