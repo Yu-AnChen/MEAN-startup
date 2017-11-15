@@ -12,7 +12,7 @@ const absSubmitCompleteComponent = {
             return ['$window', '$log', '$timeout', '$scope', '$location', 'FormApi', 'UserApi', '$state', 'absFormService'];
         }
         constructor($window, $log, $timeout, $scope, $location, FormApi, UserApi, $state, absFormService) {
-            this.$window = $window
+            this.$window = $window;
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
@@ -28,7 +28,7 @@ const absSubmitCompleteComponent = {
             this.getSubmittedAbs = false;
             this.resultTimeoutDelay = 1500;
             this.pdfLink = '#';
-            this.absFormService.getPdfUrl()
+            this.absFormService.getPdfUrl();
         }
         $onChange() {
         }
@@ -85,7 +85,7 @@ const absSubmitCompleteComponent = {
                 if (res.status == 200) {
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
                     // this.$state.go('app.user.signIn', {email: ''});
-                    window.location = "http://www.symposium2016.ttbatw.org/";
+                    window.location = "http://twbiogroup.org/index_news.aspx?&pn=12";
                     
                 } else {
                     console.log('error: signout');
