@@ -4,6 +4,8 @@ const fs = require('fs');
 const path = require('path');
 const Auth = require('./auth');
 
+const filePrefix = 'Taiwan-TBA_Year-End_Symposium_2017-';
+
 ToPdf.post('/', Auth, (req, res) => {
     const pdfsDirPath = path.join(__dirname, '../dist/pdfs/');
     try {
@@ -12,7 +14,7 @@ ToPdf.post('/', Auth, (req, res) => {
         fs.mkdirSync(pdfsDirPath);
     }
     // https://nodejs.org/api/fs.html#fs_fs_accesssync_path_mode
-    const filePrefix = 'Taiwan-TBA_Year-End_Symposium_2017';
+    
     const fileName = filePrefix + req.body.email + '.pdf';
     const pdfPath = pdfsDirPath + fileName;
 
