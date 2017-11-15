@@ -2,23 +2,27 @@
     ng-if="!$ctrl.abstracts">
     <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1 progress_indic"></md-progress-circular>
 </div>
-<div layout="row" class="admin" layout-padding  ng-if="$ctrl.abstracts">
+<div layout="row" class="admin" layout-margin  ng-if="$ctrl.abstracts">
 <div flex="10" show-md hide></div>
-<div flex="20" show-lg hide></div>
-<div flex="30" show-xl hide></div>
-<div flex="">
+<div flex="10" show-lg hide></div>
+<div flex="20" show-xl hide></div>
+<div flex="" md-whiteframe="5">
 
     <md-toolbar class="md-hue-3" 
         ng-show="$ctrl.$state.current.url=='admin'">
         <div class="md-toolbar-tools" layout="row">
             <span>Admin Portal</span>
+            <span flex></span>
+            <md-button class="md-raised" aria-label="User view" ng-click="$ctrl.$state.go('app.absResults')">
+                User view
+            </md-button>
         </div>
     </md-toolbar>
     
     <md-toolbar class="md-accent" 
         ng-show="$ctrl.$state.current.url=='results'">
         <div class="md-toolbar-tools" layout="row">
-            <span>Elevator Talks
+            <span>Poster Abstracts
                 <!-- <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span> -->
             </span>
         </div>
@@ -28,7 +32,7 @@
         <md-subheader class="md-primary" ng-show="$ctrl.$state.current.url=='admin'">
             <h2 class="md-display-1">Settings</h2>
         </md-subheader>
-        <!-- <admin-settings ng-show="$ctrl.$state.current.url=='admin'"></admin-settings> -->
+        <admin-settings ng-if="$ctrl.$state.current.url=='admin'"></admin-settings>
         
       <!--<md-list class="md-dense" flex="">-->
         <md-subheader class="md-primary">
@@ -87,13 +91,7 @@
                     >Abstracts in dark background are not eligible for elevator talks.
                 </span>
             </md-list-item>
-            <md-list-item class="selected_for_talk"
-                ng-show="$ctrl.$state.current.url=='results'">
-                <span 
-                    >All the submitted abstracts have been reviewed. The following abstracts are selected for elevator talks. 
-                    <!-- Abstracts marked yellow are selected for elevator talks. -->
-                </span>
-            </md-list-item>
+            <md-divider></md-divider>
             <md-list-item>
                 <div layout-padding hide-xs>
                     <div layout-padding >
@@ -110,21 +108,28 @@
                 <span layout-padding
                     md-colors="{color: 'warn-900'}"
                     ng-show="$ctrl.$state.current.url=='admin'"
-                    ><strong>Elevator talk?</strong>
+                    ><strong>Show in client view?</strong>
                 </span>
             </md-list-item>
+            <!-- <md-list-item class="selected_for_talk"
+                ng-show="$ctrl.$state.current.url=='results'">
+                <span 
+                    >All the submitted abstracts have been reviewed. The following abstracts are selected for elevator talks. 
+                    Abstracts marked yellow are selected for elevator talks.
+                </span>
+            </md-list-item> -->
             <!--<md-divider ></md-divider>-->
             
             <md-list-item class="md-3-line" 
                 ng-repeat="item in $ctrl.filterSelected($ctrl.abstracts) | orderBy:$ctrl.sortBy"
                 ng-class="{no_elevator_talk: !$ctrl.strToBoolean(item.canGiveATalk) && $ctrl.$state.current.url=='admin',
-                           selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='results'}">
+                           selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='results' && $index % 2 === 0}">
                 <div  layout="row" layout-align="" layout-fill layout-padding>
                     <div layout-padding hide-xs>
                         <md-checkbox aria-label="Select this abstract"
-                            ng-checked="$ctrl.absSelected(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)" 
-                            ng-click="$ctrl.toggleSelectAbs(item.fieldNoSpace+'-'+item.fileId, $ctrl.selectedAbs)"
-                            id="label_{{item.fieldNoSpace+'-'+item.fileId}}"
+                            ng-checked="$ctrl.selectedAbs.includes(item)" 
+                            ng-click="$ctrl.toggleSelectAbs(item)"
+                            id="label_{{item._id}}"
                             >
                             {{ $index+1 }}
                         </md-checkbox>
@@ -132,6 +137,11 @@
                     <div hide-gt-xs>{{ $index+1 }}</div>
                     <!--<label layout-margin>{{ $index+1 }}</label>-->
                     <div layout="column">
+                        <div>
+                            <span id="location" class="md-body-1"
+                                >Location: {{ item.whichLocation }}
+                            </span>
+                        </div>
                         <div>
                             <span id="wrapper-abs_field"
                                 >{{ item.field }}<span ng-show="$ctrl.displaySetting.showEmails"
@@ -143,7 +153,7 @@
                         <!--<h3>{{ item.title }}</h3>-->
                         <!--<p>{{ item.authors }}</p>-->
                         <div class="wrapper-abs_print" >
-                            <abs-print-admin id="abs_{{item.fieldNoSpace+'-'+item.fileId}}"
+                            <abs-print-admin id="abs_{{item._id}}"
                                abs-data="item"
                                display-setting="$ctrl.displaySetting"></abs-print-admin>
                         </div>
@@ -155,8 +165,8 @@
                         ng-model="item.selectedForTalk" 
                         ng-change="$ctrl.updateTalkStatus(item)"
                         class="md-warn md-hue-1">
-                        <span ng-show="item.selectedForTalk">Yes!</span>
-                        <span ng-show="!item.selectedForTalk">Nope</span>
+                        <span ng-show="item.selectedForTalk">Show</span>
+                        <span ng-show="!item.selectedForTalk">Hide</span>
                         <!--{{ item.selectedForTalk }}-->
                     </md-switch>
                     
@@ -167,6 +177,6 @@
     </md-content>
 </div>
 <div flex="10" show-md hide></div>
-<div flex="20" show-lg hide></div>
-<div flex="30" show-xl hide></div>
+<div flex="10" show-lg hide></div>
+<div flex="20" show-xl hide></div>
 </div>

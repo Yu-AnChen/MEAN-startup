@@ -20,21 +20,13 @@ const adminComponent = {
             this.$state = $state;
         }
         $onInit() {
-            // this.adminService.getSettings()
-            //     .then(res => {
-            //         res.data.eventName = 'some symposium';
-            //         this.adminService.updateSettings(res.data)
-            //             .then(res => this.adminService.getSettings()
-            //                 .then(res => console.log(res)));
-            //     });
-            
-            console.log(this.$state.current.url);
+            // console.log(this.$state.current.url);
             this.selectAllAbs = [];
             this.getAbstracts();
-            this.sortBy = 'elevatorTalkOrder';
+            this.sortBy = 'whichLocation';
             this.sortByOptions = {
-                name: ["Title", "Author", "Field", 'Talk order'],
-                value: ["title", "fileId", "field", 'elevatorTalkOrder']
+                name: ["Title", "Author", "Field", 'Talk order', 'Location'],
+                value: ["title", "fileId", "field", 'elevatorTalkOrder', 'whichLocation']
             };
             this.displaySetting = {
                 showAffil: false,
@@ -43,15 +35,11 @@ const adminComponent = {
                 showEmails: false,
             };
             this.selectedAbs = [];
-            
-            // this.adminService.getData();
-            // this.adminService.storeData({'change':'value'});
         }
         $onDestroy(){
-            // this.adminService.cleanup();
         }
         strToBoolean(str) {
-            return str === "true" ? true : false;
+            return str.toString() === 'true' ? true : false;
         }
         getAbstracts() {
             // let rawData = [];
@@ -59,36 +47,20 @@ const adminComponent = {
             .then(
                 (res)=>{
                     let rawData = res.data;
-                    
-                    for (let i=0; i<rawData.length; i++) {
-                        let authorNameArray = rawData[i].authors[0].name.split(' ');
-                        rawData[i].fileId = authorNameArray[authorNameArray.length-1] + "_" + authorNameArray[0];
-                        rawData[i].fieldNoSpace = rawData[i].field.replace(/\s/g, '-');
-                        this.selectAllAbs.push(rawData[i].fieldNoSpace+'-'+rawData[i].fileId);
-                        if (rawData[i].selectedForTalk === undefined) {
-                            rawData[i].selectedForTalk = false;
-                        }
-                    }
-                    // console.log(this.selectAllAbs);
-                    this.abstracts =  rawData;
-                    
+                    rawData.forEach(element => {
+                        element.selectedForTalk = !element.selectedForTalk 
+                            ? false
+                            : true;
+                    });
+                    this.abstracts = rawData;
                 },
                 ()=>{
                     console.log('error: getAbstracts');
                 }
             );
-            
-            // for (let i=0; i<rawData.length; i++) {
-            //     let authorNameArray = rawData[i].authors[0].name.split(' ');
-            //     rawData[i].fileId = authorNameArray[authorNameArray.length-1] + "_" + authorNameArray[0];
-            //     rawData[i].fieldNoSpace = rawData[i].field.replace(/\s/g, '-');
-            //     this.selectAllAbs.push(rawData[i].fieldNoSpace+'-'+rawData[i].fileId);
-            // }
-            // console.log(this.selectAllAbs);
-            // return rawData;
-            
         }
         filterSelected(abstracts) {
+            // return abstracts;
             return this.$state.current.url === 'results'
                 ? abstracts.filter(element => element.selectedForTalk)
                 : abstracts;
@@ -118,45 +90,46 @@ const adminComponent = {
                 ()=> {
                     console.log('error: updateTalkStatus');
                     this.taskDone();
-                })
+                });
 
         }
         replaceSpace(str) {
             return str.replace(/\s/g, '-');
         }
-        toggleSelectAbs(email, selectedList) {
-            let idx = selectedList.indexOf(email);
-            if (idx > -1) {
-                selectedList.splice(idx, 1);
-            } else {
-                selectedList.push(email);
-            }
+        toggleSelectAbs(item) {
+            this.selectedAbs = this.selectedAbs.includes(item)
+                ? this.selectedAbs.filter(element => element !== item)
+                : [...this.selectedAbs, item];
         }
         absSelected(item, list) {
             return list.indexOf(item) > -1;
         }
         toggleSelectAll() {
-            if (this.selectedAbs.length == this.abstracts.length) {
+            let allAbstracts = this.filterSelected(this.abstracts);
+            if (this.selectedAbs.length == allAbstracts.length) {
                 this.selectedAbs = [];
             } else {
-                this.selectedAbs = this.selectAllAbs;
+                this.selectedAbs = allAbstracts;
             }
         }
         allSelected() {
-            return this.selectedAbs.length == this.abstracts.length;
+            return this.selectedAbs.length == this.filterSelected(this.abstracts).length;
         }
         generateFile(selectedAbs) {
-            for (let i=0; i<selectedAbs.length; i++) {
-                let label = document.querySelector(
-                                '#label_' + selectedAbs[i] + ' .md-label'
-                            ).innerHTML.trim();
-                if (label.length === 1) {
-                    label = "0" + label;
-                }
-                console.log(label);
-                let absElId = '#abs_' + selectedAbs[i];
-                saveAs(this.convertHtmlToDocx(absElId),  label + '_' + selectedAbs[i] + '.docx');
-            }
+            selectedAbs.forEach(element => {
+                let label = document
+                    .querySelector('#label_' + element._id + ' .md-label')
+                    .innerHTML.trim();
+                if (label.length === 1) { label = '0' + label; }
+                let absElId = '#abs_' + element._id;
+                let location = !element.whichLocation 
+                    ? 'Unknown' 
+                    : element.whichLocation.split(',').slice(-1)[0].trim();
+                let author = element.authors[0].name.split(' ').join('_');
+                let outputFileName = `${location}_${label}_${author}.docx`;
+
+                saveAs(this.convertHtmlToDocx(absElId),  outputFileName);
+            });
         }
         
         convertHtmlToDocx(elementId) {
