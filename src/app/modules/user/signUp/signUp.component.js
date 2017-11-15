@@ -37,9 +37,9 @@ const userSignUpComponent = {
             return {
                 email: this.$stateParams.email,
                 favoritePhrase: this.$stateParams.favoritePhrase,
-                favoritePhraseConfirm: "",
-                primaryAffiliation: ""
-            }
+                favoritePhraseConfirm: '',
+                primaryAffiliation: ''
+            };
         }
         getCurrentUser() {
             this.UserApi.getCurrentUser().then((res)=>{
@@ -50,7 +50,7 @@ const userSignUpComponent = {
             }, ()=>{
                 this.showView = true;
                 this.autofocus();
-            })
+            });
         }
         signUp() {
             let userDbData = {
@@ -59,14 +59,13 @@ const userSignUpComponent = {
                 primaryAffiliation: this.userData.primaryAffiliation,
                 signInDate: [new Date()],
                 signInCount: 1
-            }
+            };
             
-            console.log('saving to db now');
             this.UserApi.signup(userDbData).then((res)=>{
                 if (res.status == 200) {
                     // console.log(res.data);
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
-                    console.log(this.$stateParams);
+                    // console.log(this.$stateParams);
                     if (Object.keys(this.$stateParams.unsavedData).length) {
                         this.$stateParams.unsavedData.email = res.data.email;
                         
@@ -84,9 +83,8 @@ const userSignUpComponent = {
             }, (res)=>{
                 if (res.status == 403 && res.data == 'email already exist') {
                     this.alreadyExist = true;
-                    console.log(res);
                 } else {
-                    console.log('other error');
+                    console.log('signUp error');
                 }
             });
         }

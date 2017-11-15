@@ -26,23 +26,20 @@ const userSignOutComponent = {
         
         getUserData() {
             return {
-                email: "",
-                password: "",
-                passwordConfirm: "",
-                primaryAffil: ""
-            }
+                email: '',
+                password: '',
+                passwordConfirm: '',
+                primaryAffil: ''
+            };
         }
         signOut() {
-            console.log('signing out');
             this.UserApi.signout(this.userData).then((res)=>{
-                console.log(res);
                 if (res.status == 200) {
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
-                    console.log('sign out succed!')
                     this.$state.go('app.user.signIn', {email: ''});
                     
                 } else {
-                    console.log('keeptrying');
+                    console.log('signOut failed');
                 }
             });
         }
