@@ -138,8 +138,11 @@
                     <!--<label layout-margin>{{ $index+1 }}</label>-->
                     <div layout="column">
                         <div>
-                            <span id="location" class="md-body-1"
+                            <!-- <span id="location" class="md-body-1"
                                 >Location: {{ item.whichLocation }}
+                            </span> -->
+                            <span id="location" class="md-body-1"
+                                >Submitted At: {{ item.lastSubmittedAt | date : 'short' : 'CST' }}
                             </span>
                         </div>
                         <div>

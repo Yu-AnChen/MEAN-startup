@@ -28,8 +28,8 @@ function themeConfigNav($mdThemingProvider) {
             'default': '900',
             'hue-1': '800',
         })
-        .primaryPalette('light-blue', {
-            default: '100',
+        .primaryPalette('green', {
+            default: '500',
             'hue-1': '500'
         })
         // .accentPalette('customAmberMap', {

@@ -1,16 +1,16 @@
 <div layout layout-align="center" class="container-header" md-colors="{background: 'accent'}">
     <div flex="80" flex-xs="95" layout="row" layout-xs="column" layout-align="center end" layout-align-gt-xs="space-between center">
         <div>
-            <a ng-href="http://twbiogroup.org/index_news.aspx?&pn=12" class="silent-link">
+            <a ng-href="{{$ctrl.METADATA.registerUrl}}" class="silent-link">
                 <!-- <img src="assets/img/header-logo.png" alt="" style="width:100%; padding:5% 1%"> -->
-                <h1>Taiwan-TBA Year-End Symposium 2017</h1>
+                <h1>TECO-Houston x TTBA Lecture</h1>
             </a>
-            <div class="header-hide">TTBA SYMPOSIUM 2017, Austin TX, 11/4-5</div>
+            <div class="header-hide">TECO-Houston x TTBA Lecture</div>
         </div>
         <div flex="none">
-            <md-button class="md-primary" ng-href="http://twbiogroup.org/index_news.aspx?&pn=12" target="_blank" layout="row" layout-align="center center" >
+            <md-button class="md-primary" ng-href="{{$ctrl.METADATA.registerUrl}}" target="_blank" layout="row" layout-align="center center" >
                 <span class="md-subhead">
-                    <strong>Event Site</strong>
+                    <strong>Register</strong>
                 </span>
                 <span style="padding:3px"></span>
                 <ng-md-icon icon="launch" size="24" style="fill: #555" class="iconInButton"></ng-md-icon>
@@ -43,7 +43,7 @@
     style="min-height:150px">
     <div flex="80" flex-xs="95" layout layout-align="space-between center">
         <a href="#" class="md-display-1 silent-link">
-            Abstract Submission for Poster Session
+            Abstract Submission for Pitch Competition (8 Minutes)
         </a>
         <md-button class="md-icon-button" ng-click="$ctrl.$state.go('app.admin')" aria-label="go to admin portal">
             <ng-md-icon icon="settings" size="24" style="fill: #555" class="iconInButton"></ng-md-icon>

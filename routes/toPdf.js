@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 const Auth = require('./auth');
 
-const filePrefix = 'Taiwan-TBA_Year-End_Symposium_2017-';
+const filePrefix = 'TECOxTTBA_pitch_competition-';
 
 ToPdf.post('/', Auth, (req, res) => {
     const pdfsDirPath = path.join(__dirname, '../dist/pdfs/');

@@ -9,9 +9,9 @@ const adminComponent = {
     controller: /* @ngInject */ 
     class AdminController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', 'FormApi', 'adminService', '$state', '$mdDialog'];
+            return ['$log', '$timeout', '$scope', 'FormApi', 'adminService', '$state', '$mdDialog', '$filter'];
         }
-        constructor($log, $timeout, $scope, FormApi, adminService, $state, $mdDialog) {
+        constructor($log, $timeout, $scope, FormApi, adminService, $state, $mdDialog, $filter) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
@@ -19,15 +19,16 @@ const adminComponent = {
             this.adminService = adminService;
             this.$state = $state;
             this.$mdDialog = $mdDialog;
+            this.$filter = $filter;
         }
         $onInit() {
             console.log(this.$state.current.url);
             this.selectAllAbs = [];
             this.getAbstracts();
-            this.sortBy = 'whichLocation';
+            this.sortBy = 'lastSubmittedAt';
             this.sortByOptions = {
-                name: ["Title", "Author", "Field", 'Talk order', 'Location'],
-                value: ["title", "fileId", "field", 'elevatorTalkOrder', 'whichLocation']
+                name: ["Title", "Author", "Field", 'Talk order', 'Location', 'Submission time'],
+                value: ["title", "fileId", "field", 'elevatorTalkOrder', 'whichLocation', 'lastSubmittedAt']
             };
             this.displaySetting = {
                 showAffil: false,
@@ -71,6 +72,7 @@ const adminComponent = {
                         element.selectedForTalk = !element.selectedForTalk 
                             ? false
                             : true;
+                        element.lastSubmittedAt = this.getLastSubmittedAt(element.submittedAt);
                     });
                     this.abstracts = rawData;
                 },
@@ -85,6 +87,12 @@ const adminComponent = {
                 ? abstracts.filter(element => element.selectedForTalk)
                 : abstracts;
             
+        }
+        getLastSubmittedAt(submittedAt) {
+            if (!submittedAt || !submittedAt.length) {
+                return 'Did not submit.';
+            }
+            return new Date(submittedAt.slice(-1)[0]);
         }
         taskOn(){
             this.busy = true;
@@ -142,11 +150,13 @@ const adminComponent = {
                     .innerHTML.trim();
                 if (label.length === 1) { label = '0' + label; }
                 let absElId = '#abs_' + element._id;
-                let location = !element.whichLocation 
-                    ? 'Unknown' 
-                    : element.whichLocation.split(',').slice(-1)[0].trim();
+                // let location = !element.whichLocation 
+                //     ? 'Unknown' 
+                //     : element.whichLocation.split(',').slice(-1)[0].trim();
                 let author = element.authors[0].name.split(' ').join('_');
-                let outputFileName = `${location}_${label}_${author}.docx`;
+                let lastSubmittedAt = this.$filter('date')(element.lastSubmittedAt, 'yyyy-MM-dd-H-mm', 'CST');
+                // let outputFileName = `${location}_${label}_${author}.docx`;
+                let outputFileName = `${label}_${lastSubmittedAt}_${author}.docx`;
 
                 saveAs(this.convertHtmlToDocx(absElId),  outputFileName);
             });

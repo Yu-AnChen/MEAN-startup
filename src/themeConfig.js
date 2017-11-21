@@ -20,7 +20,7 @@ function themeConfig($mdThemingProvider) {
             'hue-2': '200',
             'hue-3': '500'
         })
-        .accentPalette('light-blue', {
+        .accentPalette('green', {
             default: '100',
             'hue-1': '500',
             'hue-2': '100',

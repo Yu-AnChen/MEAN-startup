@@ -8,13 +8,14 @@ const headerAndNavComponent = {
     },
     controller: /* @ngInject */ class headerAndNavController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', '$state'];
+            return ['$log', '$timeout', '$scope', '$state', 'METADATA'];
         }
-        constructor($log, $timeout, $scope, $state) {
+        constructor($log, $timeout, $scope, $state, METADATA) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
             this.$state = $state;
+            this.METADATA = METADATA;
         }
         $onInit() {
             this.originatorEv;

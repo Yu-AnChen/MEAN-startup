@@ -2,26 +2,30 @@
         <md-content layout="column" layout-padding="" flex-gt-xs="80" flex="100" flex-gt-md="70">
             <div class="abs-root" md-colors="{color: 'grey-800'}">
                 <h2>
-                    <span class="form_bullet">Poster Session</span>
+                    <span class="form_bullet">Pitch Competition (8 minutes)</span>
                 </h2>
                 <div style="padding-left:20px" md-theme="navTheme">
-                    <h3>
-                        There will be a 30 - 60 minutes poster session in the symposium. Please submit your abstract.
-                    </h3>
-                    <div layout="row" layout-wrap layout-align="space-around">
-                        <div flex-gt-xs="45" flex="100"> 
-                            <h4>I. On Dec 23, at Medical School of National Cheng-Kung University, Tainan</h4>
-                            <div layout="column" layout-align="center center">
-                                <img src="assets/img/NCKU-square.png" alt="" style="width: 80%; max-width:250px">
-                            </div>
-                        </div>
-                        <div flex-gt-xs="45" flex="100">
-                            <h4>II. On Dec 30, at Institute of Molecular Biology at Academia Sinica, Taipei</h4>
-                            <div layout="column" layout-align="center center">
-                                <img src="assets/img/IMBAS.png" alt="" style="width: 80%; max-width:250px">
-                            </div>
-                        </div>
-                    </div>
+                    <h3>Event information</h3>
+                    <ul>
+                        <li>Date: 6-9 pm, Dec. 12, 2017, Pitch Competition is from 6:10 - 7:40 pm</li>
+                        <li>Location: <md-button class="md-primary md-raised" ng-href="https://goo.gl/maps/9yXpP5p5QMQ2" target="_blank">Hess Club</md-button></li>
+                        <li>Registration: Free registration is required. <md-button class="md-primary md-raised" ng-href="{{$ctrl.METADATA.registerUrl}}" target="_blank">Register</md-button></li>
+                    </ul>
+                    <!-- <h4>
+                        Date: 6-9 pm, Dec. 12, 2017, Pitch Competition is from 6:10 - 7:40 pm
+                    </h4>
+                    <h4>
+                        Location: The Hess Club (https://goo.gl/maps/9yXpP5p5QMQ2)
+                    </h4>
+                    <h4>
+                        Registration: Free registration is required. 
+                    </h4> -->
+                    <h3>Competition rules</h3>
+                    <ul>
+                        <li>The first 10 abstract submissions will be selected for the competition, and each of them will be awarded with $20.</li>
+                        <li>Peer review will be applied to the competition: all the attendees will be the judges for the competition. </li>
+                        <li>The top-3 speakers will be awarded with $150, $100, $50 (in the order of 1st to 3rd place)</li>
+                    </ul>
                     <h3>
                         Start your submission by clicking 
                         <md-button ng-click="$ctrl.goSignUp()" class="" ng-disabled="signUpForm.$invalid">
