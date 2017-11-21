@@ -18,14 +18,14 @@ const absFormModule = angular
         'ngInject';
         $stateProvider
             .state('app.absForm', {
-                url: 'abstract',
+                url: '/abstract',
                 component: 'absForm',
                 data: {
                     pageTitle: 'Submission Form'
                 }
             })
             .state('app.absSubmitComplete', {
-                url: 'abstract-submitted',
+                url: '/abstract-submitted',
                 component: 'absSubmitComplete',
                 data: {
                     pageTitle: 'Submission Status'

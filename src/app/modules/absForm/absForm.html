@@ -1,5 +1,5 @@
 <redirect-dialog-when-submission-is-close></redirect-dialog-when-submission-is-close>
-<div ui-view class="abs_form">
+<div class="abs_form">
     <div layout="column" layout-sm="column" layout-align="center center"
         ng-show="!$ctrl.form">
         <md-progress-circular md-mode="indeterminate" class="md-accent md-hue-1 progress_indic"></md-progress-circular>
@@ -68,9 +68,11 @@
                         </md-input-container>
                         <md-input-container>
                             <label class="bullet">Abstract Title</label>
-                            <textarea type="textarea" name="title" 
+                            <textarea type="textarea" name="title"      
+                                eb-caret="test"
                                 ng-model="$ctrl.form.title"
                                 ng-change="$ctrl.toTitleCase()"></textarea>
+                                <!-- <p>{{test.get}}</p> -->
                         </md-input-container>
                         <md-input-container class="indent-left">
                             <label>Field</label>

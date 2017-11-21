@@ -9,7 +9,7 @@
 <div flex="" md-whiteframe="5">
 
     <md-toolbar class="md-hue-3" 
-        ng-show="$ctrl.$state.current.url=='admin'">
+        ng-show="$ctrl.$state.current.url=='/admin'">
         <div class="md-toolbar-tools" layout="row">
             <span>Admin Portal</span>
             <span flex></span>
@@ -20,7 +20,7 @@
     </md-toolbar>
     
     <md-toolbar class="md-accent" 
-        ng-show="$ctrl.$state.current.url=='results'">
+        ng-show="$ctrl.$state.current.url=='/results'">
         <div class="md-toolbar-tools" layout="row">
             <span>Poster Abstracts
                 <!-- <span id="highlighted-elevator_talk" class="selected_for_talk">Elevator Talks</span> -->
@@ -29,14 +29,14 @@
     </md-toolbar>
 
     <md-content>
-        <md-subheader class="md-primary" ng-show="$ctrl.$state.current.url=='admin'">
+        <md-subheader class="md-primary" ng-show="$ctrl.$state.current.url=='/admin'">
             <h2 class="md-display-1">Settings</h2>
         </md-subheader>
-        <admin-settings ng-if="$ctrl.$state.current.url=='admin'"></admin-settings>
+        <admin-settings ng-if="$ctrl.$state.current.url=='/admin'"></admin-settings>
         
       <!--<md-list class="md-dense" flex="">-->
         <md-subheader class="md-primary">
-            <h2 class="md-display-1" ng-show="$ctrl.$state.current.url=='admin'">Abstracts</h2>
+            <h2 class="md-display-1" ng-show="$ctrl.$state.current.url=='/admin'">Abstracts</h2>
             <h3>Show</h3>
             <md-checkbox ng-model="$ctrl.displaySetting.showAffil" aria-label="Show affiliations">
                 Affiliations
@@ -48,11 +48,11 @@
                 Abstract
             </md-checkbox>
             <md-checkbox ng-model="$ctrl.displaySetting.showEmails" aria-label="Show author's email"
-                ng-if="$ctrl.$state.current.url=='admin'">
+                ng-if="$ctrl.$state.current.url=='/admin'">
                 Email
             </md-checkbox>
             <div ng-show="$ctrl.displaySetting.showEmails"
-                ng-if="$ctrl.$state.current.url=='admin'">
+                ng-if="$ctrl.$state.current.url=='/admin'">
                 <strong>Authors' emails:</strong>
                     <span 
                         ng-repeat="item in $ctrl.filterSelected($ctrl.abstracts) | orderBy:$ctrl.sortBy"
@@ -85,7 +85,7 @@
             
         <md-list flex="">
             <md-list-item class="no_elevator_talk"
-                ng-show="$ctrl.$state.current.url=='admin'">
+                ng-show="$ctrl.$state.current.url=='/admin'">
                 <span 
                     md-colors="{color: 'primary-50'}"
                     >Abstracts in dark background are not eligible for elevator talks.
@@ -107,12 +107,12 @@
                 <span flex></span>
                 <span layout-padding
                     md-colors="{color: 'warn-900'}"
-                    ng-show="$ctrl.$state.current.url=='admin'"
+                    ng-show="$ctrl.$state.current.url=='/admin'"
                     ><strong>Show in client view?</strong>
                 </span>
             </md-list-item>
             <!-- <md-list-item class="selected_for_talk"
-                ng-show="$ctrl.$state.current.url=='results'">
+                ng-show="$ctrl.$state.current.url=='/results'">
                 <span 
                     >All the submitted abstracts have been reviewed. The following abstracts are selected for elevator talks. 
                     Abstracts marked yellow are selected for elevator talks.
@@ -122,8 +122,8 @@
             
             <md-list-item class="md-3-line" 
                 ng-repeat="item in $ctrl.filterSelected($ctrl.abstracts) | orderBy:$ctrl.sortBy"
-                ng-class="{no_elevator_talk: !$ctrl.strToBoolean(item.canGiveATalk) && $ctrl.$state.current.url=='admin',
-                           selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='results' && $index % 2 === 0}">
+                ng-class="{no_elevator_talk: !$ctrl.strToBoolean(item.canGiveATalk) && $ctrl.$state.current.url=='/admin',
+                           selected_for_talk: item.selectedForTalk && $ctrl.$state.current.url=='/results' && $index % 2 === 0}">
                 <div  layout="row" layout-align="" layout-fill layout-padding>
                     <div layout-padding hide-xs>
                         <md-checkbox aria-label="Select this abstract"
@@ -145,7 +145,7 @@
                         <div>
                             <span id="wrapper-abs_field"
                                 >{{ item.field }}<span ng-show="$ctrl.displaySetting.showEmails"
-                                    ng-if="$ctrl.$state.current.url=='admin'"
+                                    ng-if="$ctrl.$state.current.url=='/admin'"
                                     > | {{ item.email }}
                                 </span>
                             </span>
@@ -160,8 +160,8 @@
                     </div>
                     <div flex></div>
                     <md-switch aria-label="selected for talk switch"
-                        ng-show="$ctrl.$state.current.url=='admin'"
-                        ng-disabled="$ctrl.isTaskOn() || !$ctrl.strToBoolean(item.canGiveATalk) || !$ctrl.$state.current.url=='admin'"
+                        ng-show="$ctrl.$state.current.url=='/admin'"
+                        ng-disabled="$ctrl.isTaskOn() || !$ctrl.strToBoolean(item.canGiveATalk) || !$ctrl.$state.current.url=='/admin'"
                         ng-model="item.selectedForTalk" 
                         ng-change="$ctrl.updateTalkStatus(item)"
                         class="md-warn md-hue-1">

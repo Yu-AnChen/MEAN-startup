@@ -13,7 +13,7 @@ const absResultsModule = angular
         'ngInject';
         $stateProvider
             .state('app.absResults', {
-                url: 'results',
+                url: '/results',
                 component: 'absResults',
                 data: {
                     pageTitle: 'Results'

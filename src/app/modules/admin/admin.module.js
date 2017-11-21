@@ -16,7 +16,7 @@ const adminModule = angular
         'ngInject';
         $stateProvider
             .state('app.admin', {
-                url: 'admin',
+                url: '/admin',
                 component: 'admin',
                 data: {
                     pageTitle: 'Admin'

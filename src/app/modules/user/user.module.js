@@ -4,6 +4,12 @@ import userService from './services/user.service';
 import signUpComponent from './signUp';
 import signInComponent from './signIn';
 // import signOutComponent from './signOut';
+const userParams = {
+    email: '',
+    favoritePhrase: '',
+    absId: '',
+    unsavedData: {}
+};
 
 const userModule = angular
     .module('app.core.user', [
@@ -18,23 +24,13 @@ const userModule = angular
         'ngInject';
         $stateProvider
             .state('app.user', {
-                url: 'user', // url: '/' << app
-                params: {
-                    email: '',
-                    favoritePhrase: '',
-                    absId: '',
-                    unsavedData: {}
-                },
+                url: '/user', // url: '/' << app
+                params: userParams,
                 component: 'user'
             })
             .state('app.user.signUp', {
                 url: '/create',
-                params: {
-                    email: '',
-                    favoritePhrase: '',
-                    absId: '',
-                    unsavedData: {}
-                },
+                params: userParams,
                 data: {
                     pageTitle: 'Create Abstract'
                 },
@@ -42,12 +38,7 @@ const userModule = angular
             })
             .state('app.user.signIn', {
                 url: '/edit',
-                params: {
-                    email: '',
-                    favoritePhrase: '',
-                    absId: '',
-                    unsavedData: {}
-                },
+                params: userParams,
                 data: {
                     pageTitle: 'Edit Abstract'
                 },
@@ -55,12 +46,7 @@ const userModule = angular
             })
             .state('app.user.signOut', {
                 url: '/signOut',
-                params: {
-                    email: '',
-                    favoritePhrase: '',
-                    absId: '',
-                    unsavedData: {}
-                },
+                params: userParams,
                 component: 'signOut'
             });
     })

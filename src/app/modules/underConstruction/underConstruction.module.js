@@ -12,7 +12,7 @@ const underConstructionModule = angular
         'ngInject';
         $stateProvider
             .state('app.underConstruction', {
-                url: 'under-construction',
+                url: '/under-construction',
                 params: { navName : '' },
                 component: 'underConstruction'
             });

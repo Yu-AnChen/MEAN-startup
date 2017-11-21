@@ -1,0 +1,48 @@
+<div layout="row" layout-padding="" layout-align="center center" class="root">
+        <md-content layout="column" layout-padding="" flex-gt-xs="80" flex="100" flex-gt-md="70">
+            <div class="abs-root" md-colors="{color: 'grey-800'}">
+                <h2>
+                    <span class="form_bullet">Poster Session</span>
+                </h2>
+                <div style="padding-left:20px" md-theme="navTheme">
+                    <h3>
+                        There will be a 30 - 60 minutes poster session in the symposium. Please submit your abstract.
+                    </h3>
+                    <div layout="row" layout-wrap layout-align="space-around">
+                        <div flex-gt-xs="45" flex="100"> 
+                            <h4>I. On Dec 23, at Medical School of National Cheng-Kung University, Tainan</h4>
+                            <div layout="column" layout-align="center center">
+                                <img src="assets/img/NCKU-square.png" alt="" style="width: 80%; max-width:250px">
+                            </div>
+                        </div>
+                        <div flex-gt-xs="45" flex="100">
+                            <h4>II. On Dec 30, at Institute of Molecular Biology at Academia Sinica, Taipei</h4>
+                            <div layout="column" layout-align="center center">
+                                <img src="assets/img/IMBAS.png" alt="" style="width: 80%; max-width:250px">
+                            </div>
+                        </div>
+                    </div>
+                    <h3>
+                        Start your submission by clicking 
+                        <md-button ng-click="$ctrl.goSignUp()" class="" ng-disabled="signUpForm.$invalid">
+                            NEXT
+                        </md-button>
+                    </h3>
+                </div>
+            </div>
+            <div layout="row" layout-align="center center">
+                <go-to-result-button></go-to-result-button>
+            </div>
+            <div layout="row" layout-align="center center">
+                <md-button ng-href="http://twbiogroup.org/index_news.aspx?&pn=12" class="md-raised md-primary">
+                    Back
+                </md-button>
+                <md-button ng-click="$ctrl.goSignUp()" class="md-raised md-primary" ng-disabled="signUpForm.$invalid">
+                    Next
+                </md-button>
+                <!-- <md-button ng-click="$ctrl.goResults()" class="md-raised md-accent">
+                    Browse Abstracts
+                </md-button> -->
+            </div>
+        </md-content>
+    </div>

@@ -62,7 +62,7 @@ angular
     }])
     .config(($stateProvider, $urlRouterProvider) => {
         'ngInject';
-        $urlRouterProvider.otherwise('/');
+        $urlRouterProvider.otherwise('/overview');
     })
     .config(themeConfig)
     .config(themeConfigNav)

@@ -2,7 +2,7 @@ import uiRouter from 'angular-ui-router';
 import components from './components';
 import modules from './modules';
 import services from './services';
-import signOutComponent from './modules/user/signOut'
+import signOutComponent from './modules/user/signOut';
 
 import appComponent from './app.component';
 
@@ -15,24 +15,39 @@ const appModule = angular
     ])
     .component('app', appComponent)
     .component('signOut',signOutComponent )
-    .config(($stateProvider) => {
-        'ngInject';
-        $stateProvider
-            .state('app', {
-                url: '/',
+    // .config(($urlRouterProvider) => {
+    //     'ngInject';
+    //     $urlRouterProvider
+    //         // .when('/user/signin', '/user/edit');
+    //         // .otherwise('/')
+    // })
+    .config(['$uiRouterProvider', $uiRouter => {
+        // 'ngInject';
+        $uiRouter.stateRegistry
+            .register({
+                name: 'app',
+                // url: '/',
+                redirectTo: 'app.absForm',
                 component: 'app',
-                data: {
-                    pageTitle: 'Abstract - Home'
-                },
-            })
-            ;
-    })
-    .config(($urlRouterProvider) => {
-        'ngInject';
-        $urlRouterProvider
-            .when('/user/signin', '/user/edit');
-            // .otherwise('/')
-    })
+                // data: {
+                //     pageTitle: 'Abstract - Home'
+                // }
+            });
+    }])
+    // .config(($stateProvider) => {
+    //     'ngInject';
+    //     $stateProvider
+    //         .state({
+    //             name: 'app',
+    //             url: '',
+    //             redirectTo: 'app.overview',
+    //             component: 'app',
+    //             data: {
+    //                 pageTitle: 'Abstract - Home'
+    //             },
+    //         })
+    //         ;
+    // })
     .name;
 
 export default appModule;

@@ -9,18 +9,19 @@ const adminComponent = {
     controller: /* @ngInject */ 
     class AdminController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope', 'FormApi', 'adminService', '$state'];
+            return ['$log', '$timeout', '$scope', 'FormApi', 'adminService', '$state', '$mdDialog'];
         }
-        constructor($log, $timeout, $scope, FormApi, adminService, $state) {
+        constructor($log, $timeout, $scope, FormApi, adminService, $state, $mdDialog) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
             this.FormApi = FormApi;
             this.adminService = adminService;
             this.$state = $state;
+            this.$mdDialog = $mdDialog;
         }
         $onInit() {
-            // console.log(this.$state.current.url);
+            console.log(this.$state.current.url);
             this.selectAllAbs = [];
             this.getAbstracts();
             this.sortBy = 'whichLocation';
@@ -35,6 +36,25 @@ const adminComponent = {
                 showEmails: false,
             };
             this.selectedAbs = [];
+
+            // this.$mdDialog.show({
+            //     // targetEvent: $event,
+            //     clickOutsideToClose: true,
+            //     template:
+            //         '<md-dialog>' +
+
+            //         '  <md-dialog-content><abs-form></abs-form></md-dialog-content>' +
+
+            //         '  <md-dialog-actions>' +
+            //         '    <md-button ng-click="closeDialog()" class="md-primary">' +
+            //         '      Close Greeting' +
+            //         '    </md-button>' +
+            //         '  </md-dialog-actions>' +
+            //         '</md-dialog>',
+            //     // controller: 'GreetingController',
+            //     // onComplete: afterShowAnimation,
+            //     // locals: { employee: $scope.userName }
+            // });
         }
         $onDestroy(){
         }
@@ -61,7 +81,7 @@ const adminComponent = {
         }
         filterSelected(abstracts) {
             // return abstracts;
-            return this.$state.current.url === 'results'
+            return this.$state.current.url === '/results'
                 ? abstracts.filter(element => element.selectedForTalk)
                 : abstracts;
             
