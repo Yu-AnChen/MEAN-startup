@@ -1,24 +1,24 @@
 var INTEGER_REGEXP = /^\-?\d+$/;
 const appDirectives = angular
     .module('app.core.directives', [])
-    .directive('interger', ()=>{
+    .directive('interger', () => {
         return {
             require: 'ngModel',
-            link: function(scope, elm, attrs, ctrl) {
-              ctrl.$validators.integer = function(modelValue, viewValue) {
-                if (ctrl.$isEmpty(modelValue)) {
-                  // consider empty models to be valid
-                  return true;
-                }
-        
-                if (/^\-?\d+$/.test(viewValue)) {
-                  // it is valid
-                  return true;
-                }
-        
-                // it is invalid
-                return false;
-              };
+            link: function (scope, elm, attrs, ctrl) {
+                ctrl.$validators.integer = function (modelValue, viewValue) {
+                    if (ctrl.$isEmpty(modelValue)) {
+                        // consider empty models to be valid
+                        return true;
+                    }
+
+                    if (/^\-?\d+$/.test(viewValue)) {
+                        // it is valid
+                        return true;
+                    }
+
+                    // it is invalid
+                    return false;
+                };
             }
         };
     })
@@ -26,12 +26,12 @@ const appDirectives = angular
         return {
             require: 'ngModel',
             link: function (scope, elem, attrs, ctrl) {
-				var me = attrs.ngModel;
-				var matchTo = attrs.pwCheck;
+                var me = attrs.ngModel;
+                var matchTo = attrs.pwCheck;
                 //console.log(ctrl.constructor.prototype)      
-				scope.$watchGroup([me, matchTo], function(value){
-					ctrl.$setValidity('pwmatch', value[0] === value[1] );
-				});
+                scope.$watchGroup([me, matchTo], function (value) {
+                    ctrl.$setValidity('pwmatch', value[0] === value[1]);
+                });
 
             }
         };
@@ -45,8 +45,55 @@ const appDirectives = angular
         // Removes bound events in the element itself
         // when the scope is destroyed
             scope.$on('$destroy', function() {
-               elem.off(attr.eventFocus);
+                elem.off(attr.eventFocus);
             });
+        };
+    })
+    .directive('ebCaret', function() {
+
+        function getPos(element) {
+            if ('selectionStart' in element) {
+                return element.selectionStart;
+            } else if (document.selection) {
+                element.focus();
+                var sel = document.selection.createRange();
+                var selLen = document.selection.createRange().text.length;
+                sel.moveStart('character', -element.value.length);
+                return sel.text.length - selLen;
+            }
+        }
+
+        function setPos(element, caretPos) {
+            if (element.createTextRange) {
+                var range = element.createTextRange();
+                range.move('character', caretPos);
+                range.select();
+            } else {
+                element.focus();
+                if (element.selectionStart !== undefined) {
+                    element.setSelectionRange(caretPos, caretPos);
+                }
+            }
+        }
+
+        return {
+            restrict: 'A',
+            scope: {
+                ebCaret: '=',
+            },
+            link: function (scope, element, attrs) {
+                if (!scope.ebCaret) scope.ebCaret = {};
+
+                element.on('keydown keyup click', function (event) {
+                    scope.$apply(function () {
+                        scope.ebCaret.get = getPos(element[0]);
+                    });
+                });
+                scope.$watch('ebCaret.set', function (newVal) {
+                    if (typeof newVal === 'undefined') return;
+                    setPos(element[0], newVal);
+                });
+            }
         };
     })
     // .directive('updateTitle', ['$rootScope', '$timeout',
