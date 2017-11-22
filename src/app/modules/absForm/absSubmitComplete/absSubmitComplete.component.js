@@ -9,9 +9,9 @@ const absSubmitCompleteComponent = {
     controller: /* @ngInject */ 
     class AbsSubmitCompleteController {
         static get $inject() {
-            return ['$window', '$log', '$timeout', '$scope', '$location', 'FormApi', 'UserApi', '$state', 'absFormService'];
+            return ['$window', '$log', '$timeout', '$scope', '$location', 'FormApi', 'UserApi', '$state', 'absFormService', 'METADATA'];
         }
-        constructor($window, $log, $timeout, $scope, $location, FormApi, UserApi, $state, absFormService) {
+        constructor($window, $log, $timeout, $scope, $location, FormApi, UserApi, $state, absFormService, METADATA) {
             this.$window = $window;
             this.$log = $log;
             this.$timeout = $timeout;
@@ -21,6 +21,7 @@ const absSubmitCompleteComponent = {
             this.UserApi = UserApi;
             this.$state = $state;
             this.absFormService = absFormService;
+            this.METADATA = METADATA;
         }
         $onInit() {
             // this.form = {};
@@ -85,7 +86,7 @@ const absSubmitCompleteComponent = {
                 if (res.status == 200) {
                     // this.$state.go('tooooo', {email: res.data.email}); // $stateParams
                     // this.$state.go('app.user.signIn', {email: ''});
-                    window.location = "http://twbiogroup.org/index_news.aspx?&pn=12";
+                    window.location = this.METADATA.registerUrl;
                     
                 } else {
                     console.log('error: signout');

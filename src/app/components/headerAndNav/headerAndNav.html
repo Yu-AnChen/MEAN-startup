@@ -1,14 +1,14 @@
 <div layout layout-align="center" class="container-header" md-colors="{background: 'accent'}">
     <div flex="80" flex-xs="95" layout="row" layout-xs="column" layout-align="center end" layout-align-gt-xs="space-between center">
         <div>
-            <a ng-href="http://twbiogroup.org/index_news.aspx?&pn=12" class="silent-link">
+            <a ng-href="{{$ctrl.METADATA.registerUrl}}" class="silent-link">
                 <!-- <img src="assets/img/header-logo.png" alt="" style="width:100%; padding:5% 1%"> -->
-                <h1>Taiwan-TBA Year-End Symposium 2017</h1>
+                <h1>2017 BioTech Talent Symposium</h1>
             </a>
-            <div class="header-hide">TTBA SYMPOSIUM 2017, Austin TX, 11/4-5</div>
+            <div class="header-hide">2017 BioTech Talent Symposium</div>
         </div>
         <div flex="none">
-            <md-button class="md-primary" ng-href="http://twbiogroup.org/index_news.aspx?&pn=12" target="_blank" layout="row" layout-align="center center" >
+            <md-button class="md-primary" ng-href="{{$ctrl.METADATA.registerUrl}}" target="_blank" layout="row" layout-align="center center" >
                 <span class="md-subhead">
                     <strong>Event Site</strong>
                 </span>
@@ -39,7 +39,7 @@
     </div>
 </div>
 
-<div layout layout-align="center center" layout-wrap class="container-header" md-colors="{background: 'primary'}"
+<div layout layout-align="center center" layout-wrap class="container-header" md-colors="{color: 'grey-50'}"
     style="min-height:150px">
     <div flex="80" flex-xs="95" layout layout-align="space-between center">
         <a href="#" class="md-display-1 silent-link">

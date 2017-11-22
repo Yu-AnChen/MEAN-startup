@@ -10,7 +10,8 @@ const METADATA = {
     webDescription: 'Taiwan-TBA Year-End Symposium 2017 12/23/2017 NCKU & 12/30/2017 Academia Sinica',
     baseUrl: '/',
     iconUrl: './assets/img/favicon.ico',
-    message: 'Login Message'
+    message: 'Login Message',
+    registerUrl: 'http://btt2017.strikingly.com/'
 };
 
 module.exports = METADATA;

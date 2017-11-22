@@ -9,12 +9,13 @@ const footerComponent = {
     controller: /* @ngInject */ 
     class FooterController {
         static get $inject() {
-            return ['$log', '$timeout', '$scope'];
+            return ['$log', '$timeout', '$scope', 'METADATA'];
         }
-        constructor($log, $timeout, $scope) {
+        constructor($log, $timeout, $scope, METADATA) {
             this.$log = $log;
             this.$timeout = $timeout;
             this.$scope = $scope;
+            this.METADATA = METADATA;
         }
     }
 };
